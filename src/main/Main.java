@@ -6,7 +6,7 @@ public class Main {
 		String path = Main.class.getProtectionDomain().getCodeSource().getLocation().getPath();
 		Messenger messenger = new Messenger();
 		Generator generator = new Generator(path + "main\\Cities.txt");
-		Bot bot = new Bot(messenger, generator);
+		Bot bot = new Bot(messenger, generator, path + "main\\Info.txt");
 		bot.run(args);
 	}
 

@@ -10,17 +10,18 @@ public class Generator {
 	private ArrayList<Turn> turns = new ArrayList<Turn>();
 	private Turn loseTurn = new Turn("Я сдаюсь, ты выйграл");
 	
-	public Generator(String file) {
-		generateFromFile(file);
+	public Generator(String source) {
+		generateFromFile(source);
 	}
 	
 	private void generateFromFile(String file) {
 		try {
-			var reader = new BufferedReader(new FileReader(file));
+			BufferedReader reader = new BufferedReader(new FileReader(file));
 			String city;
 			while ((city = reader.readLine()) != null) {
 				turns.add(new Turn(city));
 			}
+			reader.close();
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
