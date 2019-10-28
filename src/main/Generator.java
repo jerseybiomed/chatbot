@@ -9,6 +9,7 @@ public class Generator {
 	
 	private ArrayList<Turn> turns = new ArrayList<Turn>();
 	private Turn loseTurn = new Turn("ß ñäàşñü, òû âûéãğàë");
+	private String alph = "ÀÁÂÃÄÅ¨ÆÇÈÊËÌÍÎÏĞÑÒÓÔÕÖ×ØÙİŞß";
 	
 	public Generator(String source) {
 		generateFromFile(source);
@@ -19,7 +20,9 @@ public class Generator {
 			BufferedReader reader = new BufferedReader(new FileReader(file));
 			String city;
 			while ((city = reader.readLine()) != null) {
-				turns.add(new Turn(city));
+				if (alph.indexOf(city.charAt(0)) != -1) {
+					turns.add(new Turn(city));
+				}
 			}
 			reader.close();
 		} catch (IOException e) {
@@ -28,9 +31,9 @@ public class Generator {
 	}
 	
 	public Turn nextTurn(String city) {
-		int length = turns.size();
-		for (int i = 0; i < length; i++) {
-			if (Character.toUpperCase(city.charAt(city.length()-1)) == turns.get(i).getPreviousLetter()) {
+		Turn answer = new Turn(city);
+		for (int i = 0; i < turns.size(); i++) {
+			if (Character.toUpperCase(answer.getNextLetter()) == turns.get(i).getPreviousLetter()) {
 				Turn nextTurn = turns.get(i);
 				turns.remove(i);
 				return nextTurn;
@@ -39,4 +42,14 @@ public class Generator {
 		return loseTurn;
 	}
 	
+	public boolean checkAnswer(String city) {
+		int length = turns.size();
+		for (int i = 0; i < length; i++) {
+			if (turns.get(i).getCity().equals(city)) {
+				turns.remove(i);
+				return true;
+			}
+		}
+		return true;
+	}
 }

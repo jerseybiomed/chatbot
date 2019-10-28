@@ -1,19 +1,17 @@
 package main;
 
-import java.util.Arrays;
-
 public class Turn {
 
 	private char previousLetter;
 	private char nextLetter;
 	private String city;
-	private char[] badLastLetters = {'ú','ü','û','é'};
+	private String badLastLetters = "éûüú";
 	
 	public Turn(String city) {
 		this.city = city;
 		previousLetter = city.charAt(0);
 		nextLetter = city.charAt(city.length() - 1);
-		if (Arrays.asList(badLastLetters).contains(nextLetter)) {
+		if (badLastLetters.indexOf(nextLetter) != -1) {
 			nextLetter = city.charAt(city.length() - 2);
 		}
 	}

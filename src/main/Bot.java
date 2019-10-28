@@ -16,7 +16,7 @@ public class Bot {
 	public void run(String[] args) {
 		messenger.writeFromFile(infoPath);
 		messenger.write("Ќачинаем, первый город:");
-		String answer = ("у");
+		String answer = ("н");
 		while(true) {
 			Turn nextTurn = generator.nextTurn(answer);
 			messenger.write(nextTurn.getCity());
@@ -24,13 +24,16 @@ public class Bot {
 				answer = messenger.read();
 				while (answer.equals("\\help") 
 						|| answer.equals("help") 
-						|| Character.toLowerCase(answer.charAt(0)) != nextTurn.getNextLetter()) {
+						|| Character.toLowerCase(answer.charAt(0)) != nextTurn.getNextLetter()
+						|| !generator.checkAnswer(answer)) {
 					if (answer.equals("\\help")) {
 						messenger.writeFromFile(infoPath);
 						messenger.write("я жду от теб€ города");
 					} else if (answer.equals("help")) {
 						Turn helpTurn = generator.nextTurn(nextTurn.getCity());
 						messenger.write("—кажи город: " + helpTurn.getCity());
+					} else if (!generator.checkAnswer(answer)) {
+						messenger.write("я не знаю такого города, назови другой");
 					} else {
 						messenger.write("Ќужен город на букву " + Character.toUpperCase(nextTurn.getNextLetter()));
 					}
