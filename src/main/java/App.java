@@ -11,8 +11,10 @@ public class App {
         Bot bot = new Bot();
         Scanner scanner = new Scanner(System.in);
         boolean temp = true;
-        while (temp)
-            bot.perform(scanner.nextLine());
+        while (temp) {
+            final String[] comm_args = scanner.nextLine().split(" ");
+            bot.perform(comm_args);
+        }
         scanner.close();
     }
 }

@@ -6,6 +6,7 @@ import java.util.concurrent.ConcurrentSkipListMap;
  * CommandRegistry
  */
 public class CommandRegistry<T> {
+
     public ConcurrentSkipListMap<String, T> map = new ConcurrentSkipListMap<>();
     
     public void add(final String commandName, final T commandFunc) {

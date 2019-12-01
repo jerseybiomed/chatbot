@@ -1,22 +1,24 @@
 package chatbot;
 
-import java.util.function.Consumer;
-
 /**
  * Bot
  */
 public class Bot {
-    protected CommandRegistry<Consumer<String[]>> commands = new CommandRegistry<>();
+    protected CommandRegistry<Command> commands = new CommandRegistry<Command>();
 
     public Bot() {
-        ECommands.Help.sendTo(commands::add);
+        ECommands.Help.sendTo(commands::add, (args) -> System.out.println("It's very smart bot"));
         ECommands.Balance.sendTo(commands::add);
         ECommands.Roll.sendTo(commands::add);
     }
 
-    public void perform(String msg) {
-        String[] args = msg.split(" ");
-        if (args.length > 0 && commands.contains(args[0]))
-            commands.get(args[0]).accept(args);
+    public void perform(final String[] args) {
+        Bot.assertArgsNotNull(args);
+        this.commands.get(args[0]).setArgs(args).run();
+    }
+
+    private static void assertArgsNotNull(String[] args) {
+        if (args == null || args.length == 0)
+            throw new RuntimeException("Invalid arguments");
     }
 }
