@@ -76,6 +76,4 @@ nb-configuration.xml
 ## Visual Studio Code
 ##############################
 .settings/
-.classpath
-.project
 .vscode/
