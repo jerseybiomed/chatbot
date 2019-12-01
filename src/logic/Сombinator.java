@@ -1,6 +1,6 @@
 package logic;
 
-public class Ñombinator {
+public class Ð¡ombinator {
 	
 	public boolean isFirstClassWinnerComb(String combination) {
 		return combination.charAt(0) == combination.charAt(1) && combination.charAt(0) == combination.charAt(2);
