@@ -48,5 +48,15 @@ class CalculatorTest {
 	public void coffisientTestFifth() throws IOException {
 		assertEquals(Calculator.getCoffisient("971"), 0);
 	}
+	
+	@Test
+	public void coffisientTestSixth() throws IOException {
+		assertEquals(Calculator.getCoffisient("011"), 1.5);
+	}
+	
+	@Test
+	public void coffisientTestSeventh() throws IOException {
+		assertEquals(Calculator.getCoffisient("101"), 1.5);
+	}
 
 }

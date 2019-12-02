@@ -13,7 +13,10 @@ public class App {
         Bot bot = new OneArmBandit(messenger);
         while (true) {
             String[] comm_args = messenger.read();
-            bot.perform(comm_args);
+            if (comm_args[0].equals("help"))
+            	messenger.write(Help.help);
+            else
+            	bot.perform(comm_args);
         }
     }
 }
