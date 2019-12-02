@@ -3,7 +3,7 @@ package com;
 import java.util.Scanner;
 
 import bot.Bot;
-import onearmedbandit.BotBandit;
+import onearmedbandit.BanditBot;
 
 /**
  * Hello world!
@@ -11,7 +11,7 @@ import onearmedbandit.BotBandit;
 public final class App {
     static Scanner sc = new Scanner(System.in);
     public static void main(String[] args) {
-        Bot bot = new BotBandit();
+        Bot bot = new BanditBot();
         while (true) {
             String[] bot_args = sc.nextLine().split(" ");
             bot.perform(bot_args);

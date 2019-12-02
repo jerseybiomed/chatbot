@@ -8,10 +8,10 @@ import bot.ECommands;
 /**
  * BotBandit
  */
-public class BotBandit extends Bot {
+public class BanditBot extends Bot {
     private Drum drum = new Drum();
 
-    public BotBandit() {
+    public BanditBot() {
         super();
         ECommands.Roll.sendTo(this.commands::replace, this::roll);
     }
