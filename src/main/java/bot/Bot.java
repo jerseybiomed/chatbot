@@ -1,9 +1,11 @@
 package bot;
 
+import com.Listener;
+
 /**
  * Bot
  */
-public class Bot {
+public class Bot implements Listener<String[]>{
     protected CommandRegistry<Command> commands = new CommandRegistry<Command>();
 
     public Bot() {
@@ -17,8 +19,14 @@ public class Bot {
         this.commands.get(args[0]).setArgs(args).run();
     }
 
-    private static void assertArgsNotNull(String[] args) {
+    private static void assertArgsNotNull(final String[] args) {
         if (args == null || args.length == 0)
             throw new RuntimeException("Invalid arguments");
+    }
+
+    @Override
+    public void listen(final String[] arg) {
+        // TODO Auto-generated method stub
+        this.perform(arg);
     }
 }
