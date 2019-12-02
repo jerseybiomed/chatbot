@@ -8,8 +8,9 @@ import console.Messenger;
 public class App {
 
     public static void main(String[] args) {
-        Bot bot = new OneArmBandit();
         Messenger messenger = new Messenger();
+        messenger.write(Help.help);
+        Bot bot = new OneArmBandit(messenger);
         while (true) {
             String[] comm_args = messenger.read();
             bot.perform(comm_args);

@@ -7,7 +7,7 @@ import web.Connector;
 public class Calculator {
 	
 	public static String getCombination(String previousComb) throws IOException {
-		String request = "https://www.random.org/integers/?num=1&min=1&max=50&col=1&base=10&format=plain&rnd=new";
+		String request = "https://www.random.org/integers/?num=10&min=1&max=50&col=1&base=10&format=plain&rnd=new";
 		String combination = "";
 		for (int i=0; i < 3; i++) {
 			int random = Connector.GetRandomNumber(request);
