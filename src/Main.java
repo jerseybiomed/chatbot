@@ -2,7 +2,7 @@ import java.io.IOException;
 
 import logic.Calculator;
 
-public class main {
+public class Main {
 
 	public static void main(String[] args) throws IOException {
 		String combination = Calculator.getCombination("000");
