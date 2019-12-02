@@ -6,7 +6,7 @@ import web.Connector;
 
 public class Calculator {
 	
-	public String getCombination(String previousComb) throws IOException {
+	public static String getCombination(String previousComb) throws IOException {
 		Connector connector = new Connector();
 		String request = "https://www.random.org/integers/?num=1&min=1&max=50&col=1&base=10&format=plain&rnd=new";
 		String combination = "";
@@ -15,7 +15,7 @@ public class Calculator {
 		return combination;
 	}
 	
-	public double getCoffisient(String combination) {
+	public static double getCoffisient(String combination) {
 		Сombinator combinator = new Сombinator();
 		if (combinator.isFirstClassWinnerComb(combination)) 
 			return 2;

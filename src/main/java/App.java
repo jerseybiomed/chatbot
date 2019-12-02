@@ -1,6 +1,7 @@
 import java.util.Scanner;
 
 import chatbot.Bot;
+import onearmedbandit.BotBandit;
 
 /**
  * App
@@ -8,7 +9,7 @@ import chatbot.Bot;
 public class App {
 
     public static void main(String[] args) {
-        Bot bot = new Bot();
+        Bot bot = new BotBandit();
         Scanner scanner = new Scanner(System.in);
         boolean temp = true;
         while (temp) {
