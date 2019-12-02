@@ -1,4 +1,4 @@
-package chatbot;
+package bot;
 
 import java.util.concurrent.ConcurrentSkipListMap;
 

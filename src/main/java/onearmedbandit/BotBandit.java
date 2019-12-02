@@ -2,8 +2,8 @@ package onearmedbandit;
 
 import java.io.IOException;
 
-import chatbot.Bot;
-import chatbot.ECommands;
+import bot.Bot;
+import bot.ECommands;
 
 /**
  * BotBandit
