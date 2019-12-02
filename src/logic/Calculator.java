@@ -6,17 +6,18 @@ import web.Connector;
 
 public class Calculator {
 	
-	public String getCombination(String previousComb) throws IOException {
-		Connector connector = new Connector();
+	public static String getCombination(String previousComb) throws IOException {
 		String request = "https://www.random.org/integers/?num=1&min=1&max=50&col=1&base=10&format=plain&rnd=new";
 		String combination = "";
-		for (int i=0; i < 3; i++)
-			combination += ((int)previousComb.charAt(0) + connector.GetRandomNumber(request)) % 10;
+		for (int i=0; i < 3; i++) {
+			int random = Connector.GetRandomNumber(request);
+			combination += (Integer.parseInt(previousComb.substring(i, i+1)) + random) % 10;
+		}
 		return combination;
 	}
 	
-	public double getCoffisient(String combination) {
-		Сombinator combinator = new Сombinator();
+	public static double getCoffisient(String combination) {
+		Combinator combinator = new Combinator();
 		if (combinator.isFirstClassWinnerComb(combination)) 
 			return 2;
 		else if (combinator.isSecondClassWinnerComb(combination))
