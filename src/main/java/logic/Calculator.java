@@ -16,7 +16,7 @@ public class Calculator {
 	}
 	
 	public static double getCoffisient(String combination) {
-		Сombinator combinator = new Сombinator();
+		Combinator combinator = new Combinator();
 		if (combinator.isFirstClassWinnerComb(combination)) 
 			return 2;
 		else if (combinator.isSecondClassWinnerComb(combination))
