@@ -1,4 +1,4 @@
-package tests;
+package web;
 
 import static org.junit.jupiter.api.Assertions.*;
 
