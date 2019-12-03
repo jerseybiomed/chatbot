@@ -1,6 +1,6 @@
 package bot;
 
-import com.Listener;
+import messenger.Listener;
 
 /**
  * Bot

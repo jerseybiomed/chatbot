@@ -9,7 +9,7 @@ import bot.ECommands;
  * BotBandit
  */
 public class BanditBot extends Bot {
-    private Drum drum = new Drum();
+    private final Drum drum = new Drum();
 
     public BanditBot() {
         super();
@@ -18,13 +18,13 @@ public class BanditBot extends Bot {
 
     private void roll(final String[] args) {
         try {
-            double res = drum.roll(Integer.parseInt(args[1]));
+            final double res = drum.roll(Integer.parseInt(args[1]));
             System.out.println(drum.getComb());
             System.out.println(res);
-        } catch (NumberFormatException e) {
+        } catch (final NumberFormatException e) {
             // TODO Auto-generated catch block
             e.printStackTrace();
-        } catch (IOException e) {
+        } catch (final IOException e) {
             // TODO Auto-generated catch block
             e.printStackTrace();
         }
