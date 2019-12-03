@@ -9,10 +9,15 @@ import logic.Calculator;
  */
 public class Drum {
     private String currentComb = "000";
+    private Calculator calculator;
+    
+    public Drum(Calculator calculator) {
+    	this.calculator = calculator;
+    }
 
     public double roll(int bet) throws IOException {
-        this.currentComb = Calculator.getCombination(this.currentComb);
-        return bet * Calculator.getCoffisient(this.currentComb);
+        this.currentComb = calculator.getCombination(this.currentComb);
+        return bet * calculator.getCoffisient(this.currentComb);
     }
 
     public String getComb() {

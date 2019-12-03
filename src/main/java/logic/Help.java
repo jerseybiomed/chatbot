@@ -1,3 +1,4 @@
+package logic;
 
 public class Help {
 	public static String help = 

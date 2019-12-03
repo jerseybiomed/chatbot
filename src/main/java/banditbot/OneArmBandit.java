@@ -5,16 +5,20 @@ import java.io.IOException;
 import bot.Bot;
 import bot.ECommands;
 import console.Messenger;
+import logic.Help;
 
 /**
  * BotBandit
  */
 public class OneArmBandit extends Bot {
-    private Drum drum = new Drum();
+    private Drum drum;
 
-    public OneArmBandit(Messenger messenger) {
+    public OneArmBandit(Messenger messenger, Drum drum) {
         super(messenger);
+        this.drum = drum;
         ECommands.Roll.sendTo(this.commands::replace, this::roll);
+        ECommands.Help.sendTo(this.commands::replace, (args) -> messenger.write(Help.help));
+        this.perform("help".split(" "));
     }
 
     private void roll(String[] args) {

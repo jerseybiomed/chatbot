@@ -1,6 +1,9 @@
+import banditbot.Drum;
 import banditbot.OneArmBandit;
 import bot.Bot;
 import console.Messenger;
+import logic.Calculator;
+import logic.Help;
 
 /**
  * App
@@ -9,14 +12,12 @@ public class App {
 
     public static void main(String[] args) {
         Messenger messenger = new Messenger();
-        messenger.write(Help.help);
-        Bot bot = new OneArmBandit(messenger);
+        Calculator calculator = new Calculator();
+        Drum drum = new Drum(calculator);
+        Bot bot = new OneArmBandit(messenger, drum);
         while (true) {
             String[] comm_args = messenger.read();
-            if (comm_args[0].equals("help"))
-            	messenger.write(Help.help);
-            else
-            	bot.perform(comm_args);
+            bot.perform(comm_args);
         }
     }
 }
