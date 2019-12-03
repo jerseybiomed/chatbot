@@ -7,7 +7,7 @@ import java.util.concurrent.ConcurrentSkipListMap;
  */
 public class CommandRegistry<T> {
 
-    public ConcurrentSkipListMap<String, T> map = new ConcurrentSkipListMap<>();
+    private ConcurrentSkipListMap<String, T> map = new ConcurrentSkipListMap<>();
     
     public void add(final String commandName, final T commandFunc) {
         this.assertContainsNameNot(commandName);

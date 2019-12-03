@@ -13,10 +13,10 @@ public class Combinator {
 	}
 	
 	public boolean isBeautifulComb(String combination) {
-		return ((int)combination.charAt(2) - (int)combination.charAt(1)) == 
-				((int)combination.charAt(1) - (int)combination.charAt(0)) ||
-				((int)combination.charAt(0) - (int)combination.charAt(1)) == 
-				((int)combination.charAt(1) - (int)combination.charAt(2));
+		return (((int)combination.charAt(2) - (int)combination.charAt(1)) == 
+				((int)combination.charAt(1) - (int)combination.charAt(0))) ||
+				(((int)combination.charAt(0) - (int)combination.charAt(1)) == 
+				((int)combination.charAt(1) - (int)combination.charAt(2)));
 	}
 
 }

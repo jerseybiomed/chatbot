@@ -8,7 +8,7 @@ import java.net.URL;
 
 public class Connector {
 	
-	public int GetRandomNumber(String request) throws IOException {
+	public static int GetRandomNumber(String request) throws IOException {
 		URL url = new URL(request);
 		HttpURLConnection connection = (HttpURLConnection) url.openConnection();
 		connection.setRequestMethod("GET");
