@@ -1,17 +1,21 @@
 package bot;
 
+import bot.command.Command;
+import bot.command.CommandRegistry;
+import bot.command.ECommands;
+import messenger.Connector.Connectable;
 import messenger.Listener;
 
 /**
  * Bot
  */
-public class Bot implements Listener<String[]>{
+public class Bot extends Listener<String[]> {
     protected CommandRegistry<Command> commands = new CommandRegistry<Command>();
 
     public Bot() {
-        ECommands.Help.sendTo(commands::add, (args) -> System.out.println("It's very smart bot"));
-        ECommands.Balance.sendTo(commands::add);
+        ECommands.Help.sendTo(commands::add);
         ECommands.Roll.sendTo(commands::add);
+        ECommands.Balance.sendTo(commands::add);
     }
 
     public void perform(final String[] args) {
@@ -25,8 +29,17 @@ public class Bot implements Listener<String[]>{
     }
 
     @Override
-    public void listen(final String[] arg) {
-        // TODO Auto-generated method stub
+    public void connect(Connectable item) {
+        this.start(item);
+    }
+
+    @Override
+    protected void start(Object source) {
+        this.perform(new String[] {"help"});
+    }
+
+    @Override
+    public void listen(String[] arg) {
         this.perform(arg);
     }
 }

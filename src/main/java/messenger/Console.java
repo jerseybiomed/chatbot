@@ -19,15 +19,10 @@ public class Console implements Runnable {
 
     @Override
     public void run() {
-        // TODO Auto-generated method stub
         while (true) {
             final String line = this.scan.nextLine();
             for (final Listener<String> cl : this.listeners)
                 cl.listen(line);
         }
-    }
-
-    public void addListener(final Listener<String> listener) {
-        this.listeners.add(listener);
     }
 }

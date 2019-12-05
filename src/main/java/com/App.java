@@ -8,7 +8,7 @@ import messenger.Console;
 import onearmedbandit.BanditBot;
 
 /**
- * Hello world!
+ * BanditBot Launch
  */
 public final class App {
     static Scanner sc = new Scanner(System.in);

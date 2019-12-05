@@ -1,4 +1,4 @@
-package bot;
+package bot.command;
 
 import java.util.function.BiConsumer;
 import java.util.function.Consumer;

@@ -2,8 +2,10 @@ package onearmedbandit;
 
 import java.io.IOException;
 
+import com.Help;
+
 import bot.Bot;
-import bot.ECommands;
+import bot.command.ECommands;
 
 /**
  * BotBandit
@@ -13,7 +15,13 @@ public class BanditBot extends Bot {
 
     public BanditBot() {
         super();
+        ECommands.Help.sendTo(this.commands::replace, this::help);
         ECommands.Roll.sendTo(this.commands::replace, this::roll);
+    }
+
+
+    private void help(final String[] args) {
+        System.out.println(Help.help);
     }
 
     private void roll(final String[] args) {
@@ -22,10 +30,8 @@ public class BanditBot extends Bot {
             System.out.println(drum.getComb());
             System.out.println(res);
         } catch (final NumberFormatException e) {
-            // TODO Auto-generated catch block
             e.printStackTrace();
         } catch (final IOException e) {
-            // TODO Auto-generated catch block
             e.printStackTrace();
         }
     }
