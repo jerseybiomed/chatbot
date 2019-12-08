@@ -23,6 +23,7 @@ public class OneArmBandit extends Bot {
         this.drum = drum;
         ECommands.Roll.sendTo(this.commands::replace, this::roll);
         ECommands.Help.sendTo(this.commands::replace, (args) -> sendMessage(message, Help.help));
+        ECommands.Start.sendTo(this.commands::replace, (args) -> sendMessage(message, Help.help));
     }
 
     private void roll(String[] args) {

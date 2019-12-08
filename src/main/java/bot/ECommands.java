@@ -4,9 +4,10 @@ import java.util.function.BiConsumer;
 import java.util.function.Consumer;
 
 public enum ECommands {
-    Help("help", (args) -> System.out.println(String.join(" ", args))),
-    Balance("balance", (args) -> System.out.println(String.join(" ", args))),
-    Roll("roll", (args) -> System.out.println(String.join(" ", args)));
+    Help("/help", (args) -> System.out.println(String.join(" ", args))),
+    Balance("/balance", (args) -> System.out.println(String.join(" ", args))),
+    Roll("/roll", (args) -> System.out.println(String.join(" ", args))),
+    Start("/start", (args) -> System.out.println(String.join(" ", args)));
 
     private String name;
     private Consumer<String[]> func;
