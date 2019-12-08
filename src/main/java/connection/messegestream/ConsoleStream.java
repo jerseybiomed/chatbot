@@ -1,7 +1,6 @@
-package messenger;
+package connection.messegestream;
 
 import java.io.InputStream;
-import java.io.OutputStream;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
@@ -9,11 +8,11 @@ import java.util.Scanner;
 /**
  * Console
  */
-public class Console implements Runnable {
+public class ConsoleStream implements Runnable {
     private final Scanner scan;
     private final List<Listener<String>> listeners = new ArrayList<Listener<String>>();
 
-    public Console(final InputStream in, final OutputStream out) {
+    public ConsoleStream(final InputStream in) {
         this.scan = new Scanner(in);
     }
 
@@ -24,5 +23,9 @@ public class Console implements Runnable {
             for (final Listener<String> cl : this.listeners)
                 cl.listen(line);
         }
+    }
+
+    public void addListener(final Listener<String> listener) {
+        this.listeners.add(listener);
     }
 }

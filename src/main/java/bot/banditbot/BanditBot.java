@@ -1,8 +1,6 @@
-package onearmedbandit;
+package bot.banditbot;
 
 import java.io.IOException;
-
-import com.Help;
 
 import bot.Bot;
 import bot.command.ECommands;
@@ -11,26 +9,24 @@ import bot.command.ECommands;
  * BotBandit
  */
 public class BanditBot extends Bot {
-    private final Drum drum = new Drum();
+    private final Helper helper;
+    private final Drum drum;
 
-    public BanditBot() {
+    public BanditBot(final logic.Help help, final logic.Calculator calculator) {
         super();
+        this.helper = new Helper(help);
+        this.drum = new Drum(calculator);
         ECommands.Help.sendTo(this.commands::replace, this::help);
         ECommands.Roll.sendTo(this.commands::replace, this::roll);
     }
 
-
     private void help(final String[] args) {
-        System.out.println(Help.help);
+        this.helper.help();
     }
 
     private void roll(final String[] args) {
         try {
-            final double res = drum.roll(Integer.parseInt(args[1]));
-            System.out.println(drum.getComb());
-            System.out.println(res);
-        } catch (final NumberFormatException e) {
-            e.printStackTrace();
+            System.out.println(drum.roll(Integer.parseInt(args[1])));
         } catch (final IOException e) {
             e.printStackTrace();
         }

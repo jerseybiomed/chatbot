@@ -1,21 +1,19 @@
 package com;
 
-import java.util.Scanner;
-
 import bot.Bot;
-import bot.BotListener;
-import messenger.Console;
-import onearmedbandit.BanditBot;
+import bot.banditbot.BanditBot;
+import connection.messegestream.ConsoleStream;
+import logic.Calculator;
+import logic.Help;
 
 /**
  * BanditBot Launch
  */
 public final class App {
-    static Scanner sc = new Scanner(System.in);
-    public static void main(String[] args) {
-        Bot bot = new BanditBot();
-        Console cons = new Console(System.in, System.out);
-        cons.addListener(new BotListener(bot));
+    public static void main(final String[] args) {
+        final Bot bot = new BanditBot(new Help(), new Calculator());
+        final ConsoleStream cons = new ConsoleStream(System.in);
+        bot.connect(cons);
         cons.run();
     }
 }

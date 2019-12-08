@@ -3,13 +3,14 @@ package bot;
 import bot.command.Command;
 import bot.command.CommandRegistry;
 import bot.command.ECommands;
-import messenger.Connector.Connectable;
-import messenger.Listener;
+import connection.Connectable;
+import connection.messegestream.ConsoleStream;
+import connection.messegestream.Listener;
 
 /**
  * Bot
  */
-public class Bot extends Listener<String[]> {
+public class Bot implements Listener<String[]>, Connectable<ConsoleStream> {
     protected CommandRegistry<Command> commands = new CommandRegistry<Command>();
 
     public Bot() {
@@ -29,17 +30,18 @@ public class Bot extends Listener<String[]> {
     }
 
     @Override
-    public void connect(Connectable item) {
-        this.start(item);
+    public void connect(final ConsoleStream connection) {
+        connection.addListener(new BotListener(this));
+        this.start();
     }
 
     @Override
-    protected void start(Object source) {
-        this.perform(new String[] {"help"});
+    public void listen(final String[] data) {
+        this.perform(data);
     }
 
     @Override
-    public void listen(String[] arg) {
-        this.perform(arg);
+    public void start() {
+        this.perform(new String[]{"help"});
     }
 }

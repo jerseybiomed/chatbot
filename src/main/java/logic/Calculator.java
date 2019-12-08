@@ -6,7 +6,7 @@ import java.io.IOException;
 
 public class Calculator {
 
-	public static String getCombination(final String previousComb) throws IOException {
+	public String getCombination(final String previousComb) throws IOException {
 		final String request = "https://www.random.org/integers/?num=1&min=1&max=50&col=1&base=10&format=plain&rnd=new";
 		String combination = "";
 		for (int i = 0; i < 3; i++)
@@ -14,7 +14,7 @@ public class Calculator {
 		return combination;
 	}
 
-	public static double getCoffisient(final String combination) {
+	public double getCoffisient(final String combination) {
 		final Combinator combinator = new Combinator();
 		if (combinator.isFirstClassWinnerComb(combination)) 
 			return 2;
