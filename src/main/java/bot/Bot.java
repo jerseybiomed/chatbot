@@ -18,7 +18,6 @@ public class Bot extends TelegramLongPollingBot {
         ECommands.Help.sendTo(commands::add, (args) -> System.out.println("It's very smart bot"));
         ECommands.Balance.sendTo(commands::add);
         ECommands.Roll.sendTo(commands::add);
-        ECommands.Start.sendTo(commands::add);
     }
 
     public void perform(final String[] args) {
