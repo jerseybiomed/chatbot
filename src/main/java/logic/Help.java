@@ -2,7 +2,9 @@ package logic;
 
 public class Help {
 	public static String help = 
-			"Вас приветсвует Однорукий Бандит\nЧтобы играть введи команду roll и сумму ставки через пробел\n"
-			+ "Я выведу итоговую линию и результат\nЯ предназначен для азартных игроков, чтобы те не проигровали свои деньги\n"
-			+ "\nДля вывода этой справки еще раз вместо roll напиши help";
+			"You are greeted by a One Arm Bandit\n" +
+					"To play enter '/roll' and the bet amount separated by a space\n" +
+					"I will output the final line and the result\n" +
+					"I'm meant for gamblers, so they don't lose their money\n" +
+					"\nFor output of this help once again instead of roll write '/help'";
 }
