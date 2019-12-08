@@ -68,7 +68,7 @@
                     <programs>
                         <program>
                             <mainClass>logic.App</mainClass>
-                            <name>chatBot</name>
+                            <name>workerBot</name>
                         </program>
                     </programs>
                 </configuration>
