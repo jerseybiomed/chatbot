@@ -67,7 +67,7 @@
                     <assembleDirectory>target</assembleDirectory>
                     <programs>
                         <program>
-                            <mainClass>App</mainClass>
+                            <mainClass>logic.App</mainClass>
                             <name>chatBot</name>
                         </program>
                     </programs>
