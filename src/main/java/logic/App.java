@@ -1,3 +1,5 @@
+package logic;
+
 import banditbot.Drum;
 import banditbot.OneArmBandit;
 import bot.Bot;
