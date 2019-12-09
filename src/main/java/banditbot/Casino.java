@@ -8,7 +8,6 @@ import bot.Bot;
 import bot.ECommands;
 import logic.Bandit;
 import logic.Help;
-import logic.RouletteDrum;
 import org.telegram.telegrambots.meta.api.methods.send.SendMessage;
 import org.telegram.telegrambots.meta.api.objects.Message;
 import org.telegram.telegrambots.meta.api.objects.Update;
@@ -25,7 +24,6 @@ import java.util.AbstractMap.SimpleEntry;
 public class Casino extends Bot {
     private String currentMenu;
     private Bandit bandit;
-    private RouletteDrum rouletteDrum;
     private Message message;
     private HashMap<Long, Double> banditBalances = new HashMap<>();
     private HashMap<Long, Double> rouletteBalances = new HashMap<>();
@@ -34,11 +32,10 @@ public class Casino extends Bot {
     private ReplyKeyboardMarkup rouletteKeyboard = new ReplyKeyboardMarkup();
     private ReplyKeyboardMarkup startKeyboard = new ReplyKeyboardMarkup();
 
-    public Casino(Bandit game1, RouletteDrum drum2, String userName, String token) {
+    public Casino(Bandit game1, String userName, String token) {
         super(userName, token);
         currentMenu = "start";
         bandit = game1;
-        rouletteDrum = drum2;
         setBanditKeyboard();
         setRouletteKeyboard();
         setStartKeyboard();
