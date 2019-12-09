@@ -9,7 +9,7 @@ public class Help {
 					"I'm meant for gamblers, so they don't lose their money\n" +
 					"\nFor output of this help once again instead of roll write '/help'";
 
-	public static String lines =
+	public static String rules =
 			"The first class of lines are lines with three identical cells\n" +
 					"Such lines increase bets by 2\n" +
 					"The second class of lines are lines with two identical cells\n" +

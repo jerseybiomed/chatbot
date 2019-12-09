@@ -7,7 +7,7 @@ public enum ECommands {
     Help("/help", (args) -> System.out.println(String.join(" ", args))),
     Balance("/balance", (args) -> System.out.println(String.join(" ", args))),
     Roll("/roll", (args) -> System.out.println(String.join(" ", args))),
-    Lines("/lines", (args) -> System.out.println(String.join(" ", args))),
+    Rules("/rules", (args) -> System.out.println(String.join(" ", args))),
     Start("/start", (args) -> System.out.println(String.join(" ", args)));
 
     private String name;
