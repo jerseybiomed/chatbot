@@ -12,12 +12,15 @@ import web.Connector;
  * roulet
  */
 public class Roulette extends TimerTask {
-    private final Bot bot;
+    private Bot bot;
     private final Timer timer;
 
-    public Roulette(final Bot m_bot) {
-        this.bot = m_bot;
+    public Roulette() {
         this.timer = new Timer(true);
+    }
+
+    public void setBot(Bot m_bot) {
+        this.bot = m_bot;
     }
 
     @Override

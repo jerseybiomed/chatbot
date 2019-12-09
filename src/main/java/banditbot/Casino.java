@@ -37,6 +37,7 @@ public class Casino extends Bot {
 
     public Casino(Bandit game1, Roulette game2, String userName, String token) {
         super(userName, token);
+        game2.setBot(this);
         currentMenu = "start";
         bandit = game1;
         roulette = game2;
