@@ -45,7 +45,7 @@ public class Casino extends Bot {
         setRouletteKeyboard();
         setStartKeyboard();
         ECommands.Roll.sendTo(this.commands::replace, this::banditRoll);
-        /*ECommands.Bet.sendTo(this.commands::replace, (args) -> setRouletteBet(message.getChatId(), message.getText()));*/
+        ECommands.Bet.sendTo(this.commands::replace, (args) -> setRouletteBet(message));
         ECommands.Balance.sendTo(this.commands::replace, (args) -> sendMessage(message.getChatId(), getBalance()));
         ECommands.Help.sendTo(this.commands::replace, (args) -> sendMessage(message.getChatId(), getHelp()));
         ECommands.Rules.sendTo(this.commands::add, (args) -> sendMessage(message.getChatId(), getRules()));
@@ -58,21 +58,20 @@ public class Casino extends Bot {
     }
 
     private void performRoulette(int result) {
-        for (long player : roulettePlayers)
-            sendMessage(player, result + roulette.getColor(result));
+        sendRoulettePlayers(result + roulette.getColor(result));
         for (long player : rouletteBets.keySet()) {
             String[] bet = rouletteBets.get(player).split(" ");
-            double betResult = roulette.getCoefficient(result, bet[0]) * Integer.parseInt(bet[0]);
-            rouletteBalances.replace(player, rouletteBalances.get(player) - Integer.parseInt(bet[0]) + betResult);
-            sendMessage(player, "result: " + betResult);
+            double res = roulette.getCoefficient(result, bet[0]);
+            rouletteBalances.replace(player, rouletteBalances.get(player) + res - Integer.parseInt(bet[1]));
+            sendMessage(player, Double.toString(res));
         }
     }
 
-    private void setRouletteBet(long id, String bet) {
-        rouletteBets.put(id, bet);
-        String[] newBet = bet.split(" ");
-        for (long player : roulettePlayers)
-            sendMessage(player, "new bet: " + newBet[1] + " on " + newBet[0]);
+    private void setRouletteBet(Message message) {
+        String text = message.getText();
+        rouletteBets.put(message.getChatId(), text);
+        String[] bet = text.split(" ");
+        sendRoulettePlayers("new bet: " + bet[1] + " on " + bet[0]);
     }
 
     private String getRules() {
@@ -142,6 +141,11 @@ public class Casino extends Bot {
         }
         currentMenu = "start";
         sendMessage(message.getChatId(), "Choose your game");
+    }
+
+    private void sendRoulettePlayers(String text) {
+        for (long player : roulettePlayers)
+            sendMessage(player, text);
     }
 
     private void sendMessage(long id, String text) {
