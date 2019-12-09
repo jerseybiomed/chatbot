@@ -49,9 +49,9 @@ public class Casino extends Bot {
         ECommands.Balance.sendTo(this.commands::replace, (args) -> sendMessage(message.getChatId(), getBalance()));
         ECommands.Help.sendTo(this.commands::replace, (args) -> sendMessage(message.getChatId(), getHelp()));
         ECommands.Rules.sendTo(this.commands::add, (args) -> sendMessage(message.getChatId(), getRules()));
-        ECommands.Bandit.sendTo(this.commands::add, (args) -> sendMessage(message.getChatId(), Help.banditHelp));
-        ECommands.Roulette.sendTo(this.commands::add, (args) -> sendMessage(message.getChatId(), Help.rouletteHelp));
-        ECommands.Back.sendTo(this.commands::add, (args) -> sendMessage(message.getChatId(), "Choose your game"));
+        ECommands.Bandit.sendTo(this.commands::add, (args) -> banditRequest());
+        ECommands.Roulette.sendTo(this.commands::add, (args) -> rouletteRequest());
+        ECommands.Back.sendTo(this.commands::add, (args) -> backRequest());
         ECommands.Start.sendTo(this.commands::add, (args) -> sendMessage(message.getChatId(), "Choose your game"));
         commands.add("sayResult", new Command("sayResult",
                 (args) -> this.performRoulette(Integer.parseInt(args[1]))));
@@ -72,7 +72,7 @@ public class Casino extends Bot {
         rouletteBets.put(id, bet);
         String[] newBet = bet.split(" ");
         for (long player : roulettePlayers)
-            sendMessage(player, "new bet: " + newBet[2] + " on " + newBet[1]);
+            sendMessage(player, "new bet: " + newBet[1] + " on " + newBet[0]);
     }
 
     private String getRules() {
@@ -109,34 +109,39 @@ public class Casino extends Bot {
             message = update.getMessage();
             try {
                 String[] args = message.getText().split(" ");
-                if (args[0].equals("/bandit")) {
-                    banditBalances.put(message.getChatId(), 10000.0);
-                    currentMenu = "bandit";
-                }
-                if (args[0].equals("/roulette")) {
-                    if (roulettePlayers.size() < 10 || roulettePlayers.contains(null)) {
-                        roulettePlayers.add(message.getChatId());
-                        rouletteBalances.put(message.getChatId(), 10000.0);
-                        for (long player : roulettePlayers)
-                            sendMessage(player, "Hello " + message.getChatId().toString());
-                        currentMenu = "roulette";
-                    } else {
-                        sendMessage(message.getChatId(), "There is no available space in roulette");
-                        currentMenu = "start";
-                        args[0] = "/start";
-                    }
-                }
-                if (args[0].equals("/back")) {
-                    if (currentMenu.equals("roulette")) {
-                        roulettePlayers.remove(message.getChatId());
-                    }
-                    currentMenu = "start";
-                }
                 this.perform(args);
             } catch (Exception e) {
                 e.printStackTrace();
             }
         }
+    }
+
+    private void banditRequest() {
+        banditBalances.put(message.getChatId(), 10000.0);
+        currentMenu = "bandit";
+        sendMessage(message.getChatId(), Help.banditHelp);
+    }
+
+    private void rouletteRequest() {
+        if (roulettePlayers.size() < 10 || roulettePlayers.contains(null)) {
+            roulettePlayers.add(message.getChatId());
+            rouletteBalances.put(message.getChatId(), 10000.0);
+            for (long player : roulettePlayers)
+                sendMessage(player, "Hello " + message.getChatId().toString());
+            currentMenu = "roulette";
+            sendMessage(message.getChatId(), Help.rouletteHelp);
+        } else {
+            sendMessage(message.getChatId(), "There is no available space in roulette");
+            currentMenu = "start";
+        }
+    }
+
+    private void backRequest() {
+        if (currentMenu.equals("roulette")) {
+            roulettePlayers.remove(message.getChatId());
+        }
+        currentMenu = "start";
+        sendMessage(message.getChatId(), "Choose your game");
     }
 
     private void sendMessage(long id, String text) {
