@@ -54,8 +54,8 @@ public class Casino extends Bot {
         ECommands.Roulette.sendTo(this.commands::add, (args) -> sendMessage(message.getChatId(), Help.rouletteHelp));
         ECommands.Back.sendTo(this.commands::add, (args) -> sendMessage(message.getChatId(), "Choose your game"));
         ECommands.Start.sendTo(this.commands::add, (args) -> sendMessage(message.getChatId(), "Choose your game"));
-        commands.add("roulette sayResult", new Command("roulette sayResult",
-                (args) -> this.performRoulette(Integer.parseInt(args[2]))));
+        commands.add("sayResult", new Command("sayResult",
+                (args) -> this.performRoulette(Integer.parseInt(args[1]))));
     }
 
     private void performRoulette(int result) {
@@ -106,7 +106,7 @@ public class Casino extends Bot {
                         roulettePlayers.add(message.getChatId());
                         rouletteBalances.put(message.getChatId(), 10000.0);
                         for (long player : roulettePlayers)
-                            sendMessage(player, message.getChatId().toString());
+                            sendMessage(player, "Hello " + message.getChatId().toString());
                         currentMenu = "roulette";
                     } else {
                         sendMessage(message.getChatId(), "There is no available space in roulette");

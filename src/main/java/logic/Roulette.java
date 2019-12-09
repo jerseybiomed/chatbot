@@ -32,7 +32,7 @@ public class Roulette extends TimerTask {
         } catch (final IOException e) {
 			e.printStackTrace();
 		}
-        this.bot.perform(new String[] {"roulette sayResult", Integer.toString(random)});
+        this.bot.perform(new String[] {"sayResult", Integer.toString(random)});
     }
 
     public void Start() {
