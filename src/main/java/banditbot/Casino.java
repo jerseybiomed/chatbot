@@ -31,21 +31,29 @@ public class Casino extends Bot {
         this.drum = drum;
         this.setReplyKeyboardMarkup();
         ECommands.Roll.sendTo(this.commands::replace, this::roll);
-        ECommands.Balance.sendTo(this.commands::replace, (args) -> sendMessage(message, balances.get(message.getChatId()).toString()));
+        ECommands.Balance.sendTo(this.commands::replace, (args) ->
+                sendMessage(message, balances.get(message.getChatId()).toString()));
         ECommands.Help.sendTo(this.commands::replace, (args) -> sendMessage(message, Help.help));
         ECommands.Lines.sendTo(this.commands::add, (args) -> sendMessage(message, Help.lines));
         ECommands.Start.sendTo(this.commands::add, (args) -> sendMessage(message, Help.help));
     }
 
     private void roll(String[] args) {
-        try {
-            int bet = Integer.parseInt(args[1]);
-            double res = drum.roll(bet);
-            balances.replace(message.getChatId(), balances.get(message.getChatId()) - bet + res);
-            String message = "line:" + drum.getComb() + " result:" + res;
-            sendMessage(this.message, message);
-        } catch (IOException e) {
-            e.printStackTrace();
+        int bet = Integer.parseInt(args[1]);
+        if (bet <= balances.get(message.getChatId())) {
+            try {
+                double res = drum.roll(bet);
+                balances.replace(message.getChatId(), balances.get(message.getChatId()) - bet + res);
+                String result = "line:" + drum.getComb() + " result:" + res;
+                sendMessage(message, result);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        } else if (balances.get(message.getChatId()) < 1) {
+            sendMessage(message, "You lost all the money\nTo start the game again with 10000 write '/start'\n" +
+                    "Good Luck and Have Fun!");
+        } else {
+            sendMessage(message, "Your balance is not enough for this bet");
         }
     }
 
