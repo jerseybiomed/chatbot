@@ -1,4 +1,4 @@
-package banditbot;
+package logic;
 
 import logic.Calculator;
 
