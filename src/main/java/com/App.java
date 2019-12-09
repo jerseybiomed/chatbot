@@ -13,8 +13,15 @@ import org.telegram.telegrambots.meta.exceptions.TelegramApiRequestException;
  */
 public class App {
 
-    public static void main(String[] args) {
-        ApiContextInitializer.init();
+    public static void main(String[] args) throws InterruptedException {
+        Roulette tt = new Roulette(null);
+        tt.Start();
+        while (true) {
+            System.out.flush();
+            System.out.println(tt.getTimeLeft());
+            Thread.sleep(100);
+        }
+        /*ApiContextInitializer.init();
         TelegramBotsApi botsApi = new TelegramBotsApi();
         Calculator calculator = new Calculator();
         Bandit game1 = new Bandit();
@@ -23,6 +30,6 @@ public class App {
             botsApi.registerBot(bot);
         } catch (TelegramApiRequestException e){
             e.printStackTrace();
-        }
+        }*/
     }
 }

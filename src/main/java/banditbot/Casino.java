@@ -5,9 +5,11 @@ import java.util.HashMap;
 import java.util.List;
 
 import bot.Bot;
+import bot.Command;
 import bot.ECommands;
 import logic.Bandit;
 import logic.Help;
+import logic.Roulette;
 import org.telegram.telegrambots.meta.api.methods.send.SendMessage;
 import org.telegram.telegrambots.meta.api.objects.Message;
 import org.telegram.telegrambots.meta.api.objects.Update;
@@ -47,6 +49,11 @@ public class Casino extends Bot {
         ECommands.Roulette.sendTo(this.commands::add, (args) -> sendMessage(message, Help.rouletteHelp));
         ECommands.Back.sendTo(this.commands::add, (args) -> sendMessage(message, "Choose your game"));
         ECommands.Start.sendTo(this.commands::add, (args) -> sendMessage(message, "Choose your game"));
+        this.commands.add("roulette sayResult", new Command("roulette sayResult", (args) -> this.performRoulette(Integer.parseInt(args[2]))));
+    }
+
+    private void performRoulette(int x) {
+
     }
 
     private String getRules() {
@@ -62,27 +69,27 @@ public class Casino extends Bot {
                 : rouletteBalances.get(message.getChatId()).toString();
     }
 
-    private void banditRoll(String[] args) {
-        int bet = Integer.parseInt(args[1]);
+    private void banditRoll(final String[] args) {
+        final int bet = Integer.parseInt(args[1]);
         if (bet <= banditBalances.get(message.getChatId())) {
             SimpleEntry<String, Double> result = bandit.game(bet);
             banditBalances.replace(message.getChatId(),
                     banditBalances.get(message.getChatId()) - bet + result.getValue());
             sendMessage(message, "line:" + result.getKey() + " result:" + result.getValue());
         } else if (banditBalances.get(message.getChatId()) < 1) {
-            sendMessage(message, "You lost all the money\nTo start the game again with 10000 write '/start'\n" +
-                    "Good Luck and Have Fun!");
+            sendMessage(message, "You lost all the money\nTo start the game again with 10000 write '/start'\n"
+                    + "Good Luck and Have Fun!");
         } else {
             sendMessage(message, "Your balance is not enough for this bet");
         }
     }
 
     @Override
-    public void onUpdateReceived(Update update) {
+    public void onUpdateReceived(final Update update) {
         if (update.hasMessage()) {
             message = update.getMessage();
             try {
-                String[] args = message.getText().split(" ");
+                final String[] args = message.getText().split(" ");
                 if (args[0].equals("/bandit")) {
                     banditBalances.put(message.getChatId(), 10000.0);
                     currentMenu = "bandit";
@@ -105,40 +112,41 @@ public class Casino extends Bot {
                     currentMenu = "start";
                 }
                 this.perform(args);
-            } catch (Exception e) {
+            } catch (final Exception e) {
                 e.printStackTrace();
             }
         }
     }
 
-    private void sendMessage(Message message, String text) {
-        SendMessage chat = new SendMessage();
+    private void sendMessage(final Message message, final String text) {
+        final SendMessage chat = new SendMessage();
         chat.setChatId(message.getChatId());
         chat.setText(text);
         if (currentMenu.equals("start"))
             chat.setReplyMarkup(startKeyboard);
         else if (currentMenu.equals("bandit"))
             chat.setReplyMarkup(banditKeyboard);
-        else chat.setReplyMarkup(rouletteKeyboard);
-        try{
+        else
+            chat.setReplyMarkup(rouletteKeyboard);
+        try {
             this.execute(chat);
-        } catch (TelegramApiException e) {
+        } catch (final TelegramApiException e) {
             e.printStackTrace();
         }
     }
 
     private void setBanditKeyboard() {
         banditKeyboard.setSelective(true);
-        List<KeyboardRow> keyboard = new ArrayList<>();
-        KeyboardRow keyboardFirstRow = new KeyboardRow();
+        final List<KeyboardRow> keyboard = new ArrayList<>();
+        final KeyboardRow keyboardFirstRow = new KeyboardRow();
         keyboardFirstRow.add(new KeyboardButton("/help"));
         keyboardFirstRow.add(new KeyboardButton("/rules"));
         keyboardFirstRow.add(new KeyboardButton("/balance"));
-        KeyboardRow keyboardSecondRow = new KeyboardRow();
+        final KeyboardRow keyboardSecondRow = new KeyboardRow();
         keyboardSecondRow.add(new KeyboardButton("/roll 10"));
         keyboardSecondRow.add(new KeyboardButton("/roll 100"));
         keyboardSecondRow.add(new KeyboardButton("/roll 1000"));
-        KeyboardRow keyboardThirdRow = new KeyboardRow();
+        final KeyboardRow keyboardThirdRow = new KeyboardRow();
         keyboardThirdRow.add(new KeyboardButton("/back"));
         keyboard.add(keyboardFirstRow);
         keyboard.add(keyboardSecondRow);
@@ -148,12 +156,12 @@ public class Casino extends Bot {
 
     private void setRouletteKeyboard() {
         rouletteKeyboard.setSelective(true);
-        List<KeyboardRow> keyboard = new ArrayList<>();
-        KeyboardRow keyboardFirstRow = new KeyboardRow();
+        final List<KeyboardRow> keyboard = new ArrayList<>();
+        final KeyboardRow keyboardFirstRow = new KeyboardRow();
         keyboardFirstRow.add(new KeyboardButton("/help"));
         keyboardFirstRow.add(new KeyboardButton("/rules"));
         keyboardFirstRow.add(new KeyboardButton("/balance"));
-        KeyboardRow keyboardSecondRow = new KeyboardRow();
+        final KeyboardRow keyboardSecondRow = new KeyboardRow();
         keyboardSecondRow.add(new KeyboardButton("/back"));
         keyboard.add(keyboardFirstRow);
         keyboard.add(keyboardSecondRow);
@@ -162,8 +170,8 @@ public class Casino extends Bot {
 
     private void setStartKeyboard() {
         startKeyboard.setSelective(true);
-        List<KeyboardRow> keyboard = new ArrayList<>();
-        KeyboardRow keyboardRow = new KeyboardRow();
+        final List<KeyboardRow> keyboard = new ArrayList<>();
+        final KeyboardRow keyboardRow = new KeyboardRow();
         keyboardRow.add(new KeyboardButton("/bandit"));
         keyboardRow.add(new KeyboardButton("/roulette"));
         keyboard.add(keyboardRow);

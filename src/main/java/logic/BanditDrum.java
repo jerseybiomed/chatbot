@@ -1,7 +1,5 @@
 package logic;
 
-import java.io.IOException;
-
 import logic.Calculator;
 
 /**
