@@ -21,11 +21,12 @@ import org.telegram.telegrambots.meta.exceptions.TelegramApiException;
 import java.util.AbstractMap.SimpleEntry;
 
 /**
- * BotBandit
+ * Casino
  */
 public class Casino extends Bot {
     private String currentMenu;
     private Bandit bandit;
+    private Roulette roulette;
     private Message message;
     private HashMap<Long, Double> banditBalances = new HashMap<>();
     private HashMap<Long, Double> rouletteBalances = new HashMap<>();
@@ -34,10 +35,11 @@ public class Casino extends Bot {
     private ReplyKeyboardMarkup rouletteKeyboard = new ReplyKeyboardMarkup();
     private ReplyKeyboardMarkup startKeyboard = new ReplyKeyboardMarkup();
 
-    public Casino(Bandit game1, String userName, String token) {
+    public Casino(Bandit game1, Roulette game2, String userName, String token) {
         super(userName, token);
         currentMenu = "start";
         bandit = game1;
+        roulette = game2;
         setBanditKeyboard();
         setRouletteKeyboard();
         setStartKeyboard();
@@ -49,7 +51,8 @@ public class Casino extends Bot {
         ECommands.Roulette.sendTo(this.commands::add, (args) -> sendMessage(message, Help.rouletteHelp));
         ECommands.Back.sendTo(this.commands::add, (args) -> sendMessage(message, "Choose your game"));
         ECommands.Start.sendTo(this.commands::add, (args) -> sendMessage(message, "Choose your game"));
-        this.commands.add("roulette sayResult", new Command("roulette sayResult", (args) -> this.performRoulette(Integer.parseInt(args[2]))));
+        this.commands.add("roulette sayResult", new Command("roulette sayResult",
+                (args) -> this.performRoulette(Integer.parseInt(args[2]))));
     }
 
     private void performRoulette(int x) {
