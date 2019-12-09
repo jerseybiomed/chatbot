@@ -63,20 +63,21 @@ public class Casino extends Bot {
             String[] bet = rouletteBets.get(player).split(" ");
             double res = roulette.getCoefficient(result, bet[1]);
             double newBalance = rouletteBalances.get(player) + res - Integer.parseInt(bet[2]);
-            rouletteBalances.replace(player, newBalance);
             rouletteBets.remove(player);
             if (newBalance < 1){
                 sendMessage(player, "You lost all the money\nThe guards kicking you out\nGood Luck and Have Fun!");
+                rouletteBalances.remove(player);
                 backRequest(player);
             } else {
                 sendMessage(player, Double.toString(res));
+                rouletteBalances.replace(player, newBalance);
             }
         }
     }
 
     private void setRouletteBet(long id, String text) {
         String[] bet = text.split(" ");
-        if (Integer.parseInt(bet[2]) < rouletteBalances.get(message.getChatId())) {
+        if (Integer.parseInt(bet[2]) <= rouletteBalances.get(message.getChatId())) {
             rouletteBets.put(message.getChatId(), text);
             sendRoulettePlayers("new bet: " + bet[2] + " on " + bet[1]);
         } else {
@@ -107,6 +108,7 @@ public class Casino extends Bot {
         } else if (banditBalances.get(message.getChatId()) < 1) {
             sendMessage(message.getChatId(), "You lost all the money\nThe guards kicking you out\n"
                     + "Good Luck and Have Fun!");
+            banditBalances.remove(message.getChatId());
             backRequest(message.getChatId());
         } else {
             sendMessage(message.getChatId(), "Your balance is not enough for this bet");
@@ -127,7 +129,8 @@ public class Casino extends Bot {
     }
 
     private void banditRequest(long id) {
-        banditBalances.put(id, 10000.0);
+        if (!banditBalances.containsKey(id))
+            banditBalances.put(id, 10000.0);
         currentMenu = "bandit";
         sendMessage(id, Help.banditHelp);
     }

@@ -6,8 +6,6 @@ import java.util.*;
 import bot.Bot;
 import web.Connector;
 
-import static jdk.nashorn.internal.runtime.JSType.isNumber;
-
 /**
  * Roulette
  */
@@ -44,8 +42,7 @@ public class Roulette extends TimerTask {
     }
 
     public double getCoefficient(int result, String bet) {
-        if (isNumber(bet))
-            if (Integer.parseInt(bet) == result)
+        if (bet.equals(Integer.toString(result)))
                 return 36.0;
          else if (bet.equals(getColor(result)))
              return 2.0;
