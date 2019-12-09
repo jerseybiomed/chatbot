@@ -2,6 +2,7 @@ package banditbot;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 
 import bot.Bot;
@@ -30,7 +31,7 @@ public class Casino extends Bot {
     private Message message;
     private HashMap<Long, Double> banditBalances = new HashMap<>();
     private HashMap<Long, Double> rouletteBalances = new HashMap<>();
-    private ArrayList<Long> roulettePlayers = new ArrayList<>();
+    private HashSet<Long> roulettePlayers = new HashSet<>();
     private ReplyKeyboardMarkup banditKeyboard = new ReplyKeyboardMarkup();
     private ReplyKeyboardMarkup rouletteKeyboard = new ReplyKeyboardMarkup();
     private ReplyKeyboardMarkup startKeyboard = new ReplyKeyboardMarkup();
