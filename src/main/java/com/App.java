@@ -1,22 +1,21 @@
 package com;
 
-import banditbot.BanditDrum;
-import banditbot.Casino;
-import banditbot.RouletteDrum;
-import bot.Bot;
-import com.google.inject.internal.cglib.core.$LocalVariablesSorter;
-import logic.Calculator;
-import org.telegram.telegrambots.ApiContextInitializer;
-import org.telegram.telegrambots.meta.TelegramBotsApi;
-import org.telegram.telegrambots.meta.exceptions.TelegramApiRequestException;
+import logic.Roulette;
 
 /**
  * App
  */
 public class App {
 
-    public static void main(String[] args) {
-        ApiContextInitializer.init();
+    public static void main(String[] args) throws InterruptedException {
+        Roulette tt = new Roulette(null);
+        tt.Start();
+        while (true) {
+            System.out.flush();
+            System.out.println(tt.getTimeLeft());
+            Thread.sleep(100);
+        }
+        /*ApiContextInitializer.init();
         TelegramBotsApi botsApi = new TelegramBotsApi();
         Calculator calculator = new Calculator();
         BanditDrum drum1 = new BanditDrum(calculator);
@@ -26,6 +25,6 @@ public class App {
             botsApi.registerBot(bot);
         } catch (TelegramApiRequestException e){
             e.printStackTrace();
-        }
+        }*/
     }
 }

@@ -30,15 +30,4 @@ public class Calculator {
 			return 1;
 		return 0;
 	}
-
-	public int getNextNumber() {
-		String request = "https://www.random.org/integers/?num=10&min=0&max=36&col=1&base=10&format=plain&rnd=new";
-		int random = 0;
-		try {
-			random =  Connector.GetRandomNumber(request);
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-		return random;
-	}
 }

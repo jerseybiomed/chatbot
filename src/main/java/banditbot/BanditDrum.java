@@ -1,7 +1,5 @@
 package banditbot;
 
-import java.io.IOException;
-
 import logic.Calculator;
 
 /**
