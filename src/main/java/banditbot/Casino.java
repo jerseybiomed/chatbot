@@ -45,8 +45,8 @@ public class Casino extends Bot {
         setRouletteKeyboard();
         setStartKeyboard();
         ECommands.Roll.sendTo(this.commands::replace, this::banditRoll);
-        ECommands.Bet.sendTo(this.commands::replace, (args) -> setRouletteBet(message.getChatId(),
-                args[1] + " " + args[2]));
+        /*ECommands.Bet.sendTo(this.commands::replace, (args) -> setRouletteBet(message.getChatId(),
+                args[1] + " " + args[2]));*/
         ECommands.Balance.sendTo(this.commands::replace, (args) -> sendMessage(message.getChatId(), getBalance()));
         ECommands.Help.sendTo(this.commands::replace, (args) -> sendMessage(message.getChatId(), getHelp()));
         ECommands.Rules.sendTo(this.commands::add, (args) -> sendMessage(message.getChatId(), getRules()));
@@ -63,7 +63,7 @@ public class Casino extends Bot {
             sendMessage(player, result + roulette.getColor(result));
         for (long player : rouletteBets.keySet()) {
             String[] bet = rouletteBets.get(player).split(" ");
-            double betResult = roulette.getCofficient(result, bet[0]) * Integer.parseInt(bet[0]);
+            double betResult = roulette.getCoefficient(result, bet[0]) * Integer.parseInt(bet[0]);
             rouletteBalances.replace(player, rouletteBalances.get(player) - Integer.parseInt(bet[0]) + betResult);
             sendMessage(player, "result: " + betResult);
         }

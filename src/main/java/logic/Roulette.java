@@ -28,10 +28,8 @@ public class Roulette extends TimerTask {
     @Override
     public void run() {
         String request = "https://www.random.org/integers/?num=10&min=0&max=36&col=1&base=10&format=plain&rnd=new";
-        int random = 0;
         try {
-            random = Connector.GetRandomNumber(request);
-            this.bot.perform(new String[] {"sayResult", Integer.toString(random)});
+            this.bot.perform(new String[] {"sayResult", Integer.toString(Connector.GetRandomNumber(request))});
         } catch (IOException e) {
 			e.printStackTrace();
 		}
@@ -45,7 +43,7 @@ public class Roulette extends TimerTask {
         return new Date().getTime() - this.scheduledExecutionTime();
     }
 
-    public double getCofficient(int result, String bet) {
+    public double getCoefficient(int result, String bet) {
         if (isNumber(bet))
             if (Integer.parseInt(bet) == result)
                 return 36.0;
