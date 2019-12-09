@@ -61,8 +61,8 @@ public class Casino extends Bot {
         sendRoulettePlayers(result + roulette.getColor(result));
         for (long player : rouletteBets.keySet()) {
             String[] bet = rouletteBets.get(player).split(" ");
-            double res = roulette.getCoefficient(result, bet[0]);
-            rouletteBalances.replace(player, rouletteBalances.get(player) + res - Integer.parseInt(bet[1]));
+            double res = roulette.getCoefficient(result, bet[1]);
+            rouletteBalances.replace(player, rouletteBalances.get(player) + res - Integer.parseInt(bet[2]));
             sendMessage(player, Double.toString(res));
         }
     }
@@ -71,7 +71,7 @@ public class Casino extends Bot {
         String text = message.getText();
         rouletteBets.put(message.getChatId(), text);
         String[] bet = text.split(" ");
-        sendRoulettePlayers("new bet: " + bet[1] + " on " + bet[0]);
+        sendRoulettePlayers("new bet: " + bet[2] + " on " + bet[1]);
     }
 
     private String getRules() {
