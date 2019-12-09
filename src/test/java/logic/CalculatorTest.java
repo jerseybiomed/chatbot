@@ -24,37 +24,37 @@ class CalculatorTest {
 	
 	@Test
 	public void coffisientTestFirst() {
-		assertEquals(calculator.getCoffisient("000"), 2);
+		assertEquals(calculator.getCoefficient("000"), 2);
 	}
 	
 	@Test
 	public void coffisientTestSecond() {
-		assertEquals(calculator.getCoffisient("110"), 1.5);
+		assertEquals(calculator.getCoefficient("110"), 1.5);
 	}
 	
 	@Test
 	public void coffisientTestThird() {
-		assertEquals(calculator.getCoffisient("123"), 1);
+		assertEquals(calculator.getCoefficient("123"), 1);
 	}
 	
 	@Test
 	public void coffisientTestFourth() {
-		assertEquals(calculator.getCoffisient("321"), 1);
+		assertEquals(calculator.getCoefficient("321"), 1);
 	}
 	
 	@Test
 	public void coffisientTestFifth() {
-		assertEquals(calculator.getCoffisient("971"), 0);
+		assertEquals(calculator.getCoefficient("971"), 0);
 	}
 	
 	@Test
 	public void coffisientTestSixth() {
-		assertEquals(calculator.getCoffisient("011"), 1.5);
+		assertEquals(calculator.getCoefficient("011"), 1.5);
 	}
 	
 	@Test
 	public void coffisientTestSeventh() {
-		assertEquals(calculator.getCoffisient("101"), 1.5);
+		assertEquals(calculator.getCoefficient("101"), 1.5);
 	}
 
 }

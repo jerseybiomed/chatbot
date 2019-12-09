@@ -20,7 +20,7 @@ public class Calculator {
 		return combination;
 	}
 	
-	public double getCoffisient(String combination) {
+	public double getCoefficient(String combination) {
 		Combinator combinator = new Combinator();
 		if (combinator.isFirstClassWinnerComb(combination)) 
 			return 2;

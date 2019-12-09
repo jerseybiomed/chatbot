@@ -29,11 +29,10 @@ public class Casino extends Bot {
     private HashMap<Long, Double> banditBalances = new HashMap<>();
     private HashMap<Long, Double> rouletteBalances = new HashMap<>();
     private HashSet<Long> roulettePlayers = new HashSet<>();
+    private HashMap<Long, String> rouletteBets = new HashMap<>();
     private ReplyKeyboardMarkup banditKeyboard = new ReplyKeyboardMarkup();
     private ReplyKeyboardMarkup rouletteKeyboard = new ReplyKeyboardMarkup();
     private ReplyKeyboardMarkup startKeyboard = new ReplyKeyboardMarkup();
-    private List<Integer> red = Arrays.asList(32, 19, 21, 25, 34, 27, 36, 30, 23, 5, 16, 1, 14, 9, 18, 7, 12, 3);
-    private List<Integer> black = Arrays.asList(15, 4, 2, 17, 6, 13, 11, 8, 10, 24, 33, 20, 31, 22, 29, 28, 35, 26);
 
     public Casino(Bandit game1, Roulette game2, String userName, String token) {
         super(userName, token);
@@ -46,6 +45,8 @@ public class Casino extends Bot {
         setRouletteKeyboard();
         setStartKeyboard();
         ECommands.Roll.sendTo(this.commands::replace, this::banditRoll);
+        ECommands.Bet.sendTo(this.commands::replace, (args) -> setRouletteBet(message.getChatId(),
+                args[1] + " " + args[2]));
         ECommands.Balance.sendTo(this.commands::replace, (args) -> sendMessage(message.getChatId(), getBalance()));
         ECommands.Help.sendTo(this.commands::replace, (args) -> sendMessage(message.getChatId(), getHelp()));
         ECommands.Rules.sendTo(this.commands::add, (args) -> sendMessage(message.getChatId(), getRules()));
@@ -59,8 +60,20 @@ public class Casino extends Bot {
 
     private void performRoulette(int result) {
         for (long player : roulettePlayers)
-            sendMessage(player, result + (red.contains(result) ? " red"
-                    : black.contains(result) ? " black" : " green"));
+            sendMessage(player, result + roulette.getColor(result));
+        for (long player : rouletteBets.keySet()) {
+            String[] bet = rouletteBets.get(player).split(" ");
+            double betResult = roulette.getCofficient(result, bet[0]) * Integer.parseInt(bet[0]);
+            rouletteBalances.replace(player, rouletteBalances.get(player) - Integer.parseInt(bet[0]) + betResult);
+            sendMessage(player, "result: " + betResult);
+        }
+    }
+
+    private void setRouletteBet(long id, String bet) {
+        rouletteBets.put(id, bet);
+        String[] newBet = bet.split(" ");
+        for (long player : roulettePlayers)
+            sendMessage(player, "new bet: " + newBet[1] + " on " + newBet[0]);
     }
 
     private String getRules() {

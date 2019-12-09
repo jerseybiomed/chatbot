@@ -1,7 +1,5 @@
 package logic;
 
-import logic.Calculator;
-
 /**
  * BanditDrum
  */
@@ -15,7 +13,7 @@ public class BanditDrum {
 
     public double roll(int bet) {
         currentComb = calculator.getCombination(this.currentComb);
-        return bet * calculator.getCoffisient(this.currentComb);
+        return bet * calculator.getCoefficient(this.currentComb);
     }
 
     public String getComb() {
