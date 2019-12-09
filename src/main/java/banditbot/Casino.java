@@ -24,7 +24,7 @@ public class Casino extends Bot {
     private RouletteDrum rouletteDrum;
     private Message message;
     private HashMap<Long, Double> banditBalances = new HashMap<>();
-    private HashMap<Long, Double> rouletteBalances = new HashMap<>()
+    private HashMap<Long, Double> rouletteBalances = new HashMap<>();
     private ReplyKeyboardMarkup banditKeyboard = new ReplyKeyboardMarkup();
     private ReplyKeyboardMarkup rouletteKeyboard = new ReplyKeyboardMarkup();
     private ReplyKeyboardMarkup startKeyboard = new ReplyKeyboardMarkup();
