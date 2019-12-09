@@ -69,6 +69,8 @@ public class Casino extends Bot {
         int bet = Integer.parseInt(args[1]);
         if (bet <= banditBalances.get(message.getChatId())) {
             SimpleEntry<String, Double> result = bandit.game(bet);
+            banditBalances.replace(message.getChatId(),
+                    banditBalances.get(message.getChatId()) - bet + result.getValue());
             sendMessage(message, "line:" + result.getKey() + " result:" + result.getValue());
         } else if (banditBalances.get(message.getChatId()) < 1) {
             sendMessage(message, "You lost all the money\nTo start the game again with 10000 write '/start'\n" +
@@ -89,12 +91,13 @@ public class Casino extends Bot {
                     currentMenu = "bandit";
                 }
                 if (args[0].equals("/roulette")) {
-                    if (roulettePlayers.size() < 1 || roulettePlayers.contains(null)) {
+                    if (roulettePlayers.size() < 1) {
                         roulettePlayers.add(message.getChatId());
                         rouletteBalances.put(message.getChatId(), 10000.0);
                         currentMenu = "roulette";
                     } else {
                         sendMessage(message, "There is no available space in roulette");
+                        currentMenu = "start";
                         args[0] = "/start";
                     }
                 }
