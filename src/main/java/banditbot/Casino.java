@@ -7,6 +7,7 @@ import java.util.List;
 import bot.Bot;
 import bot.Command;
 import bot.ECommands;
+import logic.Bandit;
 import logic.Help;
 import logic.Roulette;
 
@@ -18,23 +19,27 @@ import org.telegram.telegrambots.meta.api.objects.replykeyboard.buttons.Keyboard
 import org.telegram.telegrambots.meta.api.objects.replykeyboard.buttons.KeyboardRow;
 import org.telegram.telegrambots.meta.exceptions.TelegramApiException;
 
+import java.util.AbstractMap.SimpleEntry;
+
 /**
  * BotBandit
  */
 public class Casino extends Bot {
     private String currentMenu;
-    private final BanditDrum banditDrum;
+    private Bandit bandit;
     private Message message;
-    private final HashMap<Long, Double> banditBalances = new HashMap<>();
-    private final HashMap<Long, Double> rouletteBalances = new HashMap<>();
-    private final ReplyKeyboardMarkup banditKeyboard = new ReplyKeyboardMarkup();
-    private final ReplyKeyboardMarkup rouletteKeyboard = new ReplyKeyboardMarkup();
-    private final ReplyKeyboardMarkup startKeyboard = new ReplyKeyboardMarkup();
+    private HashMap<Long, Double> banditBalances = new HashMap<>();
+    private HashMap<Long, Double> rouletteBalances = new HashMap<>();
+    private ArrayList<Long> roulettePlayers = new ArrayList<>();
+    private ReplyKeyboardMarkup banditKeyboard = new ReplyKeyboardMarkup();
+    private ReplyKeyboardMarkup rouletteKeyboard = new ReplyKeyboardMarkup();
+    private ReplyKeyboardMarkup startKeyboard = new ReplyKeyboardMarkup();
 
-    public Casino(final BanditDrum drum1, final Roulette game2, final String userName, final String token) {
+    public Casino(Bandit game1, RouletteDrum drum2, String userName, String token) {
         super(userName, token);
         currentMenu = "start";
-        banditDrum = drum1;
+        bandit = game1;
+        rouletteDrum = drum2;
         setBanditKeyboard();
         setRouletteKeyboard();
         setStartKeyboard();
@@ -69,10 +74,10 @@ public class Casino extends Bot {
     private void banditRoll(final String[] args) {
         final int bet = Integer.parseInt(args[1]);
         if (bet <= banditBalances.get(message.getChatId())) {
-            final double res = banditDrum.roll(bet);
-            banditBalances.replace(message.getChatId(), banditBalances.get(message.getChatId()) - bet + res);
-            final String result = "line:" + banditDrum.getComb() + " result:" + res;
-            sendMessage(message, result);
+            SimpleEntry<String, Double> result = bandit.game(bet);
+            banditBalances.replace(message.getChatId(),
+                    banditBalances.get(message.getChatId()) - bet + result.getValue());
+            sendMessage(message, "line:" + result.getKey() + " result:" + result.getValue());
         } else if (banditBalances.get(message.getChatId()) < 1) {
             sendMessage(message, "You lost all the money\nTo start the game again with 10000 write '/start'\n"
                     + "Good Luck and Have Fun!");
@@ -92,10 +97,20 @@ public class Casino extends Bot {
                     currentMenu = "bandit";
                 }
                 if (args[0].equals("/roulette")) {
-                    rouletteBalances.put(message.getChatId(), 10000.0);
-                    currentMenu = "roulette";
+                    if (roulettePlayers.size() < 1 || roulettePlayers.contains(null)) {
+                        roulettePlayers.add(message.getChatId());
+                        rouletteBalances.put(message.getChatId(), 10000.0);
+                        currentMenu = "roulette";
+                    } else {
+                        sendMessage(message, "There is no available space in roulette");
+                        currentMenu = "start";
+                        args[0] = "/start";
+                    }
                 }
                 if (args[0].equals("/back")) {
+                    if (currentMenu.equals("roulette")) {
+                        roulettePlayers.remove(roulettePlayers.indexOf(message.getChatId()));
+                    }
                     currentMenu = "start";
                 }
                 this.perform(args);
