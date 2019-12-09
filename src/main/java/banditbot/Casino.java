@@ -1,9 +1,6 @@
 package banditbot;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.List;
+import java.util.*;
 
 import bot.Bot;
 import bot.Command;
@@ -35,6 +32,8 @@ public class Casino extends Bot {
     private ReplyKeyboardMarkup banditKeyboard = new ReplyKeyboardMarkup();
     private ReplyKeyboardMarkup rouletteKeyboard = new ReplyKeyboardMarkup();
     private ReplyKeyboardMarkup startKeyboard = new ReplyKeyboardMarkup();
+    private List<Integer> red = Arrays.asList(32, 19, 21, 25, 34, 27, 36, 30, 23, 5, 16, 1, 14, 9, 18, 7, 12, 3);
+    private List<Integer> black = Arrays.asList(15, 4, 2, 17, 6, 13, 11, 8, 10, 24, 33, 20, 31, 22, 29, 28, 35, 26);
 
     public Casino(Bandit game1, Roulette game2, String userName, String token) {
         super(userName, token);
@@ -60,7 +59,8 @@ public class Casino extends Bot {
 
     private void performRoulette(int result) {
         for (long player : roulettePlayers)
-            sendMessage(player, Integer.toString(result));
+            sendMessage(player, result + (red.contains(result) ? " red"
+                    : black.contains(result) ? " black" : " green"));
     }
 
     private String getRules() {
