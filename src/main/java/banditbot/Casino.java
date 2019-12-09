@@ -45,19 +45,20 @@ public class Casino extends Bot {
         setRouletteKeyboard();
         setStartKeyboard();
         ECommands.Roll.sendTo(this.commands::replace, this::banditRoll);
-        ECommands.Balance.sendTo(this.commands::replace, (args) -> sendMessage(message, getBalance()));
-        ECommands.Help.sendTo(this.commands::replace, (args) -> sendMessage(message, getHelp()));
-        ECommands.Rules.sendTo(this.commands::add, (args) -> sendMessage(message, getRules()));
-        ECommands.Bandit.sendTo(this.commands::add, (args) -> sendMessage(message, Help.banditHelp));
-        ECommands.Roulette.sendTo(this.commands::add, (args) -> sendMessage(message, Help.rouletteHelp));
-        ECommands.Back.sendTo(this.commands::add, (args) -> sendMessage(message, "Choose your game"));
-        ECommands.Start.sendTo(this.commands::add, (args) -> sendMessage(message, "Choose your game"));
-        this.commands.add("roulette sayResult", new Command("roulette sayResult",
+        ECommands.Balance.sendTo(this.commands::replace, (args) -> sendMessage(message.getChatId(), getBalance()));
+        ECommands.Help.sendTo(this.commands::replace, (args) -> sendMessage(message.getChatId(), getHelp()));
+        ECommands.Rules.sendTo(this.commands::add, (args) -> sendMessage(message.getChatId(), getRules()));
+        ECommands.Bandit.sendTo(this.commands::add, (args) -> sendMessage(message.getChatId(), Help.banditHelp));
+        ECommands.Roulette.sendTo(this.commands::add, (args) -> sendMessage(message.getChatId(), Help.rouletteHelp));
+        ECommands.Back.sendTo(this.commands::add, (args) -> sendMessage(message.getChatId(), "Choose your game"));
+        ECommands.Start.sendTo(this.commands::add, (args) -> sendMessage(message.getChatId(), "Choose your game"));
+        commands.add("roulette sayResult", new Command("roulette sayResult",
                 (args) -> this.performRoulette(Integer.parseInt(args[2]))));
     }
 
-    private void performRoulette(int x) {
-
+    private void performRoulette(int result) {
+        for (long player : roulettePlayers)
+            sendMessage(player, Integer.toString(result));
     }
 
     private String getRules() {
@@ -73,23 +74,23 @@ public class Casino extends Bot {
                 : rouletteBalances.get(message.getChatId()).toString();
     }
 
-    private void banditRoll(final String[] args) {
+    private void banditRoll(String[] args) {
         final int bet = Integer.parseInt(args[1]);
         if (bet <= banditBalances.get(message.getChatId())) {
             SimpleEntry<String, Double> result = bandit.game(bet);
             banditBalances.replace(message.getChatId(),
                     banditBalances.get(message.getChatId()) - bet + result.getValue());
-            sendMessage(message, "line:" + result.getKey() + " result:" + result.getValue());
+            sendMessage(message.getChatId(), "line:" + result.getKey() + " result:" + result.getValue());
         } else if (banditBalances.get(message.getChatId()) < 1) {
-            sendMessage(message, "You lost all the money\nTo start the game again with 10000 write '/start'\n"
+            sendMessage(message.getChatId(), "You lost all the money\nTo start the game again with 10000 write '/start'\n"
                     + "Good Luck and Have Fun!");
         } else {
-            sendMessage(message, "Your balance is not enough for this bet");
+            sendMessage(message.getChatId(), "Your balance is not enough for this bet");
         }
     }
 
     @Override
-    public void onUpdateReceived(final Update update) {
+    public void onUpdateReceived(Update update) {
         if (update.hasMessage()) {
             message = update.getMessage();
             try {
@@ -104,7 +105,7 @@ public class Casino extends Bot {
                         rouletteBalances.put(message.getChatId(), 10000.0);
                         currentMenu = "roulette";
                     } else {
-                        sendMessage(message, "There is no available space in roulette");
+                        sendMessage(message.getChatId(), "There is no available space in roulette");
                         currentMenu = "start";
                         args[0] = "/start";
                     }
@@ -122,9 +123,9 @@ public class Casino extends Bot {
         }
     }
 
-    private void sendMessage(final Message message, final String text) {
+    private void sendMessage(long id, String text) {
         final SendMessage chat = new SendMessage();
-        chat.setChatId(message.getChatId());
+        chat.setChatId(id);
         chat.setText(text);
         if (currentMenu.equals("start"))
             chat.setReplyMarkup(startKeyboard);

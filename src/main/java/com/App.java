@@ -18,8 +18,8 @@ public class App {
         ApiContextInitializer.init();
         TelegramBotsApi botsApi = new TelegramBotsApi();
         Bandit game1 = new Bandit();
-        Roulette roulette = new Roulette();
-        Bot bot = new Casino(game1, roulette, "Casino", "1050523384:AAHQXvGM4MB1eU1dVZ2vxfdO7bEzFFAk_lA");
+        Roulette game2 = new Roulette();
+        Bot bot = new Casino(game1, game2, "Casino", "1050523384:AAHQXvGM4MB1eU1dVZ2vxfdO7bEzFFAk_lA");
         try {
             botsApi.registerBot(bot);
         } catch (TelegramApiRequestException e){

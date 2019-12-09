@@ -9,7 +9,7 @@ import bot.Bot;
 import web.Connector;
 
 /**
- * roulet
+ * Roulette
  */
 public class Roulette extends TimerTask {
     private Bot bot;
