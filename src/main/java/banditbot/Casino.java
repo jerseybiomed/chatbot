@@ -89,12 +89,13 @@ public class Casino extends Bot {
                     currentMenu = "bandit";
                 }
                 if (args[0].equals("/roulette")) {
-                    if (roulettePlayers.size() < 1) {
+                    if (roulettePlayers.size() < 1 || roulettePlayers.contains(null)) {
                         roulettePlayers.add(message.getChatId());
                         rouletteBalances.put(message.getChatId(), 10000.0);
                         currentMenu = "roulette";
                     } else {
                         sendMessage(message, "There is no available space in roulette");
+                        args[0] = "/start";
                     }
                 }
                 if (args[0].equals("/back")) {
