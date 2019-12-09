@@ -63,6 +63,7 @@ public class Casino extends Bot {
             String[] bet = rouletteBets.get(player).split(" ");
             double res = roulette.getCoefficient(result, bet[1]);
             rouletteBalances.replace(player, rouletteBalances.get(player) + res - Integer.parseInt(bet[2]));
+            rouletteBets.remove(player);
             sendMessage(player, Double.toString(res));
         }
     }
@@ -192,7 +193,11 @@ public class Casino extends Bot {
         keyboardFirstRow.add(new KeyboardButton("/rules"));
         keyboardFirstRow.add(new KeyboardButton("/balance"));
         KeyboardRow keyboardSecondRow = new KeyboardRow();
-        keyboardSecondRow.add(new KeyboardButton("/back"));
+        keyboardSecondRow.add(new KeyboardButton("/bet red 100"));
+        keyboardSecondRow.add(new KeyboardButton("/bet dark 100"));
+        keyboardSecondRow.add(new KeyboardButton("/bet 0 100"));
+        KeyboardRow keyboardThirdRow = new KeyboardRow();
+        keyboardThirdRow.add(new KeyboardButton("/back"));
         keyboard.add(keyboardFirstRow);
         keyboard.add(keyboardSecondRow);
         rouletteKeyboard.setKeyboard(keyboard);

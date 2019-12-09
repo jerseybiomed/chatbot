@@ -22,8 +22,15 @@ public class Help {
 	public static String rouletteHelp =
 			"You are greeted by a Roulette\n" +
 					"To play enter '/red' or '/black' and the bet amount separated by a space\n" +
-					"You can see the winning payment by enter '/rules'";
+					"Every 30 seconds there is a new scrolling roulette\n" +
+					"After scrolling you can bet on the following by entering '/bet red' or '/bet dark' or '/bet NUMBER'" +
+					"and the bet amount separated by a space (NUMBER between 0 and 36)\n" +
+					"You can see the winning payment by enter '/rules'\n" +
+					"Also all participants reported when someone put somewhere put a bet\n" +
+					"\nFor output of this help once again instead of roll enter '/help'";
 
 	public static String rouletteRules =
-			"";
+			"If you bet on the color and guess, then your bet increases by 2\n" +
+					"If you bet on the number and guess, the bet increases by 36\n" +
+					"If you do not guess, you lose money";
 }
