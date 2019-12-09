@@ -100,7 +100,7 @@ public class Casino extends Bot {
                 }
                 if (args[0].equals("/back")) {
                     if (currentMenu.equals("roulette")) {
-                        roulettePlayers.remove(message.getChatId());
+                        roulettePlayers.remove(roulettePlayers.indexOf(message.getChatId()));
                     }
                     currentMenu = "start";
                 }
