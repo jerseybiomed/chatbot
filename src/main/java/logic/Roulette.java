@@ -50,6 +50,6 @@ public class Roulette extends TimerTask {
     }
 
     public String getColor(int result) {
-        return red.contains(result) ? " red" : black.contains(result) ? " black" : " green";
+        return red.contains(result) ? "red" : black.contains(result) ? "black" : "green";
     }
 }

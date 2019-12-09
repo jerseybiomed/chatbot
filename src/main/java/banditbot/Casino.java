@@ -65,7 +65,7 @@ public class Casino extends Bot {
             double newBalance = rouletteBalances.get(player) + res - Integer.parseInt(bet[2]);
             rouletteBets.remove(player);
             if (newBalance < 1){
-                sendMessage(player, "You lost all the money\nThe guards kicking you out\nGood Luck and Have Fun!");
+                sendMessage(player, "You lost all the money\nThe guards kicked you out\nGood Luck and Have Fun!");
                 rouletteBalances.remove(player);
                 backRequest(player);
             } else {
@@ -106,7 +106,7 @@ public class Casino extends Bot {
             banditBalances.replace(message.getChatId(), newBalance);
             sendMessage(message.getChatId(), "line:" + result.getKey() + " result:" + result.getValue());
             if (newBalance < 1) {
-                sendMessage(message.getChatId(), "You lost all the money\nThe guards kicking you out\n"
+                sendMessage(message.getChatId(), "You lost all the money\nThe guards kicked you out\n"
                         + "Good Luck and Have Fun!");
                 banditBalances.remove(message.getChatId());
                 backRequest(message.getChatId());
