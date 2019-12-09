@@ -41,6 +41,7 @@ public class Casino extends Bot {
         currentMenu = "start";
         bandit = game1;
         roulette = game2;
+        roulette.Start();
         setBanditKeyboard();
         setRouletteKeyboard();
         setStartKeyboard();
@@ -100,7 +101,7 @@ public class Casino extends Bot {
                     currentMenu = "bandit";
                 }
                 if (args[0].equals("/roulette")) {
-                    if (roulettePlayers.size() < 1 || roulettePlayers.contains(null)) {
+                    if (roulettePlayers.size() < 10 || roulettePlayers.contains(null)) {
                         roulettePlayers.add(message);
                         rouletteBalances.put(message.getChatId(), 10000.0);
                         currentMenu = "roulette";
