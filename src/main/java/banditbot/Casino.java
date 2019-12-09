@@ -40,11 +40,15 @@ public class Casino extends Bot {
         ECommands.Roll.sendTo(this.commands::replace, this::banditRoll);
         ECommands.Balance.sendTo(this.commands::replace, (args) -> sendMessage(message, getBalance()));
         ECommands.Help.sendTo(this.commands::replace, (args) -> sendMessage(message, getHelp()));
-        ECommands.Rules.sendTo(this.commands::add, (args) -> sendMessage(message, Help.rules));
+        ECommands.Rules.sendTo(this.commands::add, (args) -> sendMessage(message, getRules()));
         ECommands.Bandit.sendTo(this.commands::add, (args) -> sendMessage(message, Help.banditHelp));
         ECommands.Roulette.sendTo(this.commands::add, (args) -> sendMessage(message, Help.rouletteHelp));
         ECommands.Back.sendTo(this.commands::add, (args) -> sendMessage(message, "Choose your game"));
         ECommands.Start.sendTo(this.commands::add, (args) -> sendMessage(message, "Choose your game"));
+    }
+
+    private String getRules() {
+        return currentMenu.equals("bandit") ? Help.banditRules : Help.rouletteRules;
     }
 
     private String getHelp() {

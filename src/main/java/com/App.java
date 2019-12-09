@@ -1,10 +1,11 @@
-package logic;
+package com;
 
 import banditbot.BanditDrum;
 import banditbot.Casino;
 import banditbot.RouletteDrum;
 import bot.Bot;
 import com.google.inject.internal.cglib.core.$LocalVariablesSorter;
+import logic.Calculator;
 import org.telegram.telegrambots.ApiContextInitializer;
 import org.telegram.telegrambots.meta.TelegramBotsApi;
 import org.telegram.telegrambots.meta.exceptions.TelegramApiRequestException;
