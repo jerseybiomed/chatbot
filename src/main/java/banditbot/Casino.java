@@ -30,7 +30,7 @@ public class Casino extends Bot {
     private Message message;
     private HashMap<Long, Double> banditBalances = new HashMap<>();
     private HashMap<Long, Double> rouletteBalances = new HashMap<>();
-    private ArrayList<Message> roulettePlayers = new ArrayList<>();
+    private HashMap<Long, Message> roulettePlayers = new HashMap<>();
     private ReplyKeyboardMarkup banditKeyboard = new ReplyKeyboardMarkup();
     private ReplyKeyboardMarkup rouletteKeyboard = new ReplyKeyboardMarkup();
     private ReplyKeyboardMarkup startKeyboard = new ReplyKeyboardMarkup();
@@ -58,7 +58,7 @@ public class Casino extends Bot {
     }
 
     private void performRoulette(int result) {
-        for (Message player : roulettePlayers)
+        for (Message player : roulettePlayers.values())
             sendMessage(player, Integer.toString(result));
     }
 
@@ -101,8 +101,8 @@ public class Casino extends Bot {
                     currentMenu = "bandit";
                 }
                 if (args[0].equals("/roulette")) {
-                    if (roulettePlayers.size() < 10 || roulettePlayers.contains(null)) {
-                        roulettePlayers.add(message);
+                    if (roulettePlayers.size() < 10 || roulettePlayers.containsValue(null)) {
+                        roulettePlayers.put(message.getChatId(), message);
                         rouletteBalances.put(message.getChatId(), 10000.0);
                         currentMenu = "roulette";
                     } else {
@@ -113,7 +113,7 @@ public class Casino extends Bot {
                 }
                 if (args[0].equals("/back")) {
                     if (currentMenu.equals("roulette")) {
-                        roulettePlayers.remove(roulettePlayers.indexOf(message.getChatId()));
+                        roulettePlayers.remove(message.getChatId());
                     }
                     currentMenu = "start";
                 }
