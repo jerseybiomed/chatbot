@@ -8,11 +8,11 @@ import java.util.Scanner;
 /**
  * Console
  */
-public class ConsoleStream implements Runnable {
+public class Console implements Runnable {
     private final Scanner scan;
     private final List<Listener<String>> listeners = new ArrayList<Listener<String>>();
 
-    public ConsoleStream(final InputStream in) {
+    public Console(final InputStream in) {
         this.scan = new Scanner(in);
     }
 

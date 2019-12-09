@@ -15,7 +15,13 @@
             <artifactId>junit-jupiter-engine</artifactId>
             <version>5.5.2</version>
             <scope>test</scope>
-	</dependency>
+	    </dependency>
+        <!-- https://mvnrepository.com/artifact/org.telegram/telegrambots -->
+        <dependency>
+            <groupId>org.telegram</groupId>
+            <artifactId>telegrambots</artifactId>
+            <version>4.4.0.2</version>
+        </dependency>
     </dependencies>
     <build>
         <pluginManagement>

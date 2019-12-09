@@ -4,13 +4,13 @@ import bot.command.Command;
 import bot.command.CommandRegistry;
 import bot.command.ECommands;
 import connection.Connectable;
-import connection.messegestream.ConsoleStream;
+import connection.messegestream.Console;
 import connection.messegestream.Listener;
 
 /**
  * Bot
  */
-public class Bot implements Listener<String[]>, Connectable<ConsoleStream> {
+public class Bot implements Listener<String[]>, Connectable<Console> {
     protected CommandRegistry<Command> commands = new CommandRegistry<Command>();
 
     public Bot() {
@@ -30,7 +30,7 @@ public class Bot implements Listener<String[]>, Connectable<ConsoleStream> {
     }
 
     @Override
-    public void connect(final ConsoleStream connection) {
+    public void connect(final Console connection) {
         connection.addListener(new BotListener(this));
         this.start();
     }
