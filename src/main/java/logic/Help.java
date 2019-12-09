@@ -23,7 +23,7 @@ public class Help {
 			"You are greeted by a Roulette\n" +
 					"To play enter '/red' or '/black' and the bet amount separated by a space\n" +
 					"Every 30 seconds there is a new scrolling roulette\n" +
-					"After scrolling you can bet on the following by entering '/bet red' or '/bet dark' or '/bet NUMBER'" +
+					"After scrolling you can bet on the following by entering '/bet red' or '/bet black' or '/bet NUMBER'" +
 					"and the bet amount separated by a space (NUMBER between 0 and 36)\n" +
 					"You can see the winning payment by enter '/rules'\n" +
 					"Also all participants reported when someone put somewhere put a bet\n" +

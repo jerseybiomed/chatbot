@@ -47,11 +47,11 @@ public class Casino extends Bot {
         ECommands.Roll.sendTo(this.commands::replace, this::banditRoll);
         ECommands.Balance.sendTo(this.commands::replace, (args) -> sendMessage(message.getChatId(), getBalance()));
         ECommands.Help.sendTo(this.commands::replace, (args) -> sendMessage(message.getChatId(), getHelp()));
-        ECommands.Bet.sendTo(this.commands::add, (args) -> setRouletteBet(message));
+        ECommands.Bet.sendTo(this.commands::add, (args) -> setRouletteBet(message.getChatId(), message.getText()));
         ECommands.Rules.sendTo(this.commands::add, (args) -> sendMessage(message.getChatId(), getRules()));
-        ECommands.Bandit.sendTo(this.commands::add, (args) -> banditRequest());
-        ECommands.Roulette.sendTo(this.commands::add, (args) -> rouletteRequest());
-        ECommands.Back.sendTo(this.commands::add, (args) -> backRequest());
+        ECommands.Bandit.sendTo(this.commands::add, (args) -> banditRequest(message.getChatId()));
+        ECommands.Roulette.sendTo(this.commands::add, (args) -> rouletteRequest(message.getChatId()));
+        ECommands.Back.sendTo(this.commands::add, (args) -> backRequest(message.getChatId()));
         ECommands.Start.sendTo(this.commands::add, (args) -> sendMessage(message.getChatId(), "Choose your game"));
         commands.add("sayResult", new Command("sayResult",
                 (args) -> this.performRoulette(Integer.parseInt(args[1]))));
@@ -62,17 +62,26 @@ public class Casino extends Bot {
         for (long player : rouletteBets.keySet()) {
             String[] bet = rouletteBets.get(player).split(" ");
             double res = roulette.getCoefficient(result, bet[1]);
-            rouletteBalances.replace(player, rouletteBalances.get(player) + res - Integer.parseInt(bet[2]));
+            double newBalance = rouletteBalances.get(player) + res - Integer.parseInt(bet[2]);
+            rouletteBalances.replace(player, newBalance);
             rouletteBets.remove(player);
-            sendMessage(player, Double.toString(res));
+            if (newBalance < 1){
+                sendMessage(player, "You lost all the money\nThe guards kicking you out\nGood Luck and Have Fun!");
+                backRequest(player);
+            } else {
+                sendMessage(player, Double.toString(res));
+            }
         }
     }
 
-    private void setRouletteBet(Message message) {
-        String text = message.getText();
-        rouletteBets.put(message.getChatId(), text);
+    private void setRouletteBet(long id, String text) {
         String[] bet = text.split(" ");
-        sendRoulettePlayers("new bet: " + bet[2] + " on " + bet[1]);
+        if (Integer.parseInt(bet[2]) < rouletteBalances.get(message.getChatId())) {
+            rouletteBets.put(message.getChatId(), text);
+            sendRoulettePlayers("new bet: " + bet[2] + " on " + bet[1]);
+        } else {
+            sendMessage(message.getChatId(), "Your balance is not enough for this bet");
+        }
     }
 
     private String getRules() {
@@ -96,8 +105,9 @@ public class Casino extends Bot {
                     banditBalances.get(message.getChatId()) - bet + result.getValue());
             sendMessage(message.getChatId(), "line:" + result.getKey() + " result:" + result.getValue());
         } else if (banditBalances.get(message.getChatId()) < 1) {
-            sendMessage(message.getChatId(), "You lost all the money\nTo start the game again with 10000 write '/start'\n"
+            sendMessage(message.getChatId(), "You lost all the money\nThe guards kicking you out\n"
                     + "Good Luck and Have Fun!");
+            backRequest(message.getChatId());
         } else {
             sendMessage(message.getChatId(), "Your balance is not enough for this bet");
         }
@@ -116,32 +126,32 @@ public class Casino extends Bot {
         }
     }
 
-    private void banditRequest() {
-        banditBalances.put(message.getChatId(), 10000.0);
+    private void banditRequest(long id) {
+        banditBalances.put(id, 10000.0);
         currentMenu = "bandit";
-        sendMessage(message.getChatId(), Help.banditHelp);
+        sendMessage(id, Help.banditHelp);
     }
 
-    private void rouletteRequest() {
+    private void rouletteRequest(long id) {
         if (roulettePlayers.size() < 10 || roulettePlayers.contains(null)) {
-            roulettePlayers.add(message.getChatId());
-            rouletteBalances.put(message.getChatId(), 10000.0);
+            roulettePlayers.add(id);
+            rouletteBalances.put(id, 10000.0);
             for (long player : roulettePlayers)
-                sendMessage(player, "Hello " + message.getChatId().toString());
+                sendMessage(player, "Hello " + id);
             currentMenu = "roulette";
-            sendMessage(message.getChatId(), Help.rouletteHelp);
+            sendMessage(id, Help.rouletteHelp);
         } else {
-            sendMessage(message.getChatId(), "There is no available space in roulette");
+            sendMessage(id, "There is no available space in roulette");
             currentMenu = "start";
         }
     }
 
-    private void backRequest() {
+    private void backRequest(long id) {
         if (currentMenu.equals("roulette")) {
-            roulettePlayers.remove(message.getChatId());
+            roulettePlayers.remove(id);
         }
         currentMenu = "start";
-        sendMessage(message.getChatId(), "Choose your game");
+        sendMessage(id, "Choose your game");
     }
 
     private void sendRoulettePlayers(String text) {
@@ -194,12 +204,13 @@ public class Casino extends Bot {
         keyboardFirstRow.add(new KeyboardButton("/balance"));
         KeyboardRow keyboardSecondRow = new KeyboardRow();
         keyboardSecondRow.add(new KeyboardButton("/bet red 100"));
-        keyboardSecondRow.add(new KeyboardButton("/bet dark 100"));
+        keyboardSecondRow.add(new KeyboardButton("/bet black 100"));
         keyboardSecondRow.add(new KeyboardButton("/bet 0 100"));
         KeyboardRow keyboardThirdRow = new KeyboardRow();
         keyboardThirdRow.add(new KeyboardButton("/back"));
         keyboard.add(keyboardFirstRow);
         keyboard.add(keyboardSecondRow);
+        keyboard.add(keyboardThirdRow);
         rouletteKeyboard.setKeyboard(keyboard);
     }
 
