@@ -75,7 +75,7 @@ public class Casino extends Bot {
     }
 
     private void banditRoll(String[] args) {
-        final int bet = Integer.parseInt(args[1]);
+        int bet = Integer.parseInt(args[1]);
         if (bet <= banditBalances.get(message.getChatId())) {
             SimpleEntry<String, Double> result = bandit.game(bet);
             banditBalances.replace(message.getChatId(),
@@ -94,7 +94,7 @@ public class Casino extends Bot {
         if (update.hasMessage()) {
             message = update.getMessage();
             try {
-                final String[] args = message.getText().split(" ");
+                String[] args = message.getText().split(" ");
                 if (args[0].equals("/bandit")) {
                     banditBalances.put(message.getChatId(), 10000.0);
                     currentMenu = "bandit";
@@ -117,14 +117,14 @@ public class Casino extends Bot {
                     currentMenu = "start";
                 }
                 this.perform(args);
-            } catch (final Exception e) {
+            } catch (Exception e) {
                 e.printStackTrace();
             }
         }
     }
 
     private void sendMessage(long id, String text) {
-        final SendMessage chat = new SendMessage();
+        SendMessage chat = new SendMessage();
         chat.setChatId(id);
         chat.setText(text);
         if (currentMenu.equals("start"))
@@ -142,16 +142,16 @@ public class Casino extends Bot {
 
     private void setBanditKeyboard() {
         banditKeyboard.setSelective(true);
-        final List<KeyboardRow> keyboard = new ArrayList<>();
-        final KeyboardRow keyboardFirstRow = new KeyboardRow();
+        List<KeyboardRow> keyboard = new ArrayList<>();
+        KeyboardRow keyboardFirstRow = new KeyboardRow();
         keyboardFirstRow.add(new KeyboardButton("/help"));
         keyboardFirstRow.add(new KeyboardButton("/rules"));
         keyboardFirstRow.add(new KeyboardButton("/balance"));
-        final KeyboardRow keyboardSecondRow = new KeyboardRow();
+        KeyboardRow keyboardSecondRow = new KeyboardRow();
         keyboardSecondRow.add(new KeyboardButton("/roll 10"));
         keyboardSecondRow.add(new KeyboardButton("/roll 100"));
         keyboardSecondRow.add(new KeyboardButton("/roll 1000"));
-        final KeyboardRow keyboardThirdRow = new KeyboardRow();
+        KeyboardRow keyboardThirdRow = new KeyboardRow();
         keyboardThirdRow.add(new KeyboardButton("/back"));
         keyboard.add(keyboardFirstRow);
         keyboard.add(keyboardSecondRow);
@@ -161,12 +161,12 @@ public class Casino extends Bot {
 
     private void setRouletteKeyboard() {
         rouletteKeyboard.setSelective(true);
-        final List<KeyboardRow> keyboard = new ArrayList<>();
-        final KeyboardRow keyboardFirstRow = new KeyboardRow();
+        List<KeyboardRow> keyboard = new ArrayList<>();
+        KeyboardRow keyboardFirstRow = new KeyboardRow();
         keyboardFirstRow.add(new KeyboardButton("/help"));
         keyboardFirstRow.add(new KeyboardButton("/rules"));
         keyboardFirstRow.add(new KeyboardButton("/balance"));
-        final KeyboardRow keyboardSecondRow = new KeyboardRow();
+        KeyboardRow keyboardSecondRow = new KeyboardRow();
         keyboardSecondRow.add(new KeyboardButton("/back"));
         keyboard.add(keyboardFirstRow);
         keyboard.add(keyboardSecondRow);
@@ -175,8 +175,8 @@ public class Casino extends Bot {
 
     private void setStartKeyboard() {
         startKeyboard.setSelective(true);
-        final List<KeyboardRow> keyboard = new ArrayList<>();
-        final KeyboardRow keyboardRow = new KeyboardRow();
+        List<KeyboardRow> keyboard = new ArrayList<>();
+        KeyboardRow keyboardRow = new KeyboardRow();
         keyboardRow.add(new KeyboardButton("/bandit"));
         keyboardRow.add(new KeyboardButton("/roulette"));
         keyboard.add(keyboardRow);

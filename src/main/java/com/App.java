@@ -14,7 +14,7 @@ import org.telegram.telegrambots.meta.exceptions.TelegramApiRequestException;
  */
 public class App {
 
-    public static void main(String[] args) throws InterruptedException {
+    public static void main(String[] args) {
         ApiContextInitializer.init();
         TelegramBotsApi botsApi = new TelegramBotsApi();
         Bandit game1 = new Bandit();
