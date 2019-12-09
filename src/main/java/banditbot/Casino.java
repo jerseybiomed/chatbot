@@ -6,6 +6,7 @@ import java.util.List;
 
 import bot.Bot;
 import bot.ECommands;
+import jdk.internal.vm.compiler.collections.EconomicMap;
 import logic.Help;
 import org.telegram.telegrambots.meta.api.methods.send.SendMessage;
 import org.telegram.telegrambots.meta.api.objects.Message;
@@ -39,10 +40,16 @@ public class Casino extends Bot {
         setStartKeyboard();
         ECommands.Roll.sendTo(this.commands::replace, this::banditRoll);
         ECommands.Balance.sendTo(this.commands::replace, (args) -> sendMessage(message, getBalance()));
-        ECommands.Help.sendTo(this.commands::replace, (args) -> sendMessage(message, Help.help));
+        ECommands.Help.sendTo(this.commands::replace, (args) -> sendMessage(message, getHelp()));
         ECommands.Rules.sendTo(this.commands::add, (args) -> sendMessage(message, Help.rules));
+        ECommands.Bandit.sendTo(this.commands::add, (args) -> sendMessage(message, Help.banditHelp));
+        ECommands.Roulette.sendTo(this.commands::add, (args) -> sendMessage(message, Help.rouletteHelp));
         ECommands.Back.sendTo(this.commands::add, (args) -> sendMessage(message, "Choose your game"));
-        ECommands.Start.sendTo(this.commands::add, (args) -> sendMessage(message, Help.help));
+        ECommands.Start.sendTo(this.commands::add, (args) -> sendMessage(message, "Choose your game"));
+    }
+
+    private String getHelp() {
+        return currentMenu.equals("bandit") ? Help.banditHelp : Help.rouletteHelp;
     }
 
     private String getBalance() {

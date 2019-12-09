@@ -1,7 +1,7 @@
 package logic;
 
 public class Help {
-	public static String help = 
+	public static String banditHelp =
 			"You are greeted by a One Arm Bandit\n" +
 					"To play enter '/roll' and the bet amount separated by a space\n" +
 					"I will output the final line and the result\n" +
@@ -18,4 +18,7 @@ public class Help {
 					"These lines have the same difference between adjacent cells\n" +
 					"Such lines keep the bet\n" +
 					"The other lines tell you of defeat";
+
+	public static String rouletteHelp =
+			"You are greeted by a Roulette";
 }
