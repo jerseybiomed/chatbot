@@ -45,8 +45,7 @@ public class Casino extends Bot {
         setRouletteKeyboard();
         setStartKeyboard();
         ECommands.Roll.sendTo(this.commands::replace, this::banditRoll);
-        /*ECommands.Bet.sendTo(this.commands::replace, (args) -> setRouletteBet(message.getChatId(),
-                args[1] + " " + args[2]));*/
+        ECommands.Bet.sendTo(this.commands::replace, (args) -> setRouletteBet(message.getChatId(), message.getText()));
         ECommands.Balance.sendTo(this.commands::replace, (args) -> sendMessage(message.getChatId(), getBalance()));
         ECommands.Help.sendTo(this.commands::replace, (args) -> sendMessage(message.getChatId(), getHelp()));
         ECommands.Rules.sendTo(this.commands::add, (args) -> sendMessage(message.getChatId(), getRules()));
@@ -73,7 +72,7 @@ public class Casino extends Bot {
         rouletteBets.put(id, bet);
         String[] newBet = bet.split(" ");
         for (long player : roulettePlayers)
-            sendMessage(player, "new bet: " + newBet[1] + " on " + newBet[0]);
+            sendMessage(player, "new bet: " + newBet[2] + " on " + newBet[1]);
     }
 
     private String getRules() {
