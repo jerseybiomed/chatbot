@@ -31,7 +31,7 @@ public class Casino extends Bot {
         this.drum = drum;
         this.setReplyKeyboardMarkup();
         ECommands.Roll.sendTo(this.commands::replace, this::roll);
-        ECommands.Balance.sendTo(this.commands::replace, (args) -> balances.get(message.getChatId()));
+        ECommands.Balance.sendTo(this.commands::replace, (args) -> sendMessage(message, balances.get(message.getChatId()).toString()));
         ECommands.Help.sendTo(this.commands::replace, (args) -> sendMessage(message, Help.help));
         ECommands.Lines.sendTo(this.commands::add, (args) -> sendMessage(message, Help.lines));
         ECommands.Start.sendTo(this.commands::add, (args) -> sendMessage(message, Help.help));
