@@ -52,6 +52,8 @@ public class Casino extends Bot {
         ECommands.Roulette.sendTo(this.commands::add, (args) -> sendMessage(message, Help.rouletteHelp));
         ECommands.Back.sendTo(this.commands::add, (args) -> sendMessage(message, "Choose your game"));
         ECommands.Start.sendTo(this.commands::add, (args) -> sendMessage(message, "Choose your game"));
+        commands.add("roulette sayResult", new Command("roulette sayResult",
+                (args) -> this.performRoulette(Integer.parseInt(args[2]))));
     }
 
     private void performRoulette(int result) {
