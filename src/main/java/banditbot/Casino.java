@@ -41,6 +41,7 @@ public class Casino extends Bot {
         ECommands.Balance.sendTo(this.commands::replace, (args) -> sendMessage(message, getBalance()));
         ECommands.Help.sendTo(this.commands::replace, (args) -> sendMessage(message, Help.help));
         ECommands.Rules.sendTo(this.commands::add, (args) -> sendMessage(message, Help.rules));
+        ECommands.Back.sendTo(this.commands::add, (args) -> sendMessage(message, "Choose your game"));
         ECommands.Start.sendTo(this.commands::add, (args) -> sendMessage(message, Help.help));
     }
 
@@ -70,10 +71,17 @@ public class Casino extends Bot {
             message = update.getMessage();
             try {
                 String[] args = message.getText().split(" ");
-                if (args[0].equals("/bandit"))
+                if (args[0].equals("/bandit")) {
                     banditBalances.put(message.getChatId(), 10000.0);
-                if (args[0].equals("/roulette"))
+                    currentMenu = "bandit";
+                }
+                if (args[0].equals("/roulette")) {
                     rouletteBalances.put(message.getChatId(), 10000.0);
+                    currentMenu = "roulette";
+                }
+                if (args[0].equals("/back")) {
+                    currentMenu = "start";
+                }
                 this.perform(args);
             } catch (Exception e) {
                 e.printStackTrace();
