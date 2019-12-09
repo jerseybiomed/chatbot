@@ -35,11 +35,11 @@ public class Casino extends Bot {
     private ReplyKeyboardMarkup rouletteKeyboard = new ReplyKeyboardMarkup();
     private ReplyKeyboardMarkup startKeyboard = new ReplyKeyboardMarkup();
 
-    public Casino(Bandit game1, RouletteDrum drum2, String userName, String token) {
+    public Casino(Bandit game1, Roulette game2, String userName, String token) {
         super(userName, token);
+        game2.setBot(this);
         currentMenu = "start";
         bandit = game1;
-        rouletteDrum = drum2;
         setBanditKeyboard();
         setRouletteKeyboard();
         setStartKeyboard();
