@@ -131,7 +131,7 @@ public class Casino extends Bot {
     }
 
     private void setStartKeyboard() {
-        startKeyboard.setSelective(True);
+        startKeyboard.setSelective(true);
         List<KeyboardRow> keyboard = new ArrayList<>();
         KeyboardRow keyboardRow = new KeyboardRow();
         keyboardRow.add(new KeyboardButton("/bandit"));
