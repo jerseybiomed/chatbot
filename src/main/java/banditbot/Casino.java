@@ -45,9 +45,9 @@ public class Casino extends Bot {
         setRouletteKeyboard();
         setStartKeyboard();
         ECommands.Roll.sendTo(this.commands::replace, this::banditRoll);
-        ECommands.Bet.sendTo(this.commands::replace, (args) -> setRouletteBet(message));
         ECommands.Balance.sendTo(this.commands::replace, (args) -> sendMessage(message.getChatId(), getBalance()));
         ECommands.Help.sendTo(this.commands::replace, (args) -> sendMessage(message.getChatId(), getHelp()));
+        ECommands.Bet.sendTo(this.commands::add, (args) -> setRouletteBet(message));
         ECommands.Rules.sendTo(this.commands::add, (args) -> sendMessage(message.getChatId(), getRules()));
         ECommands.Bandit.sendTo(this.commands::add, (args) -> banditRequest());
         ECommands.Roulette.sendTo(this.commands::add, (args) -> rouletteRequest());
