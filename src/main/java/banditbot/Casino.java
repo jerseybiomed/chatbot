@@ -52,7 +52,7 @@ public class Casino extends Bot {
         ECommands.Roulette.sendTo(this.commands::add, (args) -> rouletteRequest(message.getChatId()));
         ECommands.Back.sendTo(this.commands::add, (args) -> backRequest(message.getChatId()));
         ECommands.Start.sendTo(this.commands::add, (args) -> sendMessage(message.getChatId(), "Choose your game"));
-        commands.add("Bet", new Command("/bet", (args) -> setRouletteBet(message.getChatId(), message.getText())));
+        commands.add("/bet", new Command("/bet", (args) -> setRouletteBet(message.getChatId(), message.getText())));
         commands.add("sayResult", new Command("sayResult",
                 (args) -> this.performRoulette(Integer.parseInt(args[1]))));
     }
