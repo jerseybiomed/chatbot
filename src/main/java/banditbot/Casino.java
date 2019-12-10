@@ -76,7 +76,7 @@ public class Casino extends Bot {
                     rouletteBalances.remove(player);
                     backRequest(player);
                 } else {
-                    sendMessage(player, Double.toString(res));
+                    sendMessage(player, "You win: " + res);
                     rouletteBalances.replace(player, newBalance);
                 }
             }
@@ -87,7 +87,7 @@ public class Casino extends Bot {
         String[] bet = text.split(" ");
         if (Integer.parseInt(bet[2]) <= rouletteBalances.get(message.getChatId())) {
             rouletteBets.put(message.getChatId(), text);
-            sendRoulettePlayers("new bet: " + bet[2] + " on " + bet[1]);
+            sendRoulettePlayers(id + " new bet: " + bet[2] + " on " + bet[1]);
         } else {
             sendMessage(message.getChatId(), "Your balance is not enough for this bet");
         }
