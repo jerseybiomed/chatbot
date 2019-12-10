@@ -22,7 +22,6 @@ import java.util.AbstractMap.SimpleEntry;
  * Casino
  */
 public class Casino extends Bot {
-    private String currentMenu;
     private Bandit bandit;
     private Roulette roulette;
     private Message message;
@@ -30,6 +29,7 @@ public class Casino extends Bot {
     private HashMap<Long, Double> rouletteBalances = new HashMap<>();
     private HashSet<Long> roulettePlayers = new HashSet<>();
     private HashMap<Long, String> rouletteBets = new HashMap<>();
+    private HashMap<Long, String> currentMenu = new HashMap<>();
     private ReplyKeyboardMarkup banditKeyboard = new ReplyKeyboardMarkup();
     private ReplyKeyboardMarkup rouletteKeyboard = new ReplyKeyboardMarkup();
     private ReplyKeyboardMarkup startKeyboard = new ReplyKeyboardMarkup();
@@ -37,7 +37,6 @@ public class Casino extends Bot {
     public Casino(Bandit game1, Roulette game2, String userName, String token) {
         super(userName, token);
         game2.setBot(this);
-        currentMenu = "start";
         bandit = game1;
         roulette = game2;
         roulette.Start();
@@ -45,16 +44,18 @@ public class Casino extends Bot {
         setRouletteKeyboard();
         setStartKeyboard();
         ECommands.Roll.sendTo(this.commands::replace, this::banditRoll);
-        ECommands.Balance.sendTo(this.commands::replace, (args) -> sendMessage(message.getChatId(), getBalance()));
-        ECommands.Help.sendTo(this.commands::replace, (args) -> sendMessage(message.getChatId(), getHelp()));
+        ECommands.Balance.sendTo(this.commands::replace,
+                (args) -> getBalance(message.getChatId()));
+        ECommands.Help.sendTo(this.commands::replace,
+                (args) -> getHelp(message.getChatId()));
         commands.add("/rules", new Command("/rules",
-                (args) -> sendMessage(message.getChatId(), getRules())));
+                (args) -> getRules(message.getChatId())));
         commands.add("/bandit", new Command("/bandit",
                 (args) -> banditRequest(message.getChatId())));
         commands.add("/roulette", new Command("/roulette",
                 (args) -> rouletteRequest(message.getChatId())));
         commands.add("/start", new Command("/start",
-                (args) -> sendMessage(message.getChatId(), "Choose your game")));
+                (args) -> startRequest(message.getChatId())));
         commands.add("/back", new Command("/back",
                 (args) -> backRequest(message.getChatId())));
         commands.add("/bet", new Command("/bet",
@@ -98,17 +99,20 @@ public class Casino extends Bot {
         }
     }
 
-    private String getRules() {
-        return currentMenu.equals("bandit") ? Help.banditRules : Help.rouletteRules;
+    private void getRules(long id) {
+        String rules = currentMenu.get(id).equals("bandit") ? Help.banditRules : Help.rouletteRules;
+        sendMessage(id, rules);
     }
 
-    private String getHelp() {
-        return currentMenu.equals("bandit") ? Help.banditHelp : Help.rouletteHelp;
+    private void getHelp(long id) {
+        String help = currentMenu.get(id).equals("bandit") ? Help.banditHelp : Help.rouletteHelp;
+        sendMessage(id, help);
     }
 
-    private String getBalance() {
-        return currentMenu.equals("bandit") ? banditBalances.get(message.getChatId()).toString()
+    private void getBalance(long id) {
+        String balance = currentMenu.get(id).equals("bandit") ? banditBalances.get(message.getChatId()).toString()
                 : rouletteBalances.get(message.getChatId()).toString();
+        sendMessage(id, balance);
     }
 
     private void banditRoll(String[] args) {
@@ -145,30 +149,35 @@ public class Casino extends Bot {
     private void banditRequest(long id) {
         if (!banditBalances.containsKey(id))
             banditBalances.put(id, 10000.0);
-        currentMenu = "bandit";
+        currentMenu.replace(id, "bandit");
         sendMessage(id, Help.banditHelp);
     }
 
     private void rouletteRequest(long id) {
-        if (roulettePlayers.size() < 10 || roulettePlayers.contains(null)) {
+        if (roulettePlayers.size() < 10) {
             roulettePlayers.add(id);
             rouletteBalances.put(id, 10000.0);
             for (long player : roulettePlayers)
                 sendMessage(player, "Hello " + id);
-            currentMenu = "roulette";
+            currentMenu.replace(id, "roulette");
             sendMessage(id, Help.rouletteHelp);
         } else {
             sendMessage(id, "There is no available space in roulette");
-            currentMenu = "start";
+            currentMenu.replace(id, "start");
         }
     }
 
     private void backRequest(long id) {
-        if (currentMenu.equals("roulette")) {
+        if (currentMenu.get(id).equals("roulette")) {
             roulettePlayers.remove(id);
         }
-        currentMenu = "start";
+        currentMenu.replace(id, "start");
         sendMessage(id, "Choose your game");
+    }
+
+    private void startRequest(long id) {
+        currentMenu.put(id, "start");
+        sendMessage(message.getChatId(), "Choose your game");
     }
 
     private void sendRoulettePlayers(String text) {
@@ -180,9 +189,10 @@ public class Casino extends Bot {
         SendMessage chat = new SendMessage();
         chat.setChatId(id);
         chat.setText(text);
-        if (currentMenu.equals("start"))
+        String current = currentMenu.get(id);
+        if (current.equals("start"))
             chat.setReplyMarkup(startKeyboard);
-        else if (currentMenu.equals("bandit"))
+        else if (current.equals("bandit"))
             chat.setReplyMarkup(banditKeyboard);
         else
             chat.setReplyMarkup(rouletteKeyboard);
