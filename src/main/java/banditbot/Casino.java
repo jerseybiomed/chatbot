@@ -85,11 +85,16 @@ public class Casino extends Bot {
 
     private void setRouletteBet(long id, String text) {
         String[] bet = text.split(" ");
-        if (Integer.parseInt(bet[2]) <= rouletteBalances.get(message.getChatId())) {
-            rouletteBets.put(message.getChatId(), text);
-            sendRoulettePlayers(id + " new bet: " + bet[2] + " on " + bet[1]);
+        if (rouletteBets.containsKey(id)) {
+            rouletteBets.replace(id, text);
+            sendRoulettePlayers(id + " change bet: " + bet[2] + " on " + bet[1]);
         } else {
-            sendMessage(message.getChatId(), "Your balance is not enough for this bet");
+            if (Integer.parseInt(bet[2]) <= rouletteBalances.get(id)) {
+                rouletteBets.put(id, text);
+                sendRoulettePlayers(id + " new bet: " + bet[2] + " on " + bet[1]);
+            } else {
+                sendMessage(id, "Your balance is not enough for this bet");
+            }
         }
     }
 
