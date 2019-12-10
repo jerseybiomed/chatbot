@@ -47,12 +47,12 @@ public class Casino extends Bot {
         ECommands.Roll.sendTo(this.commands::replace, this::banditRoll);
         ECommands.Balance.sendTo(this.commands::replace, (args) -> sendMessage(message.getChatId(), getBalance()));
         ECommands.Help.sendTo(this.commands::replace, (args) -> sendMessage(message.getChatId(), getHelp()));
-        ECommands.Bet.sendTo(this.commands::add, (args) -> setRouletteBet(message.getChatId(), message.getText()));
         ECommands.Rules.sendTo(this.commands::add, (args) -> sendMessage(message.getChatId(), getRules()));
         ECommands.Bandit.sendTo(this.commands::add, (args) -> banditRequest(message.getChatId()));
         ECommands.Roulette.sendTo(this.commands::add, (args) -> rouletteRequest(message.getChatId()));
         ECommands.Back.sendTo(this.commands::add, (args) -> backRequest(message.getChatId()));
         ECommands.Start.sendTo(this.commands::add, (args) -> sendMessage(message.getChatId(), "Choose your game"));
+        commands.add("Bet", new Command("/bet", (args) -> setRouletteBet(message.getChatId(), message.getText())));
         commands.add("sayResult", new Command("sayResult",
                 (args) -> this.performRoulette(Integer.parseInt(args[1]))));
     }
