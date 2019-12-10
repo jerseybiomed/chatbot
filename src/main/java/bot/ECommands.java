@@ -6,12 +6,7 @@ import java.util.function.Consumer;
 public enum ECommands {
     Help("/help", (args) -> System.out.println(String.join(" ", args))),
     Balance("/balance", (args) -> System.out.println(String.join(" ", args))),
-    Roll("/roll", (args) -> System.out.println(String.join(" ", args))),
-    Rules("/rules", (args) -> System.out.println(String.join(" ", args))),
-    Back("/back", (args) -> System.out.println(String.join(" ", args))),
-    Start("/start", (args) -> System.out.println(String.join(" ", args))),
-    Bandit("/bandit", (args) -> System.out.println(String.join(" ", args))),
-    Roulette("/roulette", (args) -> System.out.println(String.join(" ", args)));
+    Roll("/roll", (args) -> System.out.println(String.join(" ", args)));
 
     private String name;
     private Consumer<String[]> func;
