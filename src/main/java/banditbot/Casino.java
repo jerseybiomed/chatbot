@@ -65,7 +65,6 @@ public class Casino extends Bot {
 
     private void performRoulette(int result) {
         sendRoulettePlayers(result + " " + roulette.getColor(result));
-                backRequest(player);
         for (long player : roulettePlayers) {
             if (rouletteBets.containsKey(player)) {
                 String[] bet = rouletteBets.get(player).split(" ");
