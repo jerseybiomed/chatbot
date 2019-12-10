@@ -65,18 +65,21 @@ public class Casino extends Bot {
 
     private void performRoulette(int result) {
         sendRoulettePlayers(result + " " + roulette.getColor(result));
-        for (long player : rouletteBets.keySet()) {
-            String[] bet = rouletteBets.get(player).split(" ");
-            double res = roulette.getCoefficient(result, bet[1]) * Integer.parseInt(bet[2]);
-            double newBalance = rouletteBalances.get(player) + res - Integer.parseInt(bet[2]);
-            rouletteBets.remove(player);
-            if (newBalance < 1){
-                sendMessage(player, "You lost all the money\nThe guards kicked you out\nGood Luck and Have Fun!");
-                rouletteBalances.remove(player);
                 backRequest(player);
-            } else {
-                sendMessage(player, Double.toString(res));
-                rouletteBalances.replace(player, newBalance);
+        for (long player : roulettePlayers) {
+            if (rouletteBets.containsKey(player)) {
+                String[] bet = rouletteBets.get(player).split(" ");
+                double res = roulette.getCoefficient(result, bet[1]) * Integer.parseInt(bet[2]);
+                double newBalance = rouletteBalances.get(player) + res - Integer.parseInt(bet[2]);
+                rouletteBets.remove(player);
+                if (newBalance < 1) {
+                    sendMessage(player, "You lost all the money\nThe guards kicked you out\nGood Luck and Have Fun!");
+                    rouletteBalances.remove(player);
+                    backRequest(player);
+                } else {
+                    sendMessage(player, Double.toString(res));
+                    rouletteBalances.replace(player, newBalance);
+                }
             }
         }
     }
