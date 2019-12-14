@@ -1,11 +1,12 @@
 package bot;
 
-import connection.messegestream.Listener;
+import messagestream.Listener;
 
 /**
  * BotListener
  */
-public class BotListener implements Listener<String>{
+public class BotListener
+implements Listener<String>{
     private final Bot bot;
 
     public BotListener(final Bot m_bot) {
@@ -14,8 +15,11 @@ public class BotListener implements Listener<String>{
 
     @Override
     public void listen(final String data) {
-        final String[] args = data.split(" ");
-        this.bot.perform(args);
+        String[] args = data.split(" ");
+        if (args[0].charAt(0) == '/') {
+            args[0] = args[0].substring(1);
+            this.bot.perform(args);
+        }
     }
 
     @Override

@@ -1,43 +1,52 @@
 package bot;
 
-import bot.command.Command;
+import java.util.Arrays;
+
 import bot.command.CommandRegistry;
-import bot.command.ECommands;
-import connection.Connectable;
-import connection.messegestream.Console;
-import connection.messegestream.Listener;
+import messagestream.Connection;
+import messagestream.Listener;
+import messagestream.speakers.Speaker;
 
 /**
  * Bot
  */
-public class Bot implements Listener<String[]>, Connectable<Console> {
-    protected CommandRegistry<Command> commands = new CommandRegistry<Command>();
+public class Bot
+implements Listener<String[]> {
+    protected CommandRegistry commands = new CommandRegistry();
+    private Speaker<String> speaker;
 
-    public Bot() {
-        ECommands.Help.sendTo(commands::add);
-        ECommands.Roll.sendTo(commands::add);
-        ECommands.Balance.sendTo(commands::add);
+    public Bot(Speaker<String> m_speaker) {
+        this.speaker = m_speaker;
+        ECommands.Help.sendTo(this.commands::add, (args) -> this.perform("_say", "help"));
+        ECommands.Say.sendTo(this.commands::add, (args) -> this.speaker.say(String.join(" ", Arrays.copyOfRange(args, 1, args.length))));
+        ECommands.Recognize.sendTo(this.commands::add, (args) -> this.perform("_say", "unknown command:", args[1]));
     }
 
-    public void perform(final String[] args) {
+    public void perform(final String... args) {
         Bot.assertArgsNotNull(args);
-        this.commands.get(args[0]).setArgs(args).run();
+        if (this.commands.contains(args[0])) {
+            this.commands.get(args[0]).setArgs(args).run();
+        }
+        else {
+            this.perform("_recognize", args[0]);
+        }
     }
 
     private static void assertArgsNotNull(final String[] args) {
-        if (args == null || args.length == 0)
+        if (args.length == 0 || args[0] == null)
             throw new RuntimeException("Invalid arguments");
     }
 
-    @Override
-    public void connect(final Console connection) {
-        connection.addListener(new BotListener(this));
+    public void connect(final Connection<Listener<String>> connection) {
+        connection.connect(new BotListener(this));
         this.start();
     }
 
     @Override
-    public void listen(final String[] data) {
-        this.perform(data);
+    public void listen(final String[] args) {
+        if (args[0].charAt(0) == '_')
+            return;
+        this.perform(args);
     }
 
     @Override

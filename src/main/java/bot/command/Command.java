@@ -7,7 +7,6 @@ import java.util.function.Consumer;
  */
 public class Command
 implements Runnable{
-    private String name;
     private Consumer<String[]> func;
     private String[] args;
 
@@ -19,17 +18,12 @@ implements Runnable{
     }
 
     private void assertArgsNotNull() {
-        if (this.args == null || this.args.length == 0 || !this.args[0].equals(name))
+        if (this.args == null || this.args.length == 0)
             throw new RuntimeException("Invalid arguments");
     }
 
-    public Command(final String m_name, final Consumer<String[]> m_func) {
-        this.name = m_name;
+    public Command(final Consumer<String[]> m_func) {
         this.func = m_func;
-    }
-
-    public String getName() {
-        return this.name;
     }
 
     public Command setArgs(final String[] m_args) {

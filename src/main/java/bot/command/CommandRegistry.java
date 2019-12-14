@@ -5,12 +5,11 @@ import java.util.concurrent.ConcurrentSkipListMap;
 /**
  * CommandRegistry
  */
-public class CommandRegistry<T> {
+public class CommandRegistry {
 
-    private ConcurrentSkipListMap<String, T> map = new ConcurrentSkipListMap<>();
+    private ConcurrentSkipListMap<String, Command> map = new ConcurrentSkipListMap<>();
     
-    public void add(final String commandName, final T commandFunc) {
-        this.assertContainsNameNot(commandName);
+    public void add(final String commandName, final Command commandFunc) {
         CommandRegistry.assertArgNotNull(commandFunc);
         this.map.put(commandName, commandFunc);
     }
@@ -22,7 +21,7 @@ public class CommandRegistry<T> {
             !CommandRegistry.isNull(this.map.get(commandName));
     }
 
-    public T get(final String commandName) {
+    public Command get(final String commandName) {
         this.assertContainsName(commandName);
         return this.map.get(commandName);
     }
@@ -32,7 +31,7 @@ public class CommandRegistry<T> {
         this.map.remove(commandName);
     }
 
-    public void replace(final String commandName, final T commandFunc) {
+    public void replace(final String commandName, final Command commandFunc) {
         this.assertContainsName(commandName);
         CommandRegistry.assertArgNotNull(commandFunc);
         this.map.replace(commandName, commandFunc);
@@ -51,11 +50,6 @@ public class CommandRegistry<T> {
     private void assertContainsName(final String commandName) {
         if (!this.contains(commandName))
             throw new RuntimeException("Command \"" + commandName + "\" didn't registered");
-    }
-
-    private void assertContainsNameNot(final String commandName) {
-        if (this.contains(commandName))
-            throw new RuntimeException("Command \"" + commandName + "\" registered");
     }
 
     private void assertMapNotNull() {

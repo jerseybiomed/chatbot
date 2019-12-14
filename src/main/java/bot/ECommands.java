@@ -1,28 +1,30 @@
-package bot.command;
+package bot;
 
 import java.util.function.BiConsumer;
 import java.util.function.Consumer;
 
+import bot.command.Command;
+
 public enum ECommands {
-    Help("help", (args) -> System.out.println(String.join(" ", args))),
-    Balance("balance", (args) -> System.out.println(String.join(" ", args))),
-    Roll("roll", (args) -> System.out.println(String.join(" ", args)));
+    Help("help", (args) -> System.out.println(args[0])),
+    Say("_say", (args) -> System.out.println(args[1])),
+    Recognize("_recognize", (args) -> System.out.println(args[1]));
 
     private String name;
-    private Consumer<String[]> func;
+    private Command comm;
 
     private ECommands(final String m_name, final Consumer<String[]> m_func) {
         this.name = m_name;
-        this.func = m_func;
+        this.comm = new Command(m_func);
     }
 
     public void sendTo(final BiConsumer<String, Command> someApiFunction) {
-        someApiFunction.accept(this.name, new Command(this.name, this.func));
+        someApiFunction.accept(this.name, this.comm);
     }
 
     public void sendTo(final BiConsumer<String, Command> someApiFunction, final Consumer<String[]> m_func) {
         ECommands.assertFuncNotNull(m_func);
-        someApiFunction.accept(this.name, new Command(this.name, m_func));
+        someApiFunction.accept(this.name, new Command(m_func));
     }
 
     private static void assertFuncNotNull(final Consumer<String[]> m_func) {
