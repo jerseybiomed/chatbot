@@ -1,13 +1,12 @@
 package com;
 
-import banditbot.Casino;
+import logic.*;
 import bot.Bot;
-import logic.Bandit;
-import logic.Roulette;
 
 import org.telegram.telegrambots.ApiContextInitializer;
 import org.telegram.telegrambots.meta.TelegramBotsApi;
 import org.telegram.telegrambots.meta.exceptions.TelegramApiRequestException;
+import web.Randomize;
 
 /**
  * App
@@ -15,15 +14,8 @@ import org.telegram.telegrambots.meta.exceptions.TelegramApiRequestException;
 public class App {
 
     public static void main(String[] args) {
-        ApiContextInitializer.init();
-        TelegramBotsApi botsApi = new TelegramBotsApi();
-        Bandit game1 = new Bandit();
-        Roulette game2 = new Roulette();
-        Bot bot = new Casino(game1, game2, "Casino", "1063391024:AAEiyRp_uaLsG23vGAe84zlSidDdWzV2xb4");
-        try {
-            botsApi.registerBot(bot);
-        } catch (TelegramApiRequestException e){
-            e.printStackTrace();
-        }
+        Randomize randomize = new Randomize();
+        Bandit bandit = new Bandit(randomize);
+        Roulette roulette = new Roulette(randomize);
     }
 }

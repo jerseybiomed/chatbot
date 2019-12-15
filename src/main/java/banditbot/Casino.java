@@ -6,7 +6,6 @@ import bot.Bot;
 import bot.Command;
 import bot.ECommands;
 import logic.Bandit;
-import logic.Help;
 import logic.Roulette;
 import org.telegram.telegrambots.meta.api.methods.send.SendMessage;
 import org.telegram.telegrambots.meta.api.objects.Message;
@@ -100,12 +99,12 @@ public class Casino extends Bot {
     }
 
     private void getRules(long id) {
-        String rules = currentMenu.get(id).equals("bandit") ? Help.banditRules : Help.rouletteRules;
+        String rules = currentMenu.get(id).equals("bandit") ? Bandit.Rules : Roulette.Rules;
         sendMessage(id, rules);
     }
 
     private void getHelp(long id) {
-        String help = currentMenu.get(id).equals("bandit") ? Help.banditHelp : Help.rouletteHelp;
+        String help = currentMenu.get(id).equals("bandit") ? Bandit.Help : Roulette.Help;
         sendMessage(id, help);
     }
 
@@ -118,7 +117,7 @@ public class Casino extends Bot {
     private void banditRoll(String[] args) {
         int bet = Integer.parseInt(args[1]);
         if (bet <= banditBalances.get(message.getChatId())) {
-            SimpleEntry<String, Double> result = bandit.game(bet);
+            SimpleEntry<String, Double> result = bandit.roll(bet);
             double newBalance = banditBalances.get(message.getChatId()) - bet + result.getValue();
             banditBalances.replace(message.getChatId(), newBalance);
             sendMessage(message.getChatId(), "line:" + result.getKey() + " result:" + result.getValue());
@@ -150,7 +149,7 @@ public class Casino extends Bot {
         if (!banditBalances.containsKey(id))
             banditBalances.put(id, 10000.0);
         currentMenu.replace(id, "bandit");
-        sendMessage(id, Help.banditHelp);
+        sendMessage(id, Bandit.Help);
     }
 
     private void rouletteRequest(long id) {
@@ -160,7 +159,7 @@ public class Casino extends Bot {
             for (long player : roulettePlayers)
                 sendMessage(player, "Hello " + id);
             currentMenu.replace(id, "roulette");
-            sendMessage(id, Help.rouletteHelp);
+            sendMessage(id, Roulette.Help);
         } else {
             sendMessage(id, "There is no available space in roulette");
             currentMenu.replace(id, "start");

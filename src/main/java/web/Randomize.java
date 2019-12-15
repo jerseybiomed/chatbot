@@ -6,9 +6,9 @@ import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
 
-public class Connector {
+public class Randomize {
 	
-	public static int GetRandomNumber(String request) throws IOException {
+	public int Next(String request) throws IOException {
 		URL url = new URL(request);
 		HttpURLConnection connection = (HttpURLConnection) url.openConnection();
 		connection.setRequestMethod("GET");

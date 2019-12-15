@@ -6,14 +6,10 @@ import org.telegram.telegrambots.meta.api.objects.Update;
 /**
  * Bot
  */
-public class Bot extends TelegramLongPollingBot {
+public class Bot {
     protected CommandRegistry<Command> commands = new CommandRegistry<Command>();
-    protected String userName;
-    protected String token;
 
-    public Bot(String userName, String token) {
-    	this.userName = userName;
-    	this.token = token;
+    public Bot() {
         ECommands.Help.sendTo(commands::add, (args) -> System.out.println("It's very smart bot"));
         ECommands.Balance.sendTo(commands::add);
         ECommands.Roll.sendTo(commands::add);
@@ -29,18 +25,4 @@ public class Bot extends TelegramLongPollingBot {
             throw new RuntimeException("Invalid arguments");
     }
 
-    @Override
-    public void onUpdateReceived(Update update) {
-
-    }
-
-    @Override
-    public String getBotUsername() {
-        return userName;
-    }
-
-    @Override
-    public String getBotToken() {
-        return token;
-    }
 }
