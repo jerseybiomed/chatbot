@@ -2,39 +2,28 @@ package messagestream.speakers;
 
 import java.util.ArrayList;
 import java.util.List;
-
-import org.telegram.telegrambots.bots.TelegramLongPollingBot;
-import org.telegram.telegrambots.meta.api.objects.Update;
+import java.util.Scanner;
 
 import messagestream.Connection;
 import messagestream.Listener;
 
 /**
- * Telegram
+ * Console
  */
-public class Telegram
-extends TelegramLongPollingBot
+public class ConsoleSpeaker
 implements Runnable, Speaker<String>, Connection<Listener<String>> {
+    private final Scanner scan;
     private final List<Listener<String>> listeners = new ArrayList<Listener<String>>();
-    
+
+    public ConsoleSpeaker() {
+        this.scan = new Scanner(System.in);
+    }
+
     @Override
     public void run() {
-
-    }
-
-    @Override
-    public String getBotUsername() {
-        return null;
-    }
-
-    @Override
-    public void onUpdateReceived(final Update arg0) {
-
-    }
-
-    @Override
-    public String getBotToken() {
-        return null;
+        while (true) {
+            this.say(this.scan.nextLine());
+        }
     }
 
     @Override
@@ -43,8 +32,8 @@ implements Runnable, Speaker<String>, Connection<Listener<String>> {
             cl.listen(message);
     }
 
-    @Override
-    public void connect(final Listener<String> listener) {
+	@Override
+	public void connect(Listener<String> listener) {
         this.listeners.add(listener);
-    }
+	}
 }

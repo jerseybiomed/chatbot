@@ -1,11 +1,8 @@
 package bot;
 
-import java.util.Arrays;
-
 import bot.command.CommandRegistry;
 import messagestream.Connection;
 import messagestream.Listener;
-import messagestream.speakers.Speaker;
 
 /**
  * Bot
@@ -13,12 +10,9 @@ import messagestream.speakers.Speaker;
 public class Bot
 implements Listener<String[]> {
     protected CommandRegistry commands = new CommandRegistry();
-    private Speaker<String> speaker;
 
-    public Bot(Speaker<String> m_speaker) {
-        this.speaker = m_speaker;
+    public Bot() {
         ECommands.Help.sendTo(this.commands::add, (args) -> this.perform("_say", "help"));
-        ECommands.Say.sendTo(this.commands::add, (args) -> this.speaker.say(String.join(" ", Arrays.copyOfRange(args, 1, args.length))));
         ECommands.Recognize.sendTo(this.commands::add, (args) -> this.perform("_say", "unknown command:", args[1]));
     }
 
@@ -26,8 +20,7 @@ implements Listener<String[]> {
         Bot.assertArgsNotNull(args);
         if (this.commands.contains(args[0])) {
             this.commands.get(args[0]).setArgs(args).run();
-        }
-        else {
+        } else {
             this.perform("_recognize", args[0]);
         }
     }
@@ -51,6 +44,6 @@ implements Listener<String[]> {
 
     @Override
     public void start() {
-        this.perform(new String[]{"help"});
+        this.perform("help");
     }
 }
