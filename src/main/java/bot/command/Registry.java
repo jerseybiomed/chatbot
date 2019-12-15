@@ -3,25 +3,25 @@ package bot.command;
 import java.util.concurrent.ConcurrentSkipListMap;
 
 /**
- * CommandRegistry
+ * Registry
  */
-public class CommandRegistry {
+public class Registry<T> {
 
-    private ConcurrentSkipListMap<String, Command> map = new ConcurrentSkipListMap<>();
+    private ConcurrentSkipListMap<String, T> map = new ConcurrentSkipListMap<>();
     
-    public void add(final String commandName, final Command commandFunc) {
-        CommandRegistry.assertArgNotNull(commandFunc);
+    public void add(final String commandName, final T commandFunc) {
+        Registry.assertArgNotNull(commandFunc);
         this.map.put(commandName, commandFunc);
     }
 
     public boolean contains(final String commandName) {
-        CommandRegistry.assertArgNotNull(commandName);
+        Registry.assertArgNotNull(commandName);
         this.assertMapNotNull();
         return this.map.containsKey(commandName) &&
-            !CommandRegistry.isNull(this.map.get(commandName));
+            !Registry.isNull(this.map.get(commandName));
     }
 
-    public Command get(final String commandName) {
+    public T get(final String commandName) {
         this.assertContainsName(commandName);
         return this.map.get(commandName);
     }
@@ -31,14 +31,14 @@ public class CommandRegistry {
         this.map.remove(commandName);
     }
 
-    public void replace(final String commandName, final Command commandFunc) {
+    public void replace(final String commandName, final T commandFunc) {
         this.assertContainsName(commandName);
-        CommandRegistry.assertArgNotNull(commandFunc);
+        Registry.assertArgNotNull(commandFunc);
         this.map.replace(commandName, commandFunc);
     }
     
     private static void assertArgNotNull(final Object arg) {
-        if (CommandRegistry.isNull(arg))
+        if (Registry.isNull(arg))
             throw new RuntimeException("Invalid argument");
     }
 

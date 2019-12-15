@@ -5,10 +5,10 @@ import java.util.function.Consumer;
 /**
  * Command
  */
-public class Command
+public class Command<T>
 implements Runnable{
-    private Consumer<String[]> func;
-    private String[] args;
+    private Consumer<T> func;
+    private T args;
 
     @Override
     public void run() {
@@ -18,15 +18,15 @@ implements Runnable{
     }
 
     private void assertArgsNotNull() {
-        if (this.args == null || this.args.length == 0)
+        if (this.args == null)
             throw new RuntimeException("Invalid arguments");
     }
 
-    public Command(final Consumer<String[]> m_func) {
+    public Command(final Consumer<T> m_func) {
         this.func = m_func;
     }
 
-    public Command setArgs(final String[] m_args) {
+    public Command<T> setArgs(final T m_args) {
         this.args = m_args;
         return this;
     }

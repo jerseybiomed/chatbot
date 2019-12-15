@@ -1,9 +1,10 @@
 package messagestream;
 
+import messagestream.speakers.Speaker;
+
 /**
  * Listener
  */
 public interface Listener<T> {
-    void listen(T data);
-    void start();
+    void listen(Speaker<T> from, T data);
 }

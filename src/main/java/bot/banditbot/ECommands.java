@@ -10,20 +10,20 @@ public enum ECommands {
     Say("say", (args) -> System.out.println(args[1]));
 
     private String name;
-    private Command comm;
+    private Command<String[]> comm;
 
     private ECommands(final String m_name, final Consumer<String[]> m_func) {
         this.name = m_name;
-        this.comm = new Command(m_func);
+        this.comm = new Command<String[]>(m_func);
     }
 
-    public void sendTo(final BiConsumer<String, Command> someApiFunction) {
+    public void sendTo(final BiConsumer<String, Command<String[]>> someApiFunction) {
         someApiFunction.accept(this.name, this.comm);
     }
 
-    public void sendTo(final BiConsumer<String, Command> someApiFunction, final Consumer<String[]> m_func) {
+    public void sendTo(final BiConsumer<String, Command<String[]>> someApiFunction, final Consumer<String[]> m_func) {
         ECommands.assertFuncNotNull(m_func);
-        someApiFunction.accept(this.name, new Command(m_func));
+        someApiFunction.accept(this.name, new Command<String[]>(m_func));
     }
 
     private static void assertFuncNotNull(final Consumer<String[]> m_func) {

@@ -29,11 +29,16 @@ implements Runnable, Speaker<String>, Connection<Listener<String>> {
     @Override
     public void say(final String message) {
         for (final Listener<String> cl : this.listeners)
-            cl.listen(message);
+            cl.listen(this, message);
     }
 
 	@Override
 	public void connect(Listener<String> listener) {
         this.listeners.add(listener);
 	}
+
+    @Override
+    public void reply(String answer) {
+        System.out.println(answer);
+    }
 }

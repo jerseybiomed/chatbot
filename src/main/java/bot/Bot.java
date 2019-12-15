@@ -1,15 +1,17 @@
 package bot;
 
-import bot.command.CommandRegistry;
+import bot.command.Command;
+import bot.command.Registry;
 import messagestream.Connection;
 import messagestream.Listener;
+import messagestream.speakers.Speaker;
 
 /**
  * Bot
  */
-public class Bot
+public class Bot<T>
 implements Listener<String[]> {
-    protected CommandRegistry commands = new CommandRegistry();
+    protected Registry<Command<String[]>> commands = new Registry<Command<String[]>>();
 
     public Bot() {
         ECommands.Help.sendTo(this.commands::add, (args) -> this.perform("_say", "help"));
@@ -32,18 +34,13 @@ implements Listener<String[]> {
 
     public void connect(final Connection<Listener<String>> connection) {
         connection.connect(new BotListener(this));
-        this.start();
     }
 
     @Override
-    public void listen(final String[] args) {
+    public void listen(Speaker<String[]> from, String[] args) {
         if (args[0].charAt(0) == '_')
-            return;
-        this.perform(args);
-    }
-
-    @Override
-    public void start() {
-        this.perform("help");
+            this.perform("_recognize", args[0]);
+        else
+            this.perform(args);
     }
 }
