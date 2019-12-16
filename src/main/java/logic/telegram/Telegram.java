@@ -3,9 +3,7 @@ package logic.telegram;
 import logic.Connector;
 import logic.Publisher;
 import logic.Subscriber;
-import org.telegram.telegrambots.ApiContextInitializer;
 import org.telegram.telegrambots.bots.TelegramLongPollingBot;
-import org.telegram.telegrambots.meta.TelegramBotsApi;
 import org.telegram.telegrambots.meta.api.methods.send.SendMessage;
 import org.telegram.telegrambots.meta.api.objects.Message;
 import org.telegram.telegrambots.meta.api.objects.Update;
@@ -13,7 +11,6 @@ import org.telegram.telegrambots.meta.api.objects.replykeyboard.ReplyKeyboardMar
 import org.telegram.telegrambots.meta.api.objects.replykeyboard.buttons.KeyboardButton;
 import org.telegram.telegrambots.meta.api.objects.replykeyboard.buttons.KeyboardRow;
 import org.telegram.telegrambots.meta.exceptions.TelegramApiException;
-import org.telegram.telegrambots.meta.exceptions.TelegramApiRequestException;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -29,16 +26,10 @@ implements Publisher<String>, Connector<Subscriber<String>> {
     private ReplyKeyboardMarkup startKeyboard = new ReplyKeyboardMarkup();
     private int numberPlayers = 0;
 
-    public void run() {
-        ApiContextInitializer.init();
+    public Telegram() {
         setBanditKeyboard();
         setRouletteKeyboard();
         setStartKeyboard();
-        try {
-            new TelegramBotsApi().registerBot(this);
-        } catch (TelegramApiRequestException e) {
-            e.printStackTrace();
-        }
     }
 
     @Override
