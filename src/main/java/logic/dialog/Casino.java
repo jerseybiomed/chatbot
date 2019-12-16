@@ -20,6 +20,7 @@ public class Casino extends Bot {
         roulette = game2;
         roulette.setBot(this);
         rouletteLogic.setBot(this);
+        roulette.run();
         commands.add("/start", new Command("/start",
                 (player, args) -> publisher.reply(player, StartLogic.startRequest())));
         commands.add("/back", new Command("/back",
