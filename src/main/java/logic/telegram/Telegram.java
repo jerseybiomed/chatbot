@@ -68,6 +68,7 @@ implements Publisher<String>, Connector<Subscriber<String>> {
     public void reply(Player player, String answer) {
         SendMessage sendMessage = messages.get(player);
         sendMessage.setText(answer);
+        sendMessage.setReplyMarkup(getKeyboard(player, ""));
         player.changeCurrentGame();
         try {
             this.execute(sendMessage);
