@@ -47,6 +47,11 @@ public class Casino extends Bot {
                 (player, args) -> publisher.reply(player,
                         player.getCurrentGame().equals("bandit") ? banditLogic.rulesRequest()
                                 : player.getCurrentGame().equals("roulette") ? rouletteLogic.rulesRequest() : "")));
+        commands.add("/balance", new Command("/balance",
+                (player, args) -> publisher.reply(player,
+                        player.getCurrentGame().equals("bandit") ? player.getBanditBalance().toString()
+                                : player.getCurrentGame().equals("roulette") ? player.getRouletteBalance().toString()
+                                : "")));
     }
 
     @Override
