@@ -36,9 +36,9 @@ public class Casino extends Bot {
                 (player, args) -> rouletteLogic.betRequest(player, args, roulette)));
         commands.add("/bandit", new Command("/bandit",
                 (player, args) -> publisher.reply(player, banditLogic.banditRequest(player))));
-        commands.add("/roll", new Command("/roll",
+        commands.replace("/roll", new Command("/roll",
                 (player, args) -> publisher.reply(player, banditLogic.rollRequest(player, args[1], bandit))));
-        commands.add("/help", new Command("/help",
+        commands.replace("/help", new Command("/help",
                 (player, args) -> publisher.reply(player,
                         player.getCurrentGame().equals("bandit") ? banditLogic.helpRequest()
                                 : player.getCurrentGame().equals("roulette") ? rouletteLogic.helpRequest() : "")));
