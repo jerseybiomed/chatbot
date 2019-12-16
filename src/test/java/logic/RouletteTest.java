@@ -4,9 +4,11 @@ import static org.junit.jupiter.api.Assertions.*;
 
 import game.Roulette;
 import org.junit.jupiter.api.Test;
+import web.Randomize;
 
 class RouletteTest {
-	Roulette roulette = new Roulette();
+	Randomize randomize = new Randomize();
+	Roulette roulette = new Roulette(randomize);
 
 	@Test
 	void testColorFirst() {
