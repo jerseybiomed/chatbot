@@ -1,4 +1,4 @@
-package logic;
+package logic.telegram;
 
 public class UserID {
     private long id = 0;

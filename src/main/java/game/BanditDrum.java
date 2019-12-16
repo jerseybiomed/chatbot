@@ -1,4 +1,4 @@
-package logic;
+package game;
 
 import web.Randomize;
 import java.io.IOException;
@@ -28,12 +28,12 @@ public class BanditDrum {
         currentComb = combination;
     }
 
-    public double getCoefficient() {
+    public int getCoefficient() {
         Combinator combinator = new Combinator();
         if (combinator.isFirstClassWinnerComb(currentComb))
-            return 2;
+            return 3;
         else if (combinator.isSecondClassWinnerComb(currentComb))
-            return 1.5;
+            return 2;
         else if (combinator.isBeautifulComb(currentComb))
             return 1;
         return 0;

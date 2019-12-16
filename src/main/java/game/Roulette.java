@@ -1,9 +1,10 @@
-package logic;
+package game;
 
 import java.io.IOException;
 import java.util.*;
 
 import bot.Bot;
+import logic.telegram.Player;
 import web.Randomize;
 
 /**
@@ -15,6 +16,8 @@ public class Roulette extends TimerTask {
     private Randomize randomize;
     private List<Integer> red = Arrays.asList(32, 19, 21, 25, 34, 27, 36, 30, 23, 5, 16, 1, 14, 9, 18, 7, 12, 3);
     private List<Integer> black = Arrays.asList(15, 4, 2, 17, 6, 13, 11, 8, 10, 24, 33, 20, 31, 22, 29, 28, 35, 26);
+    private HashSet<Player> players = new HashSet<>();
+    private HashMap<Player, String[]> bets = new HashMap<>();
     public static String Help =
             "You are greeted by a Roulette\n" +
                     "To play enter '/red' or '/black' and the bet amount separated by a space\n" +
@@ -41,11 +44,24 @@ public class Roulette extends TimerTask {
     @Override
     public void run() {
         String request = "https://www.random.org/integers/?num=10&min=0&max=36&col=1&base=10&format=plain&rnd=new";
-        try {
-            this.bot.perform(new String[] {"sayResult", Integer.toString(randomize.Next(request))});
-        } catch (IOException e) {
-			e.printStackTrace();
-		}
+        if (players.size() > 0) {
+            try {
+                for (Player player : players) {
+                    int result = randomize.Next(request);
+                    if (bets.containsKey(player)) {
+                        int res = betResult(player, bets.get(player), result);
+                        bets.remove(player);
+                        this.bot.perform(player, new String[]{"sayResult", "Your win: " + res + "Current balance: "
+                                    + player.getRouletteBalance()});
+                    }
+                    else {
+                        this.bot.perform(player, new String[]{"sayResult", Integer.toString(result)});
+                    }
+                }
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
     }
 
     public void Start() {
@@ -56,15 +72,41 @@ public class Roulette extends TimerTask {
         return new Date().getTime() - this.scheduledExecutionTime();
     }
 
-    public double getCoefficient(int result, String bet) {
+    public int getCoefficient(int result, String bet) {
         if (bet.equals(Integer.toString(result)))
-                return 36.0;
+                return 36;
          else if (bet.equals(getColor(result)))
-             return 2.0;
+             return 2;
          return 0;
     }
 
     public String getColor(int result) {
         return red.contains(result) ? "red" : black.contains(result) ? "black" : "green";
     }
+
+    public void bet(Player player, String[] bet) {
+        if (bets.containsKey(player))
+            bets.replace(player, bet);
+        else
+            bets.put(player, bet);
+    }
+
+    public void removePlayer(Player player) {
+        players.remove(player);
+    }
+
+    public void addPlayer(Player player) {
+        players.add(player);
+        if (player.getRouletteBalance() <= 0)
+            player.setRouletteBalance(10000);
+    }
+
+    private Integer betResult(Player player, String[] bet, int result) {
+        int res = getCoefficient(result, bet[0]) * Integer.parseInt(bet[1]);
+        player.setRouletteBalance(player.getRouletteBalance() + res - Integer.parseInt(bet[1]));
+        return res;
+    }
+
+    public HashSet<Player> getPlayers() {return players;}
+
 }

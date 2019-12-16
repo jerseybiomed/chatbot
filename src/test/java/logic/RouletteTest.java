@@ -2,6 +2,7 @@ package logic;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+import game.Roulette;
 import org.junit.jupiter.api.Test;
 
 class RouletteTest {

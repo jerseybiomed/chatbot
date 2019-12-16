@@ -1,5 +1,6 @@
-package logic;
+package game;
 
+import logic.telegram.Player;
 import web.Randomize;
 
 import java.util.AbstractMap.SimpleEntry;
@@ -27,8 +28,9 @@ public class Bandit {
         this.drum = new BanditDrum(randomize);
     }
 
-    public SimpleEntry<String, Double> roll(int bet) {
+    public SimpleEntry<String, Integer> roll(Player player, int bet) {
         drum.nextCombination();
+        player.setBanditBalance(player.getBanditBalance() + bet * (drum.getCoefficient() - 1));
         return new SimpleEntry<>(drum.getCombination(), bet * drum.getCoefficient());
     }
 

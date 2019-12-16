@@ -1,12 +1,13 @@
 package bot;
 
-import org.telegram.telegrambots.bots.TelegramLongPollingBot;
-import org.telegram.telegrambots.meta.api.objects.Update;
+import logic.telegram.Player;
+import logic.Publisher;
+import logic.Subscriber;
 
 /**
  * Bot
  */
-public class Bot {
+public class Bot implements Subscriber<String> {
     protected CommandRegistry<Command> commands = new CommandRegistry<Command>();
 
     public Bot() {
@@ -15,14 +16,18 @@ public class Bot {
         ECommands.Roll.sendTo(commands::add);
     }
 
-    public void perform(final String[] args) {
+    public void perform(Player player, String[] args) {
         Bot.assertArgsNotNull(args);
         this.commands.get(args[0]).setArgs(args).run();
     }
 
-    private static void assertArgsNotNull(String[] args) {
+    protected static void assertArgsNotNull(String[] args) {
         if (args == null || args.length == 0)
             throw new RuntimeException("Invalid arguments");
     }
 
+    @Override
+    public void listen(Publisher<String> from, Player player, String args) {
+        this.perform(player, args.split(" "));
+    }
 }

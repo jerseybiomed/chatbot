@@ -1,12 +1,10 @@
 package com;
 
-import logic.*;
-import bot.Bot;
-
-import org.telegram.telegrambots.ApiContextInitializer;
-import org.telegram.telegrambots.meta.TelegramBotsApi;
-import org.telegram.telegrambots.meta.exceptions.TelegramApiRequestException;
+import game.Bandit;
+import game.Roulette;
+import logic.dialog.Casino;
 import web.Randomize;
+import logic.telegram.Telegram;
 
 /**
  * App
@@ -17,5 +15,9 @@ public class App {
         Randomize randomize = new Randomize();
         Bandit bandit = new Bandit(randomize);
         Roulette roulette = new Roulette(randomize);
+        Casino casino = new Casino(bandit, roulette);
+        Telegram telegram = new Telegram();
+        telegram.connect(casino);
+        telegram.run();
     }
 }
