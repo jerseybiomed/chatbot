@@ -45,8 +45,8 @@ public class Roulette extends TimerTask {
     public void run() {
         String request = "https://www.random.org/integers/?num=10&min=0&max=36&col=1&base=10&format=plain&rnd=new";
         try {
-            for (Player player : players)
-                bot.perform(player, new String[]{"sayResult", Integer.toString(randomize.Next(request))});
+            int result = randomize.Next(request);
+            sendResult(result);
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -93,6 +93,11 @@ public class Roulette extends TimerTask {
         int res = getCoefficient(result, bet[0]) * Integer.parseInt(bet[1]);
         player.setRouletteBalance(player.getRouletteBalance() + res - Integer.parseInt(bet[1]));
         return res;
+    }
+
+    private void sendResult(int result) {
+        for (Player player : players)
+            bot.perform(player, new String[]{"sayResult", Integer.toString(result)});
     }
 
     public HashSet<Player> getPlayers() {return players;}
