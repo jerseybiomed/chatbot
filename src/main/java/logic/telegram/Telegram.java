@@ -68,6 +68,7 @@ implements Publisher<String>, Connector<Subscriber<String>> {
     public void reply(Player player, String answer) {
         SendMessage sendMessage = messages.get(player);
         sendMessage.setText(answer);
+        player.changeCurrentGame();
         try {
             this.execute(sendMessage);
         } catch (TelegramApiException e) {
@@ -82,18 +83,18 @@ implements Publisher<String>, Connector<Subscriber<String>> {
 
     private ReplyKeyboardMarkup getKeyboard(Player player, String text) {
         if (text.equals("/start") || text.equals("/back")) {
-            player.setCurrentGame("start");
+            player.setNextGame("start");
         } else if (text.equals("/bandit")) {
-            player.setCurrentGame("bandit");
+            player.setNextGame("bandit");
         } else if (text.equals("/roulette")) {
-            player.setCurrentGame("roulette");
+            player.setNextGame("roulette");
         } else if (player.getCurrentGame().equals("roulette") && player.getRouletteBalance() <= 0) {
-            player.setCurrentGame("start");
+            player.setNextGame("start");
         } else if (player.getCurrentGame().equals("bandit") && player.getBanditBalance() <= 0) {
-            player.setCurrentGame("start");
+            player.setNextGame("start");
         }
-        return player.getCurrentGame().equals("roulette") ? rouletteKeyboard
-                : player.getCurrentGame().equals("bandit") ? banditKeyboard : startKeyboard;
+        return player.getNextGame().equals("roulette") ? rouletteKeyboard
+                : player.getNextGame().equals("bandit") ? banditKeyboard : startKeyboard;
     }
 
     private void setBanditKeyboard() {
