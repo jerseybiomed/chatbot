@@ -5,11 +5,13 @@ import game.Roulette;
 import logic.telegram.Player;
 
 import java.net.Inet4Address;
+import java.util.HashMap;
 import java.util.HashSet;
 
 public class RouletteLogic {
     private Bot bot;
     private HashSet<Player> players;
+    private HashMap<Player, String[]> bets;
 
     public void setBot(Bot bot) {
         this.bot = bot;
@@ -29,6 +31,14 @@ public class RouletteLogic {
     }
 
     public String checkResult(Player player, String result, Roulette roulette) {
+        int res = Integer.parseInt(result);
+        bets = roulette.getBets();
+        if (bets.containsKey(player)) {
+            String[] bet = bets.get(player);
+            int betResult = roulette.betResult(player, bet, res);
+            bets.remove(player);
+            result += "\nYou win: " + betResult + "\n Current balance: " + player.getRouletteBalance();
+        }
         if (player.getRouletteBalance() <= 0) {
             roulette.removePlayer(player);
             result += "\nYou lost all money\nThe guards kicked you out\nGood Luck and Have Fun!";

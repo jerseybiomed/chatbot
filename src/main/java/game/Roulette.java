@@ -44,23 +44,11 @@ public class Roulette extends TimerTask {
     @Override
     public void run() {
         String request = "https://www.random.org/integers/?num=10&min=0&max=36&col=1&base=10&format=plain&rnd=new";
-        if (players.size() > 0) {
-            try {
-                for (Player player : players) {
-                    int result = randomize.Next(request);
-                    if (bets.containsKey(player)) {
-                        int res = betResult(player, bets.get(player), result);
-                        bets.remove(player);
-                        this.bot.perform(player, new String[]{"sayResult", "Your win: " + res + "Current balance: "
-                                    + player.getRouletteBalance()});
-                    }
-                    else {
-                        this.bot.perform(player, new String[]{"sayResult", Integer.toString(result)});
-                    }
-                }
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
+        try {
+            for (Player player : players)
+                bot.perform(player, new String[]{"sayResult", Integer.toString(randomize.Next(request))});
+        } catch (IOException e) {
+            e.printStackTrace();
         }
     }
 
@@ -101,12 +89,14 @@ public class Roulette extends TimerTask {
             player.setRouletteBalance(10000);
     }
 
-    private Integer betResult(Player player, String[] bet, int result) {
+    public Integer betResult(Player player, String[] bet, int result) {
         int res = getCoefficient(result, bet[0]) * Integer.parseInt(bet[1]);
         player.setRouletteBalance(player.getRouletteBalance() + res - Integer.parseInt(bet[1]));
         return res;
     }
 
     public HashSet<Player> getPlayers() {return players;}
+
+    public HashMap<Player, String[]> getBets() {return bets;}
 
 }

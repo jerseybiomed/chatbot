@@ -26,7 +26,7 @@ public class Casino extends Bot {
         commands.add("/back", new Command("/back",
                 (player, args) -> publisher.reply(player,
                         player.getCurrentGame().equals("roulette") ? rouletteLogic.backRequest(player, roulette)
-                                : player.getCurrentGame().equals("bandit") ? banditLogic.backRequest() : "")));
+                                : player.getCurrentGame().equals("bandit") ? banditLogic.backRequest() : "Choose")));
         commands.add("sayResult", new Command("sayResult",
                 (player, args) -> publisher.reply(player, rouletteLogic.checkResult(player, args[1], roulette))));
         commands.add("attention", new Command("attention",
