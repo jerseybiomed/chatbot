@@ -92,6 +92,7 @@ public class Roulette extends TimerTask {
     public Integer betResult(Player player, String[] bet, int result) {
         int res = getCoefficient(result, bet[0]) * Integer.parseInt(bet[1]);
         player.setRouletteBalance(player.getRouletteBalance() + res - Integer.parseInt(bet[1]));
+        bets.remove(player);
         return res;
     }
 
@@ -100,8 +101,8 @@ public class Roulette extends TimerTask {
             bot.perform(player, new String[]{"sayResult", Integer.toString(result)});
     }
 
-    public HashSet<Player> getPlayers() {return players;}
+    public HashSet<Player> getPlayers() {return new HashSet<Player>(players);}
 
-    public HashMap<Player, String[]> getBets() {return bets;}
+    public HashMap<Player, String[]> getBets() {return new HashMap<Player, String[]>(bets);}
 
 }

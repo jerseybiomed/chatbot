@@ -32,12 +32,11 @@ public class RouletteLogic {
 
     public String checkResult(Player player, String result, Roulette roulette) {
         int res = Integer.parseInt(result);
-        result += " " + roulette.getColor(res);
+        result += " " + roulette.getColor(res).toUpperCase();
         bets = roulette.getBets();
         if (bets.containsKey(player)) {
             String[] bet = bets.get(player);
             int betResult = roulette.betResult(player, bet, res);
-            bets.remove(player);
             result +=  "\nYou win: " + betResult + "\n Current balance: " + player.getRouletteBalance();
         }
         if (player.getRouletteBalance() <= 0) {
