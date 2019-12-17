@@ -56,5 +56,28 @@ class RouletteLogicTest {
 		assertEquals(rouletteLogic.rouletteRequest(player11, roulette), Roulette.Help);
 		assertEquals(rouletteLogic.rouletteRequest(player1, roulette), "Not enough seats");
 	}
+	
+	@Test
+	void testBet() {
+		RouletteLogic rouletteLogic = bot.getRouletteLogic();
+		rouletteLogic.rouletteRequest(player1, roulette);
+		rouletteLogic.rouletteRequest(player2, roulette);
+		String[] bet = new String[] {"/bet", "red", "100"};
+		rouletteLogic.betRequest(player1, bet, roulette);
+		assertEquals(rouletteLogic.checkResult(player1, "32", roulette), "32 RED\nYou win: 200" + "\n Current balance: 10100");
+		assertEquals(rouletteLogic.checkResult(player2, "32", roulette), "32 RED");
+	}
+	
+	@Test
+	void testRulesReruest() {
+		RouletteLogic rouletteLogic = bot.getRouletteLogic();
+		assertEquals(rouletteLogic.rulesRequest(), Roulette.Rules);
+	}
+	
+	@Test
+	void testHelpRequest() {
+		RouletteLogic rouletteLogic = bot.getRouletteLogic();
+		assertEquals(rouletteLogic.helpRequest(), Roulette.Help);
+	}
 
 }

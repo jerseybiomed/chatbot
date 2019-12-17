@@ -21,7 +21,7 @@ public class App {
         Bandit bandit = new Bandit(randomize);
         Roulette roulette = new Roulette(randomize);
         Casino casino = new Casino(bandit, roulette);
-        Telegram telegram = new Telegram();
+        Telegram telegram = new Telegram(System.getenv("BOT_USERNAME"), System.getenv("BOT_TOKEN"));
         telegram.connect(casino);
         try {
             botsApi.registerBot(telegram);

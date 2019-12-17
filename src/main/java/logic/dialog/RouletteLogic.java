@@ -47,8 +47,8 @@ public class RouletteLogic {
     }
 
     public String backRequest(Player player, Roulette roulette) {
-        players = roulette.getPlayers();
         roulette.removePlayer(player);
+        players = roulette.getPlayers();
         for (Player gamer : players)
             bot.perform(gamer, new String[]{"attention", "Goodbye " + player.getPlayerNickname() +
                     "\nAvailable seats: " + (10 - players.size())});

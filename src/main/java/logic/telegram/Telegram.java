@@ -25,8 +25,12 @@ implements Publisher<String>, Connector<Subscriber<String>> {
     private ReplyKeyboardMarkup rouletteKeyboard = new ReplyKeyboardMarkup();
     private ReplyKeyboardMarkup startKeyboard = new ReplyKeyboardMarkup();
     private int numberPlayers = 0;
+    private String userName;
+    private String token;
 
-    public Telegram() {
+    public Telegram(String name, String token) {
+        userName = name;
+        this.token = token;
         setBanditKeyboard();
         setRouletteKeyboard();
         setStartKeyboard();
@@ -50,12 +54,12 @@ implements Publisher<String>, Connector<Subscriber<String>> {
 
     @Override
     public String getBotUsername() {
-        return "Casino";
+        return userName;
     }
 
     @Override
     public String getBotToken() {
-        return "1063391024:AAEiyRp_uaLsG23vGAe84zlSidDdWzV2xb4";
+        return token;
     }
 
     @Override
