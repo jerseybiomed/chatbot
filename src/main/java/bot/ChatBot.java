@@ -1,34 +1,22 @@
 package bot;
 
-import java.util.Arrays;
-
-import messagestream.speakers.Speaker;
+import java.util.HashMap;
 
 /**
  * ChatBot
  */
-public class ChatBot
-extends Bot {
-    private Speaker<String> answerer;
+public class ChatBot {
+    protected final HashMap<Customer, CustomerData> customerBasa = new HashMap<>();
+    private final TaskCrafter crafter;
 
-    public ChatBot(Speaker<String> m_answerer) {
-        super();
-        this.answerer = m_answerer;
-        ECommands.Say.sendTo(this.commands::add, this::say);
+    public ChatBot(final TaskCrafter m_crafter) {
+        this.crafter = m_crafter;
     }
 
-    @Override
-    public void listen(String[] args) {
-        this.answerer = null;
-        super.listen(args);
-    }
-
-    private void say(String... args) {
-        this.answerer.say(String.join(" ", Arrays.copyOfRange(args, 1, args.length)));
-    }
-
-    public ChatBot setAnswerer(Speaker<String> m_answerer) {
-        this.answerer = m_answerer;
-        return this;
+    public void perform(Request request) {
+        Customer customer = request.customer;
+        CustomerData data = this.customerBasa.get(customer);
+        CustomerState state = data.state;
+        Task task = this.crafter.craft(request.message, state);
     }
 }
