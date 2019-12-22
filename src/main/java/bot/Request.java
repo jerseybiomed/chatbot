@@ -4,7 +4,6 @@ package bot;
  * Request
  */
 public class Request {
-
     public final Customer customer;
     public final String message;
 

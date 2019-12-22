@@ -7,14 +7,25 @@ import java.util.HashMap;
  */
 public class ChatBot {
     protected final HashMap<Customer, CustomerData> customerBasa = new HashMap<>();
+    private final Game menu;
 
-    public ChatBot(final TaskCrafter m_crafter) {
+    public ChatBot(final Game m_menu, final Game... games) {
+        this.menu = m_menu;
     }
 
-    public void perform(Request request) {
+    public void register(Customer customer, Sender replySender) {
+        this.customerBasa.put(customer, new CustomerData(menu, replySender));
+    }
+
+    public void perform(final Request request) {
         Customer customer = request.customer;
         CustomerData data = this.customerBasa.get(customer);
         CustomerState state = data.state;
-        Task task = state.crafter.craft(request.message, state);
+        TaskCrafter crafter = state.crafter;
+        Game game = state.game;
+        Sender reply = data.replySender;
+        String[] args = request.message.split(" ");
+        Task task = crafter.craft(args);
+        task.perform(game, reply);
     }
 }
