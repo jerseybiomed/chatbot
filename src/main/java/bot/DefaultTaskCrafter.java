@@ -4,18 +4,18 @@ package bot;
  * DefaultTaskCrafter
  */
 public class DefaultTaskCrafter
-extends TaskCrafter {
+extends TaskCrafter<Game> {
     protected class TaskHelp
-    extends Task {
+    extends Task<Game> {
 
         @Override
-        public void perform(Game game, Sender sender) {
+        public void perform(final Game game, final Sender sender) {
             sender.send(game.getHelp());
         }
     }
 
     @Override
-    public Task craft(final String[] args) {
+    public Task<Game> craft(final String[] args) {
         switch (args[0]) {
             case "help":
                 return new TaskHelp();

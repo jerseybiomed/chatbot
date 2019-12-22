@@ -7,14 +7,16 @@ import java.util.HashMap;
  */
 public class ChatBot {
     protected final HashMap<Customer, CustomerData> customerBasa = new HashMap<>();
-    private final Game menu;
+    private final MenuFabric menu;
 
-    public ChatBot(final Game m_menu, final Game... games) {
+    public ChatBot(final MenuFabric m_menu) {
         this.menu = m_menu;
     }
 
     public void register(Customer customer, Sender replySender) {
-        this.customerBasa.put(customer, new CustomerData(menu, replySender));
+        this.customerBasa.put(customer, new CustomerData(replySender));
+        CustomerState exState = this.customerBasa.get(customer).state;
+        exState.setGame(this.menu.newGame(exState));
     }
 
     public void perform(final Request request) {

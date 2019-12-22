@@ -4,14 +4,26 @@ package bot;
  * MenuTaskCrafter
  */
 public class MenuTaskCrafter
-extends TaskCrafter {
+extends TaskCrafter<Menu> {
+    protected class ChooseTask
+    extends Task<Menu> {
+        private final String choice;
 
+        public ChooseTask(final String m_choice) {
+            this.choice = m_choice;
+        }
+
+        @Override
+        public void perform(Menu menu, Sender sender) {
+            menu.choose(this.choice);
+        }
+    }
 
     @Override
     public Task craft(final String[] args) {
         switch (args[0]) {
-            default:
-                break;
+            case "choose":
+                return new ChooseTask(args[1]);
         }
         return new DefaultTaskCrafter().craft(args);
     }

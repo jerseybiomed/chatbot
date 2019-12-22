@@ -3,7 +3,7 @@ package bot;
 /**
  * Task
  */
-public abstract class Task {
+public abstract class Task<T extends Game> {
 
-    public abstract void perform(final Game game, final Sender sender);
+    public abstract void perform(final T game, final Sender replySender);
 }

@@ -3,7 +3,7 @@ package bot;
 /**
  * TaskCrafter
  */
-public abstract class TaskCrafter {
+public abstract class TaskCrafter<T extends Game> {
 
-    public abstract Task craft(final String[] args);
+    public abstract Task<T> craft(final String[] args);
 }

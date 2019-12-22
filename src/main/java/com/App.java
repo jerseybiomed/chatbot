@@ -7,7 +7,10 @@ import bot.ConsoleCustomer;
 import bot.ConsoleSender;
 import bot.Customer;
 import bot.Menu;
+import bot.MenuFabric;
 import bot.MenuTaskCrafter;
+import bot.SimpleGame;
+import bot.SimpleGameFabric;
 
 /**
  * BanditBot Launch
@@ -15,7 +18,7 @@ import bot.MenuTaskCrafter;
 public final class App {
 
     public static void main(final String[] args) {
-        ChatBot bot = new ChatBot(new Menu(new MenuTaskCrafter()));
+        ChatBot bot = new ChatBot(new MenuFabric(new SimpleGameFabric()));
         Customer nia = new ConsoleCustomer("Pasha");
         bot.register(nia, new ConsoleSender());
         Console cons = System.console();
