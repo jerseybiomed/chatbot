@@ -5,9 +5,9 @@ package bot;
  */
 public class CustomerData {
     public final CustomerState state = new CustomerState(new TaskCrafter());
-    public final Sender replySender;
+    public final Publisher replyPublisher;
 
-    public CustomerData(final Sender m_replySender) {
-        this.replySender = m_replySender;
+    public CustomerData(final Publisher m_replyPublisher) {
+        this.replyPublisher = m_replyPublisher;
     }
 }
