@@ -5,10 +5,9 @@ package bot;
  */
 public class SimpleGame
 extends Game {
-    protected final CustomerState customer;
 
-    public SimpleGame(final CustomerState m_state) {
-        this.customer = m_state;
+    public SimpleGame(final Game from, final CustomerState exState) {
+        super(from, exState);
     }
 
     @Override

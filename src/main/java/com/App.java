@@ -6,10 +6,7 @@ import bot.ChatBot;
 import bot.ConsoleCustomer;
 import bot.ConsoleSender;
 import bot.Customer;
-import bot.Menu;
 import bot.MenuFabric;
-import bot.MenuTaskCrafter;
-import bot.SimpleGame;
 import bot.SimpleGameFabric;
 
 /**

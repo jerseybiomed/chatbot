@@ -4,11 +4,11 @@ package bot;
  * SimpleGameFabric
  */
 public class SimpleGameFabric
-extends GameFabric<SimpleGame> {
+extends GameFabricSuper<SimpleGame> {
 
     @Override
     public SimpleGame newGame(CustomerState state) {
-        return new SimpleGame(state);
+        return new SimpleGame(this.menu, state);
     }
 
     @Override

@@ -9,14 +9,14 @@ import java.util.function.Function;
 public class Menu
 extends Game {
     private final TaskCrafter<Menu> crafter;
-    protected final CustomerState externalState; 
     private final String help = "help of this bot";
     protected final HashMap<String, Function<CustomerState, Game>> games = new HashMap<>();
 
-    public Menu(final TaskCrafter<Menu> m_crafter, final CustomerState m_state, final GameFabric... fabrics) {
+    public Menu(final TaskCrafter<Menu> m_crafter, final CustomerState m_exState, final GameFabricSuper... fabrics) {
+        super(m_exState);
         this.crafter = m_crafter;
-        this.externalState = m_state;
-        for (GameFabric fabric : fabrics) {
+        for (GameFabricSuper fabric : fabrics) {
+            fabric.setMenu(this);
             this.games.put(fabric.getGameName(), fabric::newGame);
         }
     }
@@ -32,6 +32,6 @@ extends Game {
     }
 
     public void choose(final String choice) {
-        this.externalState.setGame(this.games.get(choice).apply(this.externalState));
+        this.exState.setGame(this.games.get(choice).apply(this.exState));
     }
 }
