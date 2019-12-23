@@ -1,12 +1,21 @@
 package bot;
 
+import customer.Customer;
+import customer.CustomerData;
+import customer.CustomerState;
+import games.GameClient;
+import games.menu.MenuFabric;
+import logic.Sender;
+import task.Task;
+import task.TaskCreator;
+
 import java.util.HashMap;
 
 /**
  * ChatBot
  */
 public class ChatBot {
-    protected final HashMap<Customer, CustomerData> customerBase = new HashMap<>();
+    private final HashMap<Customer, CustomerData> customerBase = new HashMap<>();
     private final MenuFabric menu;
 
     public ChatBot(final MenuFabric m_menu) {
@@ -24,11 +33,11 @@ public class ChatBot {
         Customer customer = request.customer;
         CustomerData data = this.customerBase.get(customer);
         CustomerState state = data.state;
-        TaskCrafter crafter = state.crafter;
-        Game game = state.game;
+        TaskCreator<GameClient> creator = state.getCreator();
+        GameClient gameClient = state.getGame();
         Sender reply = data.replySender;
         String[] args = request.message.split(" ");
-        Task task = crafter.craft(args);
-        task.perform(game, reply);
+        Task<GameClient> task = creator.create(args);
+        task.perform(gameClient, reply);
     }
 }

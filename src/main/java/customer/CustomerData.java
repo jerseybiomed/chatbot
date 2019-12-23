@@ -1,4 +1,6 @@
-package bot;
+package customer;
+
+import logic.Sender;
 
 /**
  * CustomerData
