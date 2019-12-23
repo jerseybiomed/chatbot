@@ -39,6 +39,8 @@ public class BanditTaskCreator extends TaskCreator<BanditClient> {
     public Task create(String[] args) {
         switch (args[0]) {
             case "roll":
+                if (args.length < 1)
+                    return new EmptyTask();
                 return new RollTask(Integer.parseInt(args[1]));
             case "rule":
                 return new RuleTask();

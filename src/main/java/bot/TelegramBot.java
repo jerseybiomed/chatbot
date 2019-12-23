@@ -5,6 +5,7 @@ import org.telegram.telegrambots.meta.api.objects.Update;
 
 import bot.ChatBot;
 import customer.TelegramCustomer;
+import logic.telegram.TelegramSender;
 
 /**
  * TelegramBot
@@ -18,7 +19,10 @@ public class TelegramBot extends TelegramLongPollingBot {
 
     @Override
     public void onUpdateReceived(Update update) {
-        bot.perform(new bot.Request(new TelegramCustomer(update.getMessage().getChatId()), update.getMessage().getText()));
+        if (update.getMessage().getText().equals("/start"))
+            bot.register(new TelegramCustomer(update.getMessage().getChatId()), new TelegramSender(update.getMessage().getChatId()));
+        else
+            bot.perform(new bot.Request(new TelegramCustomer(update.getMessage().getChatId()), update.getMessage().getText()));
     }
 
     @Override

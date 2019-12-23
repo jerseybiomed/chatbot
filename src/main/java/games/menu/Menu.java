@@ -35,6 +35,7 @@ extends GameClient {
     }
 
     public void choose(final String choice) {
-        this.exState.setGame(this.games.get(choice).newGame(this, this.exState));
+        if (games.containsKey(choice))
+            this.exState.setGame(this.games.get(choice).newGame(this, this.exState));
     }
 }

@@ -26,6 +26,8 @@ extends TaskCreator<Menu> {
     public Task create(final String[] args) {
         switch (args[0]) {
             case "choose":
+                if (args.length < 1)
+                    return new EmptyTask();
                 return new ChooseTask(args[1]);
         }
         return new DefaultTaskCreator().create(args);

@@ -86,6 +86,8 @@ extends TaskCreator<RouletteClient> {
             case "launch":
                 return new LaunchTask();
             case "bet":
+                if (args.length < 2)
+                    return new EmptyTask();
                 return new BetTask(Integer.parseInt(args[1]), args[2]);
             case "rule":
                 return new RuleTask();
