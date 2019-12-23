@@ -5,9 +5,9 @@ package bot;
  */
 public class MenuFabric
 extends GameFabric<Menu> {
-    private GameFabric[] fabrics;
+    private GameFabricSuper[] fabrics;
 
-    public MenuFabric(GameFabric... m_fabrics) {
+    public MenuFabric(GameFabricSuper... m_fabrics) {
         this.fabrics = m_fabrics;
     }
 
