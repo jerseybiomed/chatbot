@@ -1,8 +1,7 @@
 package logic;
 
-import logic.telegram.Player;
+import game.UserId;
 
 public interface Publisher<T> {
-    void say(Player player, T message);
-    void reply(Player player, T answer);
+    void publish(UserId id, T message);
 }

@@ -1,7 +1,7 @@
 package logic;
 
-import logic.telegram.Player;
+import game.UserId;
 
 public interface Subscriber<T> {
-    void listen(Publisher<T> from, Player player, T data);
+    void listen(UserId id, T data);
 }
