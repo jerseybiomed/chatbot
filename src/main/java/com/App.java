@@ -1,6 +1,7 @@
 package com;
 
 import java.io.Console;
+import java.util.Scanner;
 
 import bot.ChatBot;
 import bot.ConsoleCustomer;
@@ -21,9 +22,9 @@ public final class App {
         ChatBot bot = new ChatBot(new MenuFabric(new SimpleGameFabric()));
         Customer nia = new ConsoleCustomer("Pasha");
         bot.register(nia, new ConsoleSender());
-        Console cons = System.console();
+        Scanner cons = new Scanner(System.in);
         while (true) {
-            bot.perform(new bot.Request(nia, cons.readLine()));
+            bot.perform(new bot.Request(nia, cons.nextLine()));
         }
     }
 }

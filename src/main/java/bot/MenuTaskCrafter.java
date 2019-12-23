@@ -5,7 +5,7 @@ package bot;
  */
 public class MenuTaskCrafter
 extends TaskCrafter<Menu> {
-    protected class ChooseTask
+    protected static class ChooseTask
     extends Task<Menu> {
         private final String choice;
 
