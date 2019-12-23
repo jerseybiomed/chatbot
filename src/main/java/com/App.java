@@ -4,10 +4,13 @@ import java.util.Scanner;
 
 import bot.ChatBot;
 import customer.ConsoleCustomer;
-import logic.console.ConsoleSender;
 import customer.Customer;
+import games.bandit.BanditFabric;
 import games.menu.MenuFabric;
-import games.simplegame.SimpleGameFabric;
+import games.roulette.Roulette;
+import games.roulette.RouletteFabric;
+import logic.console.ConsoleSender;
+import random.Randomize;
 
 /**
  * BanditBot Launch
@@ -15,12 +18,17 @@ import games.simplegame.SimpleGameFabric;
 public final class App {
 
     public static void main(final String[] args) {
-        ChatBot bot = new ChatBot(new MenuFabric(new SimpleGameFabric()));
-        Customer player = new ConsoleCustomer("Pasha");
-        bot.register(player, new ConsoleSender());
+        /*
+        EvGeni, look at the lines {} on class TelegramReqestStream
+        I trust you this qest
+        */
+        ChatBot bot = new ChatBot(new MenuFabric(
+            new BanditFabric(new Randomize()),
+            new RouletteFabric(new Roulette(new Randomize()))));
+        bot.register(new ConsoleCustomer("Pasha"), new ConsoleSender());
         Scanner cons = new Scanner(System.in);
         while (true) {
-            bot.perform(new bot.Request(player, cons.nextLine()));
+            bot.perform(new bot.Request(new ConsoleCustomer("Pasha"), cons.nextLine()));
         }
     }
 }

@@ -7,6 +7,7 @@ import customer.CustomerState;
  */
 public abstract class GameFabric<T extends GameClient> {
 
-    public abstract T newGame(final CustomerState state);
+    public T newGame(final GameClient from, final CustomerState state) { return null; }
+    public T newGame(final CustomerState state) { return null; }
     public abstract String getGameName();
 }

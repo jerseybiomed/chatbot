@@ -1,17 +1,18 @@
 package games.simplegame;
 
 import customer.CustomerState;
-import games.GameFabricSuper;
+import games.GameClient;
+import games.GameFabric;
 
 /**
  * SimpleGameFabric
  */
 public class SimpleGameFabric
-extends GameFabricSuper<SimpleGameClient> {
+extends GameFabric<SimpleGameClient> {
 
     @Override
-    public SimpleGameClient newGame(CustomerState state) {
-        return new SimpleGameClient(this.menu, state);
+    public SimpleGameClient newGame(GameClient from, CustomerState state) {
+        return new SimpleGameClient(from, state);
     }
 
     @Override

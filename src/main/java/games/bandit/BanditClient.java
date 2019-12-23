@@ -3,11 +3,13 @@ package games.bandit;
 import customer.CustomerState;
 import games.GameClient;
 import random.Randomize;
+import task.BanditTaskCreator;
 import task.TaskCreator;
 
 import java.io.IOException;
 
-public class BanditClient extends GameClient {
+public class BanditClient
+extends GameClient {
     private Randomize randomize;
     private int balance = 0;
     private int currentBet = 0;
@@ -36,8 +38,8 @@ public class BanditClient extends GameClient {
     }
 
     @Override
-    public TaskCreator<GameClient> getTaskCreator() {
-        return null;
+    public TaskCreator getTaskCreator() {
+        return new BanditTaskCreator();
     }
 
     @Override
@@ -49,7 +51,7 @@ public class BanditClient extends GameClient {
     	return this.rules;
     }
 
-    public void roll() {
+    public int roll() {
         String request = "https://www.random.org/integers/?num=10&min=1&max=50&col=1&base=10&format=plain&rnd=new";
         String combination = "";
         for (int i=0; i < 3; i++) {
@@ -61,8 +63,10 @@ public class BanditClient extends GameClient {
             }
         }
         this.currentCombination = combination;
-        this.currentBet = getCoefficient() * this.currentBet;
-        this.balance += this.currentBet;
+        int result = getCoefficient() * this.currentBet;
+        this.balance += result;
+        currentBet = 0;
+        return result;
     }
 
     public int getCoefficient() {
@@ -85,6 +89,7 @@ public class BanditClient extends GameClient {
     }
 
     public void bet(int bet) {
+        currentBet += bet;
         this.balance -= bet;
     }
 }

@@ -1,19 +1,17 @@
 package games.menu;
 
-import games.GameFabric;
-import games.GameFabricSuper;
-import games.menu.Menu;
-import task.MenuTaskCreator;
 import customer.CustomerState;
+import games.GameFabric;
+import task.MenuTaskCreator;
 
 /**
  * MenuFabric
  */
 public class MenuFabric
 extends GameFabric<Menu> {
-    private GameFabricSuper[] fabrics;
+    private GameFabric[] fabrics;
 
-    public MenuFabric(GameFabricSuper... m_fabrics) {
+    public MenuFabric(GameFabric... m_fabrics) {
         this.fabrics = m_fabrics;
     }
 

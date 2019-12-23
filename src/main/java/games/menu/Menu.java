@@ -1,12 +1,11 @@
 package games.menu;
 
+import java.util.HashMap;
+
 import customer.CustomerState;
 import games.GameClient;
-import games.GameFabricSuper;
+import games.GameFabric;
 import task.TaskCreator;
-
-import java.util.HashMap;
-import java.util.function.Function;
 
 /**
  * Menu
@@ -15,14 +14,13 @@ public class Menu
 extends GameClient {
     private final TaskCreator<Menu> creator;
     private final String help = "help of this bot";
-    protected final HashMap<String, Function<CustomerState, GameClient>> games = new HashMap<>();
+    protected final HashMap<String, GameFabric> games = new HashMap<>();
 
-    public Menu(final TaskCreator<Menu> m_creator, final CustomerState m_exState, final GameFabricSuper... fabrics) {
+    public Menu(final TaskCreator<Menu> m_creator, final CustomerState m_exState, final GameFabric... fabrics) {
         super(m_exState);
         this.creator = m_creator;
-        for (GameFabricSuper fabric : fabrics) {
-            fabric.setMenu(this);
-            this.games.put(fabric.getGameName(), fabric::newGame);
+        for (GameFabric fabric : fabrics) {
+            this.games.put(fabric.getGameName(), fabric);
         }
     }
 
@@ -37,6 +35,6 @@ extends GameClient {
     }
 
     public void choose(final String choice) {
-        this.exState.setGame(this.games.get(choice).apply(this.exState));
+        this.exState.setGame(this.games.get(choice).newGame(this, this.exState));
     }
 }

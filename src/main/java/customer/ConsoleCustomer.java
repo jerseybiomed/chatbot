@@ -10,4 +10,9 @@ extends Customer {
     public ConsoleCustomer(final String m_name) {
         this.name = m_name;
     }
+
+    @Override
+    public int hashCode() {
+        return name.hashCode();
+    }
 }
