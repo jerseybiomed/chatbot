@@ -1,9 +1,9 @@
 package bot;
 
 /**
- * Publisher
+ * Sender
  */
-public interface Publisher {
+public interface Sender {
 
     void send(String message);
 }
