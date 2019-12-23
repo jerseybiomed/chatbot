@@ -1,9 +1,12 @@
-package bot;
+package customer;
+
+import logic.Sender;
 
 /**
  * CustomerData
  */
 public class CustomerData {
+
     public final CustomerState state;
     public final Sender replySender;
 

@@ -1,9 +1,11 @@
-package bot;
+package games;
+
+import games.menu.Menu;
 
 /**
  * GameFabricSuper
  */
-public abstract class GameFabricSuper<T extends Game>
+public abstract class GameFabricSuper<T extends GameClient>
 extends GameFabric<T> {
     protected Menu menu;
 

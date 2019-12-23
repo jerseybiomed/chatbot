@@ -1,4 +1,6 @@
-package bot;
+package logic.console;
+
+import logic.Sender;
 
 /**
  * ConsoleSender

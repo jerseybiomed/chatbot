@@ -1,11 +1,14 @@
-package bot;
+package task;
+
+import games.menu.Menu;
+import logic.Sender;
 
 /**
- * MenuTaskCrafter
+ * MenuTaskCreator
  */
-public class MenuTaskCrafter
-extends TaskCrafter<Menu> {
-    protected class ChooseTask
+public class MenuTaskCreator
+extends TaskCreator<Menu> {
+    protected static class ChooseTask
     extends Task<Menu> {
         private final String choice;
 
@@ -20,11 +23,11 @@ extends TaskCrafter<Menu> {
     }
 
     @Override
-    public Task craft(final String[] args) {
+    public Task create(final String[] args) {
         switch (args[0]) {
             case "choose":
                 return new ChooseTask(args[1]);
         }
-        return new DefaultTaskCrafter().craft(args);
+        return new DefaultTaskCreator().create(args);
     }
 }

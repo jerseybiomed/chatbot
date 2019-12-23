@@ -1,4 +1,10 @@
-package bot;
+package games.menu;
+
+import games.GameFabric;
+import games.GameFabricSuper;
+import games.menu.Menu;
+import task.MenuTaskCreator;
+import customer.CustomerState;
 
 /**
  * MenuFabric
@@ -13,7 +19,7 @@ extends GameFabric<Menu> {
 
     @Override
     public Menu newGame(CustomerState state) {
-        return new Menu(new MenuTaskCrafter(), state, this.fabrics);
+        return new Menu(new MenuTaskCreator(), state, this.fabrics);
     }
 
     @Override

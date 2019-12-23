@@ -1,4 +1,9 @@
-package bot;
+package games.menu;
+
+import customer.CustomerState;
+import games.GameClient;
+import games.GameFabricSuper;
+import task.TaskCreator;
 
 import java.util.HashMap;
 import java.util.function.Function;
@@ -7,14 +12,14 @@ import java.util.function.Function;
  * Menu
  */
 public class Menu
-extends Game {
-    private final TaskCrafter<Menu> crafter;
+extends GameClient {
+    private final TaskCreator<Menu> creator;
     private final String help = "help of this bot";
-    protected final HashMap<String, Function<CustomerState, Game>> games = new HashMap<>();
+    protected final HashMap<String, Function<CustomerState, GameClient>> games = new HashMap<>();
 
-    public Menu(final TaskCrafter<Menu> m_crafter, final CustomerState m_exState, final GameFabricSuper... fabrics) {
+    public Menu(final TaskCreator<Menu> m_creator, final CustomerState m_exState, final GameFabricSuper... fabrics) {
         super(m_exState);
-        this.crafter = m_crafter;
+        this.creator = m_creator;
         for (GameFabricSuper fabric : fabrics) {
             fabric.setMenu(this);
             this.games.put(fabric.getGameName(), fabric::newGame);
@@ -22,8 +27,8 @@ extends Game {
     }
 
     @Override
-    public TaskCrafter getTaskCrafter() {
-        return this.crafter;
+    public TaskCreator getTaskCreator() {
+        return this.creator;
     }
 
     @Override

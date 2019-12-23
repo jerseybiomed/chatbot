@@ -1,5 +1,7 @@
 package bot;
 
+import customer.Customer;
+
 /**
  * Request
  */
