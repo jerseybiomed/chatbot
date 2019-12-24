@@ -69,8 +69,7 @@ public class RouletteClient extends GameClient {
     }
 
     public int roll() {
-        result = 15;
-/////////////////////////////////////////////////////////////////////////
+        result = this.roulette.getNext();
         if (choice != null) {
             int change = getCoefficient() * currentBet;
             balance += change;
