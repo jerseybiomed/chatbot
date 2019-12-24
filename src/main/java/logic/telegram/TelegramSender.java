@@ -1,6 +1,5 @@
 package logic.telegram;
 
-import org.telegram.telegrambots.bots.TelegramLongPollingBot;
 import org.telegram.telegrambots.meta.api.methods.send.SendMessage;
 
 import logic.Sender;
@@ -9,22 +8,18 @@ import logic.Sender;
  * TelegramSender
  */
 public class TelegramSender
-implements Sender {
-    private TelegramLongPollingBot bot;
+implements Sender<String> {
+    private Sender<SendMessage> botSender;
     private long chatId;
 
-    public TelegramSender(TelegramLongPollingBot bot, long chatId) {
-        this.bot = bot;
+    public TelegramSender(Sender<SendMessage> botSender, long chatId) {
+        this.botSender = botSender;
         this.chatId = chatId;
     }
 
     @Override
     public void send(String message) {
         SendMessage msg = new SendMessage(chatId, message);
-        try {
-            bot.execute(msg);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+        botSender.send(msg);
     }
 }

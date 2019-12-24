@@ -3,7 +3,7 @@ package logic;
 /**
  * Sender
  */
-public interface Sender {
+public interface Sender<T> {
 
-    void send(String message);
+    void send(T message);
 }

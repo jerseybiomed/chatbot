@@ -6,7 +6,7 @@ import logic.Sender;
  * ConsoleSender
  */
 public class ConsoleSender
-implements Sender {
+implements Sender<String> {
 
     @Override
     public void send(String message) {

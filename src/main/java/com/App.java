@@ -4,6 +4,7 @@ import java.util.Scanner;
 
 import bot.ChatBot;
 import bot.TelegramBot;
+import bot.TelegramDispatcher;
 import customer.ConsoleCustomer;
 import games.bandit.BanditFabric;
 import games.menu.MenuFabric;
@@ -20,21 +21,15 @@ import random.Randomize;
  */
 public final class App {
 
-    public static void main(final String[] args) {/*
-        ChatBot bot = new ChatBot(new MenuFabric(
-            new RouletteFabric(new Roulette(new Randomize()))
-        ));
-        bot.register(new ConsoleCustomer("Pasha"), new ConsoleSender());
-        while (true) {
-            bot.perform(new bot.Request(new ConsoleCustomer("Pasha"), System.console().readLine()));
-        }*/
+    public static void main(final String[] args) {
         ApiContextInitializer.init();
         TelegramBotsApi botsApi = new TelegramBotsApi();
         ChatBot bot = new ChatBot(new MenuFabric(
             new BanditFabric(new Randomize()),
             new RouletteFabric(new Roulette(new Randomize()))));
-        TelegramBot telegram = new TelegramBot(bot
-                , System.getenv("BOT_USERNAME"), System.getenv("BOT_TOKEN"));
+        TelegramBot telegram = new TelegramBot(System.getenv("BOT_USERNAME"), System.getenv("BOT_TOKEN"));
+        TelegramDispatcher dispatcher = new TelegramDispatcher(telegram, bot);
+        telegram.pub(dispatcher);
         try {
             botsApi.registerBot(telegram);
         } catch (TelegramApiRequestException e) {
