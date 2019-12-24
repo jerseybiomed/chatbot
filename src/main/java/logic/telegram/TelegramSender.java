@@ -1,6 +1,7 @@
 package logic.telegram;
 
 import logic.Sender;
+import org.telegram.telegrambots.meta.api.methods.send.SendMessage;
 
 /**
  * TelegramSender
@@ -14,7 +15,5 @@ implements Sender {
     }
 
     @Override
-    public void send(String message) {
-
-    }
+    public void send(String message) {}
 }
