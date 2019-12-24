@@ -17,7 +17,7 @@ public class TestBot {
     /**
      * TestSender
      */
-    public class TestSender implements Sender {
+    public class TestSender implements Sender<String> {
         TestBot test;
 
         public TestSender(TestBot test) {

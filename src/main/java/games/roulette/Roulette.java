@@ -11,6 +11,11 @@ public class Roulette {
     }
 
     public int getNext() {
-        return this.randomize.Next(this.request);
+        try {
+            return this.randomize.Next(this.request);    
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return -1;
     }
 }
