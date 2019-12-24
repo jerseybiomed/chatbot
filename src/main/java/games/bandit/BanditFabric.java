@@ -22,6 +22,11 @@ extends GameFabric<BanditClient> {
     }
 
     @Override
+    public BanditClient newGame(CustomerState state) {
+        return new BanditClient(state, randomize);
+    }
+
+    @Override
     public String getGameName() {
         return "bandit";
     }    

@@ -37,6 +37,12 @@ extends GameClient {
         this.randomize = randomize;
     }
 
+    public BanditClient(final CustomerState exState, Randomize randomize) {
+        super(exState);
+        this.balance = 10000;
+        this.randomize = randomize;
+    }
+
     @Override
     public TaskCreator getTaskCreator() {
         return new BanditTaskCreator();
