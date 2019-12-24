@@ -14,9 +14,13 @@ import logic.telegram.TelegramSender;
  */
 public class TelegramBot extends TelegramLongPollingBot {
     protected final ChatBot bot;
+    private String userName;
+    private String token;
 
-    public TelegramBot(ChatBot bot) {
+    public TelegramBot(ChatBot bot, String userName, String token) {
         this.bot = bot;
+        this.userName = userName;
+        this.token = token;
     }
 
     @Override
@@ -29,11 +33,11 @@ public class TelegramBot extends TelegramLongPollingBot {
 
     @Override
     public String getBotUsername() {
-        return null;
+        return this.userName;
     }
 
     @Override
     public String getBotToken() {
-        return null;
+        return this.token;
     }
 }
