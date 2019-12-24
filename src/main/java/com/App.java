@@ -20,7 +20,14 @@ import random.Randomize;
  */
 public final class App {
 
-    public static void main(final String[] args) {
+    public static void main(final String[] args) {/*
+        ChatBot bot = new ChatBot(new MenuFabric(
+            new RouletteFabric(new Roulette(new Randomize()))
+        ));
+        bot.register(new ConsoleCustomer("Pasha"), new ConsoleSender());
+        while (true) {
+            bot.perform(new bot.Request(new ConsoleCustomer("Pasha"), System.console().readLine()));
+        }*/
         ApiContextInitializer.init();
         TelegramBotsApi botsApi = new TelegramBotsApi();
         ChatBot bot = new ChatBot(new MenuFabric(
