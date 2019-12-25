@@ -20,14 +20,14 @@ import random.Randomize;
  */
 public final class App {
     private static void telegramLaunch() {
+        ApiContextInitializer.init();
+        TelegramBotsApi botsApi = new TelegramBotsApi();
         ChatBot bot = new ChatBot(new MenuFabric(
             new BanditFabric(new Randomize()),
             new RouletteFabric(new Roulette(new Randomize()))));
         TelegramBot telegram = new TelegramBot(System.getenv("BOT_USERNAME"), System.getenv("BOT_TOKEN"));
         TelegramDispatcher dispatcher = new TelegramDispatcher(telegram, bot);
         telegram.pub(dispatcher);
-        ApiContextInitializer.init();
-        TelegramBotsApi botsApi = new TelegramBotsApi();
         try {
             botsApi.registerBot(telegram);
         } catch (TelegramApiRequestException e) {
