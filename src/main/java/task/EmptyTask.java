@@ -10,5 +10,5 @@ public class EmptyTask
 extends Task<GameClient> {
 
     @Override
-    public void perform(GameClient gameClient, Sender sender) {}
+    public void perform(GameClient gameClient, Sender<String> sender) {}
 }

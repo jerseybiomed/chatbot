@@ -17,7 +17,7 @@ extends TaskCreator<Menu> {
         }
 
         @Override
-        public void perform(Menu menu, Sender sender) {
+        public void perform(Menu menu, Sender<String> sender) {
             menu.choose(this.choice);
         }
     }

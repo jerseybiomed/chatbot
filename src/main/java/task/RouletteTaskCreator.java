@@ -17,9 +17,9 @@ extends TaskCreator<RouletteClient> {
         protected class RouletteTask
         extends TimerTask {
             private RouletteClient game;
-            private Sender reply;
+            private Sender<String> reply;
 
-            public RouletteTask(RouletteClient game, Sender replySender) {
+            public RouletteTask(RouletteClient game, Sender<String> replySender) {
                 this.game = game;
                 this.reply = replySender;
             }
@@ -35,7 +35,7 @@ extends TaskCreator<RouletteClient> {
         }
 
         @Override
-        public void perform(RouletteClient game, Sender replySender) {
+        public void perform(RouletteClient game, Sender<String> replySender) {
             game.launch(new RouletteTask(game, replySender));
         }
     }
@@ -51,7 +51,7 @@ extends TaskCreator<RouletteClient> {
         }
 
         @Override
-        public void perform(RouletteClient game, Sender replySender) {
+        public void perform(RouletteClient game, Sender<String> replySender) {
             if (game.isLaunched()) {
                 game.bet(bet, choice);
                 replySender.send("Bet " + Integer.toString(bet) + " on " + choice);
@@ -63,7 +63,7 @@ extends TaskCreator<RouletteClient> {
     extends Task<RouletteClient> {
 
         @Override
-        public void perform(RouletteClient game, Sender replySender) {
+        public void perform(RouletteClient game, Sender<String> replySender) {
             replySender.send(game.getRules());
         }
     }
@@ -72,7 +72,7 @@ extends TaskCreator<RouletteClient> {
     extends Task<RouletteClient> {
 
         @Override
-        public void perform(RouletteClient game, Sender replySender) {
+        public void perform(RouletteClient game, Sender<String> replySender) {
             game.leave();
             game.back();
         }
