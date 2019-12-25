@@ -22,6 +22,6 @@ extends GameFabric<Menu> {
 
     @Override
     public String getGameName() {
-        return "menu";
+        return Menu.getName();
     }
 }
