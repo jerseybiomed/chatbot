@@ -26,7 +26,5 @@ public abstract class GameClient {
         state.focus.setGame(this.from);
     }
 
-    public static String getName() {
-        return "game";
-    }
+    public abstract String getGameName();
 }

@@ -13,7 +13,7 @@ extends TaskCreator<GameClient> {
     extends Task<GameClient> {
 
         @Override
-        public void perform(final GameClient gameClient, final Sender sender) {
+        public void perform(final GameClient gameClient, final Sender<String> sender) {
             sender.send(gameClient.getHelp());
         }
     }
@@ -22,7 +22,7 @@ extends TaskCreator<GameClient> {
     extends Task<GameClient> {
     
         @Override
-        public void perform(final GameClient gameClient, final Sender sender) {
+        public void perform(final GameClient gameClient, final Sender<String> sender) {
             gameClient.back();
         }
     }

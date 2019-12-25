@@ -8,5 +8,5 @@ import logic.Sender;
  */
 public abstract class Task<T extends GameClient> {
 
-    public abstract void perform(final T game, final Sender replySender);
+    public abstract void perform(final T game, final Sender<String> replySender);
 }

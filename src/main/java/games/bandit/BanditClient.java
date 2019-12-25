@@ -102,4 +102,9 @@ extends GameClient {
     public static String getName() {
         return "bandit";
     }
+
+    @Override
+    public String getGameName() {
+        return getName();
+    }
 }

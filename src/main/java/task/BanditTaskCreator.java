@@ -16,7 +16,7 @@ public class BanditTaskCreator extends TaskCreator<BanditClient> {
         }
 
         @Override
-        public void perform(BanditClient game, Sender replySender) {
+        public void perform(BanditClient game, Sender<String> replySender) {
             game.bet(bet);
             int res = game.roll();
             replySender.send("-" + game.getCombination() + "-");
@@ -30,7 +30,7 @@ public class BanditTaskCreator extends TaskCreator<BanditClient> {
     extends Task<BanditClient> {
 
         @Override
-        public void perform(BanditClient game, Sender replySender) {
+        public void perform(BanditClient game, Sender<String> replySender) {
             replySender.send(game.getRules());
         }
     }
