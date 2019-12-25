@@ -14,7 +14,7 @@ import logic.Sender;
 public class TelegramBot extends TelegramLongPollingBot implements IPublisher<MyMessage>, Sender<SendMessage> {
     private String userName;
     private String token;
-    private HashSet<ISubscriber<MyMessage>> subs;
+    private HashSet<ISubscriber<MyMessage>> subs = new HashSet<>();
 
     public TelegramBot(String userName, String token) {
         this.userName = userName;

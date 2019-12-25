@@ -8,21 +8,25 @@ import task.TaskCreator;
  */
 public abstract class GameClient {
     protected final GameClient from;
-    protected final CustomerState exState;
+    protected final GameState state;
 
-    public GameClient(final CustomerState m_exState) {
+    public GameClient(final CustomerState state) {
         this.from = this;
-        this.exState = m_exState;
+        this.state = new GameState(state);
     }
 
-    public GameClient(final GameClient m_from, final CustomerState m_exState) {
+    public GameClient(final GameClient m_from, final CustomerState state) {
         this.from = m_from;
-        this.exState = m_exState;
+        this.state = new GameState(state);
     }
 
     public abstract TaskCreator<GameClient> getTaskCreator();
     public abstract String getHelp();
     public void back() {
-        exState.setGame(this.from);
+        state.focus.setGame(this.from);
+    }
+
+    public static String getName() {
+        return "game";
     }
 }

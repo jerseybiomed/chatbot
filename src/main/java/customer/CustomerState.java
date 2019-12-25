@@ -1,5 +1,7 @@
 package customer;
 
+import java.util.HashMap;
+
 import games.GameClient;
 import task.TaskCreator;
 
@@ -7,19 +9,20 @@ import task.TaskCreator;
  * CustomerState
  */
 public class CustomerState {
-    private TaskCreator<GameClient> creator;
-    private GameClient currentGameClient;
+    private final HashMap<String, TaskCreator> creators = new HashMap<>();
+    private GameClient game;
     
-    public void setGame(final GameClient m_gameClient) {
-        this.currentGameClient = m_gameClient;
-        this.creator = m_gameClient.getTaskCreator();
+    public void setGame(final GameClient gameClient) {
+        this.game = gameClient;
+        if (!creators.containsKey(gameClient.getName()))
+            creators.put(gameClient.getName(), gameClient.getTaskCreator());
     }
 
     public GameClient getGame() {
-        return this.currentGameClient;
+        return game;
     }
 
-    public TaskCreator<GameClient> getCreator() {
-        return this.creator;
+    public TaskCreator getCreator() {
+        return creators.get(game.getName());
     }
 }
