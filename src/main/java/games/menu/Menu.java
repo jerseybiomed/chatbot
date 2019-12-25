@@ -37,8 +37,7 @@ extends GameClient {
 
     public void choose(final String choice) {
         if (games.containsKey(choice)) {
-            GameFabric<GameClient> fabric = games.get(choice);
-            state.exState.focus = fabric.newGame(this, state.exState);
+            state.exState.focus = games.get(choice).newGame(this, state.exState);
         }
     }
 

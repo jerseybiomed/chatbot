@@ -24,8 +24,11 @@ extends TaskCreator<RouletteClient> {
 
         private void onResult(final Integer result, final RouletteClient game, final Sender<String> replySender) {
             game.sayResult(result);
-            replySender.send("----" + result + " " + game.getColor(result) + "----\n" +
-                             "You won: " + Integer.toString(game.getWin()));
+            String msg = "----" + result + " " + game.getColor(result) + "----";
+            if (game.getBet() != 0) {
+                msg += "\nYou won: " + Integer.toString(game.getWin());
+            }
+            replySender.send(msg);
         }
 
         @Override
