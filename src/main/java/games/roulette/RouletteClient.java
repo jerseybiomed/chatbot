@@ -109,4 +109,8 @@ public class RouletteClient extends GameClient {
     public int getResult() {
         return result;
     }
+
+    public static String getName() {
+        return "roulette";
+    }
 }

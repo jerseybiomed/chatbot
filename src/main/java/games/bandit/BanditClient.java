@@ -98,4 +98,8 @@ extends GameClient {
         currentBet += bet;
         this.balance -= bet;
     }
+
+    public static String getName() {
+        return "bandit";
+    }
 }

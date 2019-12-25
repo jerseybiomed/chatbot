@@ -20,8 +20,7 @@ import random.Randomize;
  * App
  */
 public final class App {
-
-    public static void main(final String[] args) {
+    private static void telegramLaunch() {
         ApiContextInitializer.init();
         TelegramBotsApi botsApi = new TelegramBotsApi();
         ChatBot bot = new ChatBot(new MenuFabric(
@@ -35,5 +34,18 @@ public final class App {
         } catch (TelegramApiRequestException e) {
             e.printStackTrace();
         }
+    }
+
+    private static void consoleLaunch() {
+        ChatBot bot = new ChatBot(new MenuFabric(
+            new BanditFabric(new Randomize()),
+            new RouletteFabric(new Roulette(new Randomize()))));
+        bot.register(new ConsoleCustomer("Valera"), new ConsoleSender());
+        while (true) {
+            bot.perform(new bot.Request(new ConsoleCustomer("Valera"), System.console().readLine()));
+        }
+    }
+        
+    void main(final String[] args) {
     }
 }

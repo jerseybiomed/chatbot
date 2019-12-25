@@ -20,6 +20,7 @@ extends GameClient {
         super(m_exState);
         this.creator = m_creator;
         for (GameFabric fabric : fabrics) {
+            System.out.println(fabric.getGameName());
             this.games.put(fabric.getGameName(), fabric);
         }
     }
@@ -36,6 +37,6 @@ extends GameClient {
 
     public void choose(final String choice) {
         if (games.containsKey(choice))
-            this.exState.setGame(this.games.get(choice).newGame(this, this.exState));
+            this.state.focus.setGame(this.games.get(choice).newGame(this, this.state.focus));
     }
 }
