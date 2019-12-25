@@ -12,31 +12,31 @@ import games.bandit.BanditFabric;
 import games.menu.MenuFabric;
 import games.roulette.Roulette;
 import games.roulette.RouletteFabric;
-import logic.console.ConsoleSender;
+import logic.ConsoleSender;
 import random.Randomize;
 
 /**
  * App
  */
 public final class App {
-    private static void telegramLaunch() {
+    public static void telegramLaunch() {
         ApiContextInitializer.init();
-        TelegramBotsApi botsApi = new TelegramBotsApi();
-        ChatBot bot = new ChatBot(new MenuFabric(
-            new BanditFabric(new Randomize()),
-            new RouletteFabric(new Roulette(new Randomize()))));
-        TelegramBot telegram = new TelegramBot(System.getenv("BOT_USERNAME"), System.getenv("BOT_TOKEN"));
-        TelegramDispatcher dispatcher = new TelegramDispatcher(telegram, bot);
+        final TelegramBotsApi botsApi = new TelegramBotsApi();
+        final ChatBot bot = new ChatBot(
+                new MenuFabric(new BanditFabric(new Randomize()), new RouletteFabric(new Roulette(new Randomize()))));
+        final TelegramBot telegram = new TelegramBot(System.getenv("BOT_USERNAME"), System.getenv("BOT_TOKEN"));
+        final TelegramDispatcher dispatcher = new TelegramDispatcher(telegram, bot);
         telegram.pub(dispatcher);
         try {
             botsApi.registerBot(telegram);
-        } catch (TelegramApiRequestException e) {
+        } catch (final TelegramApiRequestException e) {
             e.printStackTrace();
         }
     }
 
-    private static void consoleLaunch() {
-        ChatBot bot = new ChatBot(new MenuFabric(
+    public static void consoleLaunch() {
+        final ChatBot bot = new ChatBot(
+                new MenuFabric(
             new BanditFabric(new Randomize()),
             new RouletteFabric(new Roulette(new Randomize()))));
         bot.register(new ConsoleCustomer("Valera"), new ConsoleSender());

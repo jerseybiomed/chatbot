@@ -15,4 +15,9 @@ extends Customer {
     public int hashCode() {
         return name.hashCode();
     }
+
+    @Override
+    public String asString() {
+        return name;
+    }
 }

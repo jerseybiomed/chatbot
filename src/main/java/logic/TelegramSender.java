@@ -1,4 +1,4 @@
-package logic.telegram;
+package logic;
 
 import org.telegram.telegrambots.meta.api.methods.send.SendMessage;
 

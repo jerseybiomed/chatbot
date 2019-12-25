@@ -2,6 +2,7 @@ package games.bandit;
 
 import org.junit.jupiter.api.Test;
 
+import customer.ConsoleCustomer;
 import customer.CustomerState;
 import random.Randomize;
 
@@ -12,7 +13,7 @@ public class TestBandit {
 
     @Test
     void testGameplay() {
-        BanditClient game = new BanditClient(new CustomerState(), new Randomize());
+        BanditClient game = new BanditClient(new CustomerState(new ConsoleCustomer("/\\ioxa"), 10000), new Randomize());
         game.getHelp();
         game.getRules();
         game.bet(100);

@@ -2,7 +2,6 @@ package games.menu;
 
 import customer.CustomerState;
 import games.GameFabric;
-import task.MenuTaskCreator;
 
 /**
  * MenuFabric
@@ -17,7 +16,7 @@ extends GameFabric<Menu> {
 
     @Override
     public Menu newGame(CustomerState state) {
-        return new Menu(new MenuTaskCreator(), state, this.fabrics);
+        return new Menu(state, this.fabrics);
     }
 
     @Override

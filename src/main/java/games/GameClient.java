@@ -1,7 +1,6 @@
 package games;
 
 import customer.CustomerState;
-import task.TaskCreator;
 
 /**
  * GameClient
@@ -20,10 +19,10 @@ public abstract class GameClient {
         this.state = new GameState(state);
     }
 
-    public abstract TaskCreator<GameClient> getTaskCreator();
     public abstract String getHelp();
+    public abstract int getBalance();
     public void back() {
-        state.focus.setGame(this.from);
+        state.exState.focus = this.from;
     }
 
     public abstract String getGameName();

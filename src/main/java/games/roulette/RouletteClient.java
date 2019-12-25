@@ -2,82 +2,66 @@ package games.roulette;
 
 import java.util.Arrays;
 import java.util.List;
-import java.util.Timer;
-import java.util.TimerTask;
+import java.util.function.BiConsumer;
+import java.util.function.Consumer;
 
+import customer.Customer;
 import customer.CustomerState;
 import games.GameClient;
-import task.RouletteTaskCreator;
-import task.TaskCreator;
 
 public class RouletteClient extends GameClient {
-    private Timer timer = new Timer(true);
-    private boolean isL = false;
     private Roulette roulette;
-    private int balance = 0;
-    private int currentBet = 0;
+    private int bet = 0;
     private String choice;
-    private int result = 0;
+    private int result;
     private List<Integer> red = Arrays.asList(32, 19, 21, 25, 34, 27, 36, 30, 23, 5, 16, 1, 14, 9, 18, 7, 12, 3);
     private List<Integer> black = Arrays.asList(15, 4, 2, 17, 6, 13, 11, 8, 10, 24, 33, 20, 31, 22, 29, 28, 35, 26);
-    private String help =
-            "You are greeted by a RouletteClient\n" +
-                    "To play enter '/red' or '/black' and the bet amount separated by a space\n" +
-                    "Every 30 seconds there is a new scrolling roulette\n" +
-                    "After scrolling you can bet on the following by entering '/bet red' or '/bet black' " +
-                    "or '/bet NUMBER'" +
-                    "and the bet amount separated by a space (NUMBER between 0 and 36)\n" +
-                    "You can see the winning payment by enter '/rules'\n" +
-                    "Also all participants reported when someone put somewhere put a bet\n" +
-                    "\nFor output of this help once again instead of roll enter '/help'";
-    private String rules =
-            "If you bet on the color and guess, then your bet increases by 2\n" +
-                    "If you bet on the number and guess, the bet increases by 36\n" +
-                    "If you do not guess, you lose money";
+    private String help = "You are greeted by a RouletteClient\n"
+            + "To play enter '/red' or '/black' and the bet amount separated by a space\n"
+            + "Every 30 seconds there is a new scrolling roulette\n"
+            + "After scrolling you can bet on the following by entering '/bet red' or '/bet black' "
+            + "or '/bet NUMBER'" + "and the bet amount separated by a space (NUMBER between 0 and 36)\n"
+            + "You can see the winning payment by enter '/rules'\n"
+            + "Also all participants reported when someone put somewhere put a bet\n"
+            + "\nFor output of this help once again instead of roll enter '/help'";
+    private String rules = "If you bet on the color and guess, then your bet increases by 2\n"
+            + "If you bet on the number and guess, the bet increases by 36\n" + "If you do not guess, you lose money";
 
     public RouletteClient(GameClient from, CustomerState exState, Roulette roulette) {
         super(from, exState);
-        this.balance = 10000;
+        this.roulette = roulette;
+    }
+
+    public RouletteClient(CustomerState exState, Roulette roulette) {
+        super(exState);
         this.roulette = roulette;
     }
 
     @Override
-    public TaskCreator getTaskCreator() {
-        return new RouletteTaskCreator();
+    public String getGameName() {
+        return getName();
     }
 
     @Override
     public String getHelp() {
-        return this.help;
+        return help;
+    }
+
+    @Override
+    public int getBalance() {
+        return state.exState.balance;
+    }
+
+    public static String getName() {
+        return "roulette";
     }
 
     public String getRules() {
-        return this.rules;
+        return rules;
     }
 
-    public boolean isLaunched() {
-        return isL;
-    }
-
-    public void launch(TimerTask task) {
-        timer.scheduleAtFixedRate(task, 10 * 1000, 10 * 1000);
-        isL = true;
-    }
-
-    public void leave() {
-        timer.cancel();
-    }
-
-    public int roll() {
-        result = this.roulette.getNext();
-        if (choice != null) {
-            int change = getCoefficient() * currentBet;
-            balance += change;
-            choice = null;
-            currentBet = 0;
-            return change;
-        }
-        return -1;
+    public void sayResult(int result) {
+        this.result = result;
     }
 
     public int getCoefficient() {
@@ -92,30 +76,38 @@ public class RouletteClient extends GameClient {
         return red.contains(result) ? "red" : black.contains(result) ? "black" : "green";
     }
 
-    public void bet(int bet, String choice) {
-        this.choice = choice;
-        this.balance -= bet;
-        this.currentBet = bet;
+    public void leave() {
+        roulette.leave(state.exState.customer);
     }
 
-    public int getBalance() {
-        return this.balance;
+    public void bet(int bet, String choice) {
+        if (choice.equals(this.choice)) {
+            state.exState.balance -= bet;
+            this.bet += bet;
+        } else {
+            state.exState.balance += this.bet - bet;
+            this.choice = choice;
+            this.bet = bet;
+        }
+        roulette.newBet(state.exState.customer, choice);
     }
 
     public int getBet() {
-        return this.currentBet;
+        return bet;
     }
 
-    public int getResult() {
-        return result;
+    public int getWin() {
+        if (result == -1)
+            return 0;
+        int win = bet * getCoefficient();
+        state.exState.balance += win;
+        bet = 0;
+        result = -1;
+        return win;
     }
 
-    public static String getName() {
-        return "roulette";
-    }
-
-    @Override
-    public String getGameName() {
-        return getName();
+    public void join(Consumer<Customer> onNewCustomer, BiConsumer<Customer, String> onNewBet,
+            Consumer<Integer> onResult) {
+        roulette.join(state.exState.customer, new CustomerDataForRoom(onNewCustomer, onNewBet, onResult));
     }
 }
