@@ -31,4 +31,9 @@ extends GameClient {
     public String getHelp() {
         return "simple help";
     }
+
+    @Override
+    public String getGameName() {
+        return "simpleGame";
+    }
 }

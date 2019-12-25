@@ -38,4 +38,13 @@ extends GameClient {
         if (games.containsKey(choice))
             this.state.focus.setGame(this.games.get(choice).newGame(this, this.state.focus));
     }
+
+    @Override
+    public String getGameName() {
+        return getName();
+    }
+
+	public static String getName() {
+        return "menu";
+	}
 }

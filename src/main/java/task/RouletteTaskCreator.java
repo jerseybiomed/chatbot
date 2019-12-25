@@ -64,7 +64,8 @@ extends TaskCreator<RouletteClient> {
 
         @Override
         public void perform(RouletteClient game, Sender<String> replySender) {
-            replySender.send(game.getRules());
+            String rules = game.getRules();
+            replySender.send(rules);
         }
     }
 

@@ -113,4 +113,9 @@ public class RouletteClient extends GameClient {
     public static String getName() {
         return "roulette";
     }
+
+    @Override
+    public String getGameName() {
+        return getName();
+    }
 }

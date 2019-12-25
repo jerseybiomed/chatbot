@@ -14,8 +14,8 @@ public class CustomerState {
     
     public void setGame(final GameClient gameClient) {
         this.game = gameClient;
-        if (!creators.containsKey(gameClient.getName()))
-            creators.put(gameClient.getName(), gameClient.getTaskCreator());
+        if (!creators.containsKey(gameClient.getGameName()))
+            creators.put(gameClient.getGameName(), gameClient.getTaskCreator());
     }
 
     public GameClient getGame() {
@@ -23,6 +23,6 @@ public class CustomerState {
     }
 
     public TaskCreator getCreator() {
-        return creators.get(game.getName());
+        return creators.get(game.getGameName());
     }
 }
