@@ -18,13 +18,16 @@ extends TaskCreator<Menu> {
 
         @Override
         public void perform(Menu menu, Sender<String> sender) {
-            menu.choose(this.choice);
+            menu.choose(choice);
         }
     }
 
     @Override
     public Task create(final String[] args) {
         switch (args[0]) {
+            case "start":
+                args[0] = "help";
+                break;
             case "choose":
                 if (args.length < 1)
                     return new EmptyTask();

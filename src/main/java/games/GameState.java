@@ -6,9 +6,9 @@ import customer.CustomerState;
  * GameState
  */
 public class GameState {
-    public final CustomerState focus;
+    public final CustomerState exState;
     
     public GameState(CustomerState focus) {
-        this.focus = focus;
+        this.exState = focus;
     }
 }

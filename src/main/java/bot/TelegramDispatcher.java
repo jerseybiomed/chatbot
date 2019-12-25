@@ -4,10 +4,9 @@ import java.util.HashSet;
 
 import org.telegram.telegrambots.meta.api.methods.send.SendMessage;
 
-import customer.Customer;
 import customer.TelegramCustomer;
 import logic.Sender;
-import logic.telegram.TelegramSender;
+import logic.TelegramSender;
 
 /**
  * TelegramDispatcher

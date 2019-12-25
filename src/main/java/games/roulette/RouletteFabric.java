@@ -19,6 +19,11 @@ extends GameFabric<RouletteClient> {
     public RouletteClient newGame(GameClient from, CustomerState state) {
         return new RouletteClient(from, state, roulette);
     }
+
+    @Override
+    public RouletteClient newGame(CustomerState state) {
+        return new RouletteClient(state, roulette);
+    }
     
     @Override
     public String getGameName() {

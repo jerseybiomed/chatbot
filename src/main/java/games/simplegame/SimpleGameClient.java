@@ -2,9 +2,6 @@ package games.simplegame;
 
 import customer.CustomerState;
 import games.GameClient;
-import task.DefaultTaskCreator;
-import task.Task;
-import task.TaskCreator;
 
 /**
  * SimpleGameClient
@@ -16,15 +13,8 @@ extends GameClient {
         super(from, exState);
     }
 
-    @Override
-    public TaskCreator<GameClient> getTaskCreator() {
-        return new TaskCreator<GameClient>(){
-        
-            @Override
-            public Task<GameClient> create(final String[] args) {
-                return new DefaultTaskCreator().create(args);
-            }
-        };
+    public static String getName() {
+        return "simpleGame";
     }
 
     @Override
@@ -33,7 +23,12 @@ extends GameClient {
     }
 
     @Override
+    public int getBalance() {
+        return state.exState.balance;
+    }
+
+    @Override
     public String getGameName() {
-        return "simpleGame";
+        return getName();
     }
 }

@@ -22,25 +22,27 @@ public class ChatBot {
         this.menu = m_menu;
     }
 
-    public void register(Customer customer, Sender replySender) {
-        CustomerData data = new CustomerData(replySender);
+    public void register(Customer customer, Sender<String> replySender) {
+        CustomerData data = new CustomerData(customer, 10000, replySender);
+        data.getState().focus = menu.newGame(data.getState());
         this.customerBase.put(customer, data);
-        CustomerState exState = data.state;
-        exState.setGame(this.menu.newGame(exState));
     }
 
     public void perform(final Request request) {
-        Customer customer = request.customer;
-        CustomerData data = this.customerBase.get(customer);
-        CustomerState state = data.state;
-        TaskCreator<GameClient> creator = state.getCreator();
-        GameClient gameClient = state.getGame();
-        Sender reply = data.replySender;
         String[] args = request.message.split(" ");
         if (args.length == 0 || args[0].charAt(0) != '/')
             return;
         args[0] = args[0].substring(1);
+        Customer customer = request.customer;
+        CustomerData data = this.customerBase.get(customer);
+        Sender<String> replySender = data.getReplySender();
+        if (args[0].equals("start")) {
+            register(customer, replySender);
+        }
+        CustomerState state = data.getState();
+        TaskCreator<GameClient> creator = data.getTaskCreator(state.focus.getGameName());
         Task<GameClient> task = creator.create(args);
-        task.perform(gameClient, reply);
+        GameClient game = state.focus;
+        task.perform(game, replySender);
     }
 }

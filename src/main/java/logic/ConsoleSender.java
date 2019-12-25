@@ -1,6 +1,4 @@
-package logic.console;
-
-import logic.Sender;
+package logic;
 
 /**
  * ConsoleSender

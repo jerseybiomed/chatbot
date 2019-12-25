@@ -1,17 +1,14 @@
 package games.bandit;
 
+import java.io.IOException;
+
 import customer.CustomerState;
 import games.GameClient;
 import random.Randomize;
-import task.BanditTaskCreator;
-import task.TaskCreator;
-
-import java.io.IOException;
 
 public class BanditClient
 extends GameClient {
     private Randomize randomize;
-    private int balance = 0;
     private int currentBet = 0;
     private String currentCombination = "000";
     private String help =
@@ -33,28 +30,35 @@ extends GameClient {
 
     public BanditClient(final GameClient from, final CustomerState exState, Randomize randomize) {
         super(from, exState);
-        this.balance = 10000;
         this.randomize = randomize;
     }
 
     public BanditClient(final CustomerState exState, Randomize randomize) {
         super(exState);
-        this.balance = 10000;
         this.randomize = randomize;
     }
 
     @Override
-    public TaskCreator getTaskCreator() {
-        return new BanditTaskCreator();
+    public String getGameName() {
+        return getName();
     }
 
     @Override
     public String getHelp() {
-        return this.help;
+        return help;
     }
-    
+
+    @Override
+    public int getBalance() {
+        return state.exState.balance;
+    }
+
+    public static String getName() {
+        return "bandit";
+    }
+
     public String getRules() {
-    	return this.rules;
+    	return rules;
     }
 
     public int roll() {
@@ -70,7 +74,7 @@ extends GameClient {
         }
         this.currentCombination = combination;
         int result = getCoefficient() * this.currentBet;
-        this.balance += result;
+        state.exState.balance += result;
         currentBet = 0;
         return result;
     }
@@ -96,15 +100,6 @@ extends GameClient {
 
     public void bet(int bet) {
         currentBet += bet;
-        this.balance -= bet;
-    }
-
-    public static String getName() {
-        return "bandit";
-    }
-
-    @Override
-    public String getGameName() {
-        return getName();
+        state.exState.balance -= bet;
     }
 }
