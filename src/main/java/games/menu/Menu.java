@@ -20,7 +20,6 @@ extends GameClient {
         super(m_exState);
         this.creator = m_creator;
         for (GameFabric fabric : fabrics) {
-            System.out.println(fabric.getGameName());
             this.games.put(fabric.getGameName(), fabric);
         }
     }

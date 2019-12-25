@@ -25,8 +25,10 @@ public class TelegramDispatcher implements ISubscriber<MyMessage> {
     @Override
     public void listen(MyMessage msg) {
         Customer user = new TelegramCustomer(msg.customer);
-        if (!users.contains(user))
+        if (!users.contains(user)){
+            System.out.println(msg.customer);
             bot.register(user, new TelegramSender(tgSender, msg.customer));
+        }
         bot.perform(new bot.Request(user, msg.message));
     }
 }
