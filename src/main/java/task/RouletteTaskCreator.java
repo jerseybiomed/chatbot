@@ -77,7 +77,7 @@ extends TaskCreator<RouletteClient> {
         public void perform(final RouletteClient game, final Sender<String> replySender) {
             game.leave();
             game.back();
-            replySender.send("Choose one of the games 'bandit' or 'roulette'\nUse /choose for it");
+            replySender.send(game.getHelp());
         }
     }
 

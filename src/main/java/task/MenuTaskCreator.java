@@ -19,7 +19,7 @@ extends TaskCreator<Menu> {
         @Override
         public void perform(Menu menu, Sender<String> sender) {
             menu.choose(choice);
-            sender.send(menu.getHelp());
+            sender.send("You choose " + menu.getGameName() + " game, please enter /help to take instructions");
         }
     }
 
