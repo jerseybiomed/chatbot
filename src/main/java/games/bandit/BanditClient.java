@@ -98,8 +98,12 @@ extends GameClient {
         return currentBet;
     }
 
-    public void bet(int bet) {
-        currentBet += bet;
-        state.exState.balance -= bet;
+    public boolean bet(int bet) {
+        if (state.exState.balance >= bet && bet > 0) {
+            currentBet += bet;
+            state.exState.balance -= bet;
+            return true;
+        }
+        return false;
     }
 }

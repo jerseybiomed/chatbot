@@ -49,7 +49,11 @@ extends TaskCreator<RouletteClient> {
 
         @Override
         public void perform(final RouletteClient game, final Sender<String> replySender) {
-            game.bet(bet, choice);
+            if (!game.bet(bet, choice))
+                if (bet <= 0)
+                    replySender.send("You can't bet <= 0");
+                else
+                    replySender.send("Not enough balance");
         }
     }
 

@@ -80,7 +80,9 @@ public class RouletteClient extends GameClient {
         roulette.leave(state.exState.customer);
     }
 
-    public void bet(int bet, String choice) {
+    public boolean bet(int bet, String choice) {
+        if (bet <= 0 || bet > state.exState.balance)
+                return false;
         if (choice.equals(this.choice)) {
             state.exState.balance -= bet;
             this.bet += bet;
@@ -90,6 +92,7 @@ public class RouletteClient extends GameClient {
             this.bet = bet;
         }
         roulette.newBet(state.exState.customer, choice);
+        return true;
     }
 
     public int getBet() {

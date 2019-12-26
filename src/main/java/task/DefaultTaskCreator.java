@@ -51,7 +51,7 @@ extends TaskCreator<GameClient> {
         @Override
         public void perform(final GameClient gameClient, final Sender<String> sender) {
             gameClient.back();
-            sender.send(gameClient.getHelp());
+            sender.send("Use /help to know where you now");
         }
     }
 

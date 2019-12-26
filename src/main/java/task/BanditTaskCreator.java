@@ -17,12 +17,17 @@ public class BanditTaskCreator extends TaskCreator<BanditClient> {
 
         @Override
         public void perform(BanditClient game, Sender<String> replySender) {
-            game.bet(bet);
-            int res = game.roll();
-            replySender.send("Current combination: " + game.getCombination() + "\n" +
-                             "Bet: " + bet + "\n" +
-                             "Coefficient: X" + game.getCoefficient() + "\n" +
-                             "Result: " + res);
+            if (game.bet(bet)) {
+                int res = game.roll();
+                replySender.send("Current combination: " + game.getCombination() + "\n" +
+                        "Bet: " + bet + "\n" +
+                        "Coefficient: X" + game.getCoefficient() + "\n" +
+                        "Result: " + res);
+            } else if (bet <= 0) {
+                replySender.send("You can't bet <= 0");
+            } else {
+                replySender.send("Not enough balance");
+            }
         }
     }
 
