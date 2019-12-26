@@ -15,6 +15,8 @@ import games.roulette.RouletteFabric;
 import logic.ConsoleSender;
 import random.Randomize;
 
+import java.util.Scanner;
+
 /**
  * App
  */
@@ -40,8 +42,9 @@ public final class App {
             new BanditFabric(new Randomize()),
             new RouletteFabric(new Roulette(new Randomize()))));
         bot.register(new ConsoleCustomer("Valera"), new ConsoleSender());
+        Scanner scanner = new Scanner(System.in);
         while (true) {
-            bot.perform(new bot.Request(new ConsoleCustomer("Valera"), System.console().readLine()));
+            bot.perform(new bot.Request(new ConsoleCustomer("Valera"), scanner.nextLine()));
         }
     }
         

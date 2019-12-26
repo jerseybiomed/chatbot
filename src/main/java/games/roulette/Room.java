@@ -2,6 +2,7 @@ package games.roulette;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
 
 import customer.Customer;
 
@@ -9,7 +10,7 @@ import customer.Customer;
  * Room
  */
 public class Room {
-    private final HashMap<Customer, CustomerDataForRoom> customersData = new HashMap<>();
+    private final ConcurrentHashMap<Customer, CustomerDataForRoom> customersData = new ConcurrentHashMap<>();
 
     public boolean join(final Customer customer, final CustomerDataForRoom data) {
         if (customersData.size() >= 10)

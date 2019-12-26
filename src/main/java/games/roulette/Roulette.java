@@ -2,6 +2,7 @@ package games.roulette;
 
 import java.util.Timer;
 import java.util.TimerTask;
+import java.util.concurrent.CompletableFuture;
 
 import customer.Customer;
 import random.Randomize;
@@ -23,7 +24,8 @@ public class Roulette {
     }
 
     public Roulette(Randomize randomize) {
-        new Timer(true).scheduleAtFixedRate(new Roll(), 30 * 1000, 30 * 1000);
+        CompletableFuture.runAsync(() ->
+        new Timer(true).scheduleAtFixedRate(new Roll(), 30 * 1000, 30 * 1000));
         this.randomize = randomize;
     }
 
