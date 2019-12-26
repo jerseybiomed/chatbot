@@ -33,4 +33,18 @@ public class TestBandit {
         int bet = game.getBet();
         assertEquals(bet, 100);
     }
+
+    @Test
+    void testRoll() {
+        BanditClient game = new BanditClient(new CustomerState(new ConsoleCustomer("lexa"), 10000),
+                new Randomize());
+        game.bet(100);
+        int result = game.roll();
+        String combination = game.getCombination();
+        int coefficient = game.getCoefficient();
+        if (coefficient == 0)
+            assertEquals(result, 0);
+        else if (coefficient == 2)
+            assertEquals(result, 200);
+    }
 }
