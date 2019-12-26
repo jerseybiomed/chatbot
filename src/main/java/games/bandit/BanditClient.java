@@ -13,7 +13,7 @@ extends GameClient {
     private String currentCombination = "000";
     private String help =
             "You are greeted by a One Arm BanditClient\n" +
-                    "To play enter '/bet' and the bet amount separated by a space\n" +
+                    "To play enter '/roll' and the bet amount separated by a space\n" +
                     "I will output the final line and the result\n" +
                     "You can see the winning lines by enter '/rules'\n" +
                     "I'm meant for gamblers, so they don't lose their money\n" +

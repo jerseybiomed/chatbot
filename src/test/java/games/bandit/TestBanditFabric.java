@@ -2,11 +2,11 @@ package games.bandit;
 
 import static org.junit.jupiter.api.Assertions.assertNotEquals;
 
+import games.GameFabric;
 import org.junit.jupiter.api.Test;
 
 import customer.ConsoleCustomer;
 import customer.CustomerState;
-import games.GameFabric;
 import random.Randomize;
 
 /**

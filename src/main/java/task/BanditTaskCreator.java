@@ -19,10 +19,10 @@ public class BanditTaskCreator extends TaskCreator<BanditClient> {
         public void perform(BanditClient game, Sender<String> replySender) {
             game.bet(bet);
             int res = game.roll();
-            replySender.send("-" + game.getCombination() + "-\n" +
-                             "|" + Integer.toString(bet) + "\n" +
-                             "--X" + Integer.toString(game.getCoefficient()) + "-\n" +
-                             "|" + Integer.toString(res));
+            replySender.send("Current combination: " + game.getCombination() + "\n" +
+                             "Bet: " + bet + "\n" +
+                             "Coefficient: X" + game.getCoefficient() + "\n" +
+                             "Result: " + res);
         }
     }
 

@@ -3,6 +3,7 @@ package games.bandit;
 import customer.CustomerState;
 import games.GameClient;
 import games.GameFabric;
+import games.bandit.BanditClient;
 import random.Randomize;
 
 /**

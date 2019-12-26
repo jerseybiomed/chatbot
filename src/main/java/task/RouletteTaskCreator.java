@@ -14,19 +14,19 @@ extends TaskCreator<RouletteClient> {
     extends Task<RouletteClient> {
 
         private void onNewCustomer(final Customer customer, final Sender<String> replySender) {
-            replySender.send("Join new customer:\n----" + customer.asString());
+            replySender.send("Join new customer: \n" + customer.asString());
         }
 
         private void onNewBet(final Customer customer, final String bet,
                               final RouletteClient game, final Sender<String> replySender) {
-            replySender.send("New bet:\n----" + customer.asString() + "\n----On " + bet);
+            replySender.send("New bet:\n " + customer.asString() + "\n On " + bet);
         }
 
         private void onResult(final Integer result, final RouletteClient game, final Sender<String> replySender) {
             game.sayResult(result);
-            String msg = "----" + result + " " + game.getColor(result) + "----";
+            String msg = "Result: " + result + " " + game.getColor(result);
             if (game.getBet() != 0) {
-                msg += "\nYou won: " + Integer.toString(game.getWin());
+                msg += "\nYou won: " + game.getWin();
             }
             replySender.send(msg);
         }
@@ -67,6 +67,7 @@ extends TaskCreator<RouletteClient> {
         @Override
         public void perform(final RouletteClient game, final Sender<String> replySender) {
             game.leave();
+            replySender.send("Use /join for join in game room");
         }
     }
 
@@ -76,6 +77,7 @@ extends TaskCreator<RouletteClient> {
         public void perform(final RouletteClient game, final Sender<String> replySender) {
             game.leave();
             game.back();
+            replySender.send("Choose one of the games 'bandit' or 'roulette'\nUse /choose for it");
         }
     }
 
@@ -89,7 +91,7 @@ extends TaskCreator<RouletteClient> {
             case "bet":
                 if (args.length < 2)
                     return new EmptyTask();
-                return new BetTask(Integer.parseInt(args[1]), args[2]);
+                return new BetTask(Integer.parseInt(args[2]), args[1]);
             case "join":
                 return new JoinTask();
             case "rule":

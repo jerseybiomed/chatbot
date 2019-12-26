@@ -11,7 +11,7 @@ import games.GameFabric;
  */
 public class Menu
 extends GameClient {
-    private final String help = "help of this bot";
+    private final String help = "Choose one of the games 'bandit' or 'roulette'\nUse /choose for it\n";
     protected final HashMap<String, GameFabric> games = new HashMap<>();
 
     public Menu(final CustomerState state, final GameFabric... fabrics) {

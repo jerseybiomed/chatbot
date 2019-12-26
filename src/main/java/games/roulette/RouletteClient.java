@@ -17,7 +17,7 @@ public class RouletteClient extends GameClient {
     private List<Integer> red = Arrays.asList(32, 19, 21, 25, 34, 27, 36, 30, 23, 5, 16, 1, 14, 9, 18, 7, 12, 3);
     private List<Integer> black = Arrays.asList(15, 4, 2, 17, 6, 13, 11, 8, 10, 24, 33, 20, 31, 22, 29, 28, 35, 26);
     private String help = "You are greeted by a RouletteClient\n"
-            + "To play enter '/red' or '/black' and the bet amount separated by a space\n"
+            + "For join in game room write /join\n"
             + "Every 30 seconds there is a new scrolling roulette\n"
             + "After scrolling you can bet on the following by entering '/bet red' or '/bet black' "
             + "or '/bet NUMBER'" + "and the bet amount separated by a space (NUMBER between 0 and 36)\n"

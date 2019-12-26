@@ -10,7 +10,7 @@ import games.simplegame.SimpleGameClient;
 import logic.Sender;
 
 /**
- * DefaultTaskCrafter
+ * DefaultTaskCreator
  */
 public class DefaultTaskCreator
 extends TaskCreator<GameClient> {
@@ -51,6 +51,7 @@ extends TaskCreator<GameClient> {
         @Override
         public void perform(final GameClient gameClient, final Sender<String> sender) {
             gameClient.back();
+            sender.send("Choose one of the games 'bandit' or 'roulette'\nUse /choose for it");
         }
     }
 
